@@ -1,7 +1,6 @@
 package ir.sharif.aic.hideandseek.client;
 
 import io.grpc.Channel;
-import io.grpc.ManagedChannel;
 import ir.sharif.aic.hideandseek.ai.AI;
 import ir.sharif.aic.hideandseek.ai.PoliceAI;
 import ir.sharif.aic.hideandseek.ai.ThiefAI;
@@ -14,6 +13,7 @@ import ir.sharif.aic.hideandseek.api.grpc.GameHandlerGrpc.GameHandlerBlockingStu
 import ir.sharif.aic.hideandseek.api.grpc.GameHandlerGrpc.GameHandlerStub;
 import ir.sharif.aic.hideandseek.command.CommandImpl;
 import ir.sharif.aic.hideandseek.config.ConfigLoader;
+
 import java.util.Iterator;
 
 public class ClientHandler {
@@ -80,14 +80,22 @@ public class ClientHandler {
 
     public void sendMessage(String message) {
         var chatCommand = commandImpl.createChatCommand(message);
-        blockingStub.sendMessage(chatCommand);
+        try {
+            blockingStub.sendMessage(chatCommand);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void initialize(GameView gameView) {
         setAIMethod(gameView.getViewer().getType() == AgentType.POLICE);
         var startingNodeId = ai.getStartingNode(gameView);
         var declareReadinessCommand = commandImpl.declareReadinessCommand(startingNodeId);
-        blockingStub.declareReadiness(declareReadinessCommand);
+        try {
+            blockingStub.declareReadiness(declareReadinessCommand);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void setAIMethod(boolean isPolice) {
@@ -101,8 +109,13 @@ public class ClientHandler {
     private void move(GameView gameView) {
         var destinationNodeId = ai.move(gameView);
         var moveCommand = commandImpl.createMoveCommand(destinationNodeId);
-        blockingStub.move(moveCommand);
-        hasMoved = true;
+        try {
+            blockingStub.move(moveCommand);
+            hasMoved = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 }

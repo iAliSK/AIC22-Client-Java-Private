@@ -14,7 +14,7 @@ public class PoliceAI extends AI {
      */
     @Override
     public int getStartingNode(GameView gameView) {
-        return 0;
+        return 1;
     }
 
     /**
@@ -22,7 +22,7 @@ public class PoliceAI extends AI {
      */
     @Override
     public int move(GameView gameView) {
-        return 0;
+        return 1;
     }
 
 }
