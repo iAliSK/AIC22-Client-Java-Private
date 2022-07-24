@@ -13,15 +13,22 @@ public class ConfigLoader {
     private static Config config;
 
     private static Config loadConfig() {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
-            return objectMapper.readValue(Paths.get(
-                            Objects.requireNonNull(Main.class.getClassLoader().getResource("application.yml")).toURI())
-                    .toFile(), Config.class);
-        }  catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-            return null;
-        }
+//        try {
+            Config config = new Config();
+            GRpcConfig gRpcConfig = new GRpcConfig();
+            gRpcConfig.setPort("7000");
+            gRpcConfig.setServer("127.0.0.1");
+            config.setGRpc(gRpcConfig);
+            return config;
+            // fuck java
+//            ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+//            return objectMapper.readValue(Paths.get(
+//                            Objects.requireNonNull(Main.class.getClassLoader().getResource("application.yml")).toURI())
+//                    .toFile(), Config.class);
+//        }  catch (IOException | URISyntaxException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
     }
 
     public static Config getConfig() {
