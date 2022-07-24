@@ -27,11 +27,11 @@ public class ClientHandler {
     private int turn = 1;
     private boolean hasMoved = false;
 
-    public ClientHandler(Channel channel) {
+    public ClientHandler(Channel channel, String token) {
         this.channel = channel;
         nonBlockingStub = GameHandlerGrpc.newStub(channel);
         blockingStub = GameHandlerGrpc.newBlockingStub(channel);
-        commandImpl = new CommandImpl(ConfigLoader.getConfig().getToken());
+        commandImpl = new CommandImpl(token);
     }
 
     public void handleClient() {
