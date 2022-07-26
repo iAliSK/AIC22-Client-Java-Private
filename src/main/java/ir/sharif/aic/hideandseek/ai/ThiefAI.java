@@ -1,7 +1,7 @@
 package ir.sharif.aic.hideandseek.ai;
 
 import ir.sharif.aic.hideandseek.client.Phone;
-import ir.sharif.aic.hideandseek.api.grpc.AIProto.GameView;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 
 public class ThiefAI extends AI {
 

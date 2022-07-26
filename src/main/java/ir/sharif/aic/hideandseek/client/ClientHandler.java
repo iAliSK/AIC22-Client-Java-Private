@@ -4,15 +4,15 @@ import io.grpc.Channel;
 import ir.sharif.aic.hideandseek.ai.AI;
 import ir.sharif.aic.hideandseek.ai.PoliceAI;
 import ir.sharif.aic.hideandseek.ai.ThiefAI;
-import ir.sharif.aic.hideandseek.api.grpc.AIProto.AgentType;
-import ir.sharif.aic.hideandseek.api.grpc.AIProto.GameStatus;
-import ir.sharif.aic.hideandseek.api.grpc.AIProto.GameView;
-import ir.sharif.aic.hideandseek.api.grpc.AIProto.TurnType;
-import ir.sharif.aic.hideandseek.api.grpc.GameHandlerGrpc;
-import ir.sharif.aic.hideandseek.api.grpc.GameHandlerGrpc.GameHandlerBlockingStub;
-import ir.sharif.aic.hideandseek.api.grpc.GameHandlerGrpc.GameHandlerStub;
 import ir.sharif.aic.hideandseek.command.CommandImpl;
 
+import ir.sharif.aic.hideandseek.protobuf.AIProto.AgentType;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.GameStatus;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.TurnType;
+import ir.sharif.aic.hideandseek.protobuf.GameHandlerGrpc;
+import ir.sharif.aic.hideandseek.protobuf.GameHandlerGrpc.GameHandlerBlockingStub;
+import ir.sharif.aic.hideandseek.protobuf.GameHandlerGrpc.GameHandlerStub;
 import java.util.Iterator;
 
 public class ClientHandler {
@@ -60,10 +60,12 @@ public class ClientHandler {
     }
 
     private boolean canMove(GameView gameView) {
-        if (gameView.getTurn().getTurnType().equals(TurnType.POLICE_TURN) && gameView.getViewer().getType().equals(AgentType.THIEF))
+        if (gameView.getTurn().getTurnType().equals(TurnType.POLICE_TURN)
+                && gameView.getViewer().getType().equals(AgentType.THIEF))
             return false;
 
-        if (gameView.getTurn().getTurnType().equals(TurnType.THIEF_TURN) && gameView.getViewer().getType().equals(AgentType.POLICE))
+        if (gameView.getTurn().getTurnType().equals(TurnType.THIEF_TURN)
+                && gameView.getViewer().getType().equals(AgentType.POLICE))
             return false;
 
         if (gameView.getTurn().getTurnNumber() == turn) {

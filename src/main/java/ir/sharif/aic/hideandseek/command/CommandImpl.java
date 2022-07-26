@@ -1,9 +1,10 @@
 package ir.sharif.aic.hideandseek.command;
 
-import ir.sharif.aic.hideandseek.api.grpc.AIProto.ChatCommand;
-import ir.sharif.aic.hideandseek.api.grpc.AIProto.DeclareReadinessCommand;
-import ir.sharif.aic.hideandseek.api.grpc.AIProto.MoveCommand;
-import ir.sharif.aic.hideandseek.api.grpc.AIProto.WatchCommand;
+
+import ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand;
 
 public class CommandImpl {
 
