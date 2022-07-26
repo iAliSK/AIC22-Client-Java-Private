@@ -12,7 +12,6 @@ import ir.sharif.aic.hideandseek.api.grpc.GameHandlerGrpc;
 import ir.sharif.aic.hideandseek.api.grpc.GameHandlerGrpc.GameHandlerBlockingStub;
 import ir.sharif.aic.hideandseek.api.grpc.GameHandlerGrpc.GameHandlerStub;
 import ir.sharif.aic.hideandseek.command.CommandImpl;
-import ir.sharif.aic.hideandseek.config.ConfigLoader;
 
 import java.util.Iterator;
 
@@ -61,20 +60,16 @@ public class ClientHandler {
     }
 
     private boolean canMove(GameView gameView) {
-        switch (gameView.getViewer().getType()) {
-            case POLICE:
-                if (gameView.getTurn().getTurnType() == TurnType.THIEF_TURN) {
-                    return false;
-                }
-            case THIEF:
-                if (gameView.getTurn().getTurnType() == TurnType.POLICE_TURN) {
-                    return false;
-                }
-        }
+        if (gameView.getTurn().getTurnType().equals(TurnType.POLICE_TURN) && gameView.getViewer().getType().equals(AgentType.THIEF))
+            return false;
+
+        if (gameView.getTurn().getTurnType().equals(TurnType.THIEF_TURN) && gameView.getViewer().getType().equals(AgentType.POLICE))
+            return false;
 
         if (gameView.getTurn().getTurnNumber() == turn) {
             return !hasMoved;
         }
+
         return true;
     }
 
@@ -88,7 +83,7 @@ public class ClientHandler {
     }
 
     private void initialize(GameView gameView) {
-        setAIMethod(gameView.getViewer().getType() == AgentType.POLICE);
+        setAIMethod(gameView.getViewer().getType().equals(AgentType.POLICE));
         var startingNodeId = ai.getStartingNode(gameView);
         var declareReadinessCommand = commandImpl.declareReadinessCommand(startingNodeId);
         try {
