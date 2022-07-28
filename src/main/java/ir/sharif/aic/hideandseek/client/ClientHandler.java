@@ -45,6 +45,10 @@ public class ClientHandler {
                     turn = gameView.getTurn().getTurnNumber();
                     hasMoved = false;
                 }
+                if(gameView.getStatus().equals(GameStatus.FINISHED))
+                    return;
+                if(gameView.getViewer().getIsDead())
+                    return;
                 if (isFirstTurn) {
                     initialize(gameView);
                     isFirstTurn = false;
@@ -56,6 +60,7 @@ public class ClientHandler {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            throw ex;
         }
     }
 
