@@ -21,6 +21,11 @@ service GameHandler {
   Game
  */
 
+message Turn {
+  int32 turnNumber = 1;
+  TurnType turnType = 2;
+}
+
 enum Team {
   FIRST = 0;
   SECOND = 1;
@@ -78,15 +83,21 @@ message IncomeSettings {
   double thievesIncomeEachTurn = 2;
 }
 
-message TurnSettings{
-  int32 maxTurn = 1;
+message TurnSettings {
+  int32 maxTurns = 1;
   repeated int32 visibleTurns = 2;
+}
+
+message ChatSettings {
+  int32 chatBoxMaxSize = 1;
+  double chatCostPerCharacter = 2;
 }
 
 message GameConfig {
   Graph graph = 1;
   IncomeSettings incomeSettings = 2;
   TurnSettings turnSettings = 3;
+  ChatSettings chatSettings = 4;
 }
 
 /**
@@ -112,13 +123,10 @@ message MoveCommand {
  */
 
 message WatchCommand {
+
   string token = 1;
 }
 
-message Turn {
-  int32 turnNumber = 1;
-  TurnType turnType = 2;
-}
 message GameView {
   GameStatus status = 1;
   GameResult result = 2;
@@ -127,6 +135,7 @@ message GameView {
   Agent viewer = 5;
   double balance = 6;
   repeated Agent visible_agents = 7;
+  repeated Chat chatBox = 8;
 }
 
 /**
@@ -142,5 +151,5 @@ message Chat {
   string id = 1;
   int32 fromAgentId = 2;
   string text = 3;
-  google.protobuf.Timestamp timeStamp = 4 ;
+  google.protobuf.Timestamp timeStamp = 4;
 }
