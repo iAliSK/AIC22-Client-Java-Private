@@ -531,6 +531,538 @@ public final class AIProto {
     // @@protoc_insertion_point(enum_scope:ir.sharif.aic.hideandseek.api.grpc.GameResult)
   }
 
+  public interface TurnOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ir.sharif.aic.hideandseek.api.grpc.Turn)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 turnNumber = 1;</code>
+     */
+    int getTurnNumber();
+
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
+     */
+    int getTurnTypeValue();
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
+     */
+    AIProto.TurnType getTurnType();
+  }
+  /**
+   * Protobuf type {@code ir.sharif.aic.hideandseek.api.grpc.Turn}
+   */
+  public  static final class Turn extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ir.sharif.aic.hideandseek.api.grpc.Turn)
+      TurnOrBuilder {
+    // Use Turn.newBuilder() to construct.
+    private Turn(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Turn() {
+      turnNumber_ = 0;
+      turnType_ = 0;
+    }
+
+    @Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private Turn(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              turnNumber_ = input.readInt32();
+              break;
+            }
+            case 16: {
+              int rawValue = input.readEnum();
+
+              turnType_ = rawValue;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor;
+    }
+
+    protected FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              AIProto.Turn.class, AIProto.Turn.Builder.class);
+    }
+
+    public static final int TURNNUMBER_FIELD_NUMBER = 1;
+    private int turnNumber_;
+    /**
+     * <code>int32 turnNumber = 1;</code>
+     */
+    public int getTurnNumber() {
+      return turnNumber_;
+    }
+
+    public static final int TURNTYPE_FIELD_NUMBER = 2;
+    private int turnType_;
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
+     */
+    public int getTurnTypeValue() {
+      return turnType_;
+    }
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
+     */
+    public AIProto.TurnType getTurnType() {
+      AIProto.TurnType result = AIProto.TurnType.valueOf(turnType_);
+      return result == null ? AIProto.TurnType.UNRECOGNIZED : result;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (turnNumber_ != 0) {
+        output.writeInt32(1, turnNumber_);
+      }
+      if (turnType_ != AIProto.TurnType.THIEF_TURN.getNumber()) {
+        output.writeEnum(2, turnType_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (turnNumber_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, turnNumber_);
+      }
+      if (turnType_ != AIProto.TurnType.THIEF_TURN.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(2, turnType_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @Override
+    public boolean equals(final Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof AIProto.Turn)) {
+        return super.equals(obj);
+      }
+      AIProto.Turn other = (AIProto.Turn) obj;
+
+      boolean result = true;
+      result = result && (getTurnNumber()
+          == other.getTurnNumber());
+      result = result && turnType_ == other.turnType_;
+      return result;
+    }
+
+    @Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TURNNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getTurnNumber();
+      hash = (37 * hash) + TURNTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + turnType_;
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static AIProto.Turn parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static AIProto.Turn parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static AIProto.Turn parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static AIProto.Turn parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static AIProto.Turn parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static AIProto.Turn parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static AIProto.Turn parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static AIProto.Turn parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static AIProto.Turn parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static AIProto.Turn parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static AIProto.Turn parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static AIProto.Turn parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(AIProto.Turn prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @Override
+    protected Builder newBuilderForType(
+        BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ir.sharif.aic.hideandseek.api.grpc.Turn}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ir.sharif.aic.hideandseek.api.grpc.Turn)
+        AIProto.TurnOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor;
+      }
+
+      protected FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                AIProto.Turn.class, AIProto.Turn.Builder.class);
+      }
+
+      // Construct using ir.sharif.aic.hideandseek.api.grpc.AIProto.Turn.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        turnNumber_ = 0;
+
+        turnType_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor;
+      }
+
+      public AIProto.Turn getDefaultInstanceForType() {
+        return AIProto.Turn.getDefaultInstance();
+      }
+
+      public AIProto.Turn build() {
+        AIProto.Turn result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public AIProto.Turn buildPartial() {
+        AIProto.Turn result = new AIProto.Turn(this);
+        result.turnNumber_ = turnNumber_;
+        result.turnType_ = turnType_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof AIProto.Turn) {
+          return mergeFrom((AIProto.Turn)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(AIProto.Turn other) {
+        if (other == AIProto.Turn.getDefaultInstance()) return this;
+        if (other.getTurnNumber() != 0) {
+          setTurnNumber(other.getTurnNumber());
+        }
+        if (other.turnType_ != 0) {
+          setTurnTypeValue(other.getTurnTypeValue());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        AIProto.Turn parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (AIProto.Turn) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int turnNumber_ ;
+      /**
+       * <code>int32 turnNumber = 1;</code>
+       */
+      public int getTurnNumber() {
+        return turnNumber_;
+      }
+      /**
+       * <code>int32 turnNumber = 1;</code>
+       */
+      public Builder setTurnNumber(int value) {
+        
+        turnNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 turnNumber = 1;</code>
+       */
+      public Builder clearTurnNumber() {
+        
+        turnNumber_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int turnType_ = 0;
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
+       */
+      public int getTurnTypeValue() {
+        return turnType_;
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
+       */
+      public Builder setTurnTypeValue(int value) {
+        turnType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
+       */
+      public AIProto.TurnType getTurnType() {
+        AIProto.TurnType result = AIProto.TurnType.valueOf(turnType_);
+        return result == null ? AIProto.TurnType.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
+       */
+      public Builder setTurnType(AIProto.TurnType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        turnType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
+       */
+      public Builder clearTurnType() {
+        
+        turnType_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ir.sharif.aic.hideandseek.api.grpc.Turn)
+    }
+
+    // @@protoc_insertion_point(class_scope:ir.sharif.aic.hideandseek.api.grpc.Turn)
+    private static final AIProto.Turn DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new AIProto.Turn();
+    }
+
+    public static AIProto.Turn getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Turn>
+        PARSER = new com.google.protobuf.AbstractParser<Turn>() {
+      public Turn parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Turn(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Turn> parser() {
+      return PARSER;
+    }
+
+    @Override
+    public com.google.protobuf.Parser<Turn> getParserForType() {
+      return PARSER;
+    }
+
+    public AIProto.Turn getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface AgentOrBuilder extends
       // @@protoc_insertion_point(interface_extends:ir.sharif.aic.hideandseek.api.grpc.Agent)
       com.google.protobuf.MessageOrBuilder {
@@ -1079,7 +1611,7 @@ public final class AIProto {
        * <code>int32 id = 1;</code>
        */
       public Builder setId(int value) {
-
+        
         id_ = value;
         onChanged();
         return this;
@@ -1088,7 +1620,7 @@ public final class AIProto {
        * <code>int32 id = 1;</code>
        */
       public Builder clearId() {
-
+        
         id_ = 0;
         onChanged();
         return this;
@@ -1123,7 +1655,7 @@ public final class AIProto {
         if (value == null) {
           throw new NullPointerException();
         }
-
+        
         team_ = value.getNumber();
         onChanged();
         return this;
@@ -1132,7 +1664,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Team team = 2;</code>
        */
       public Builder clearTeam() {
-
+        
         team_ = 0;
         onChanged();
         return this;
@@ -1167,7 +1699,7 @@ public final class AIProto {
         if (value == null) {
           throw new NullPointerException();
         }
-
+        
         type_ = value.getNumber();
         onChanged();
         return this;
@@ -1176,7 +1708,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.AgentType type = 3;</code>
        */
       public Builder clearType() {
-
+        
         type_ = 0;
         onChanged();
         return this;
@@ -1193,7 +1725,7 @@ public final class AIProto {
        * <code>int32 node_id = 4;</code>
        */
       public Builder setNodeId(int value) {
-
+        
         nodeId_ = value;
         onChanged();
         return this;
@@ -1202,7 +1734,7 @@ public final class AIProto {
        * <code>int32 node_id = 4;</code>
        */
       public Builder clearNodeId() {
-
+        
         nodeId_ = 0;
         onChanged();
         return this;
@@ -1219,7 +1751,7 @@ public final class AIProto {
        * <code>bool is_dead = 5;</code>
        */
       public Builder setIsDead(boolean value) {
-
+        
         isDead_ = value;
         onChanged();
         return this;
@@ -1228,7 +1760,7 @@ public final class AIProto {
        * <code>bool is_dead = 5;</code>
        */
       public Builder clearIsDead() {
-
+        
         isDead_ = false;
         onChanged();
         return this;
@@ -1659,7 +2191,7 @@ public final class AIProto {
        * <code>int32 id = 1;</code>
        */
       public Builder setId(int value) {
-
+        
         id_ = value;
         onChanged();
         return this;
@@ -1668,7 +2200,7 @@ public final class AIProto {
        * <code>int32 id = 1;</code>
        */
       public Builder clearId() {
-
+        
         id_ = 0;
         onChanged();
         return this;
@@ -2213,7 +2745,7 @@ public final class AIProto {
        * <code>int32 id = 1;</code>
        */
       public Builder setId(int value) {
-
+        
         id_ = value;
         onChanged();
         return this;
@@ -2222,7 +2754,7 @@ public final class AIProto {
        * <code>int32 id = 1;</code>
        */
       public Builder clearId() {
-
+        
         id_ = 0;
         onChanged();
         return this;
@@ -2239,7 +2771,7 @@ public final class AIProto {
        * <code>int32 first_node_id = 2;</code>
        */
       public Builder setFirstNodeId(int value) {
-
+        
         firstNodeId_ = value;
         onChanged();
         return this;
@@ -2248,7 +2780,7 @@ public final class AIProto {
        * <code>int32 first_node_id = 2;</code>
        */
       public Builder clearFirstNodeId() {
-
+        
         firstNodeId_ = 0;
         onChanged();
         return this;
@@ -2265,7 +2797,7 @@ public final class AIProto {
        * <code>int32 second_node_id = 3;</code>
        */
       public Builder setSecondNodeId(int value) {
-
+        
         secondNodeId_ = value;
         onChanged();
         return this;
@@ -2274,7 +2806,7 @@ public final class AIProto {
        * <code>int32 second_node_id = 3;</code>
        */
       public Builder clearSecondNodeId() {
-
+        
         secondNodeId_ = 0;
         onChanged();
         return this;
@@ -2291,7 +2823,7 @@ public final class AIProto {
        * <code>double price = 4;</code>
        */
       public Builder setPrice(double value) {
-
+        
         price_ = value;
         onChanged();
         return this;
@@ -2300,7 +2832,7 @@ public final class AIProto {
        * <code>double price = 4;</code>
        */
       public Builder clearPrice() {
-
+        
         price_ = 0D;
         onChanged();
         return this;
@@ -2361,7 +2893,7 @@ public final class AIProto {
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
      */
-    java.util.List<AIProto.Path>
+    java.util.List<Path>
         getPathsList();
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
@@ -2374,7 +2906,7 @@ public final class AIProto {
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
      */
-    java.util.List<? extends AIProto.PathOrBuilder>
+    java.util.List<? extends PathOrBuilder>
         getPathsOrBuilderList();
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
@@ -2385,7 +2917,7 @@ public final class AIProto {
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
      */
-    java.util.List<AIProto.Node>
+    java.util.List<Node>
         getNodesList();
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
@@ -2398,7 +2930,7 @@ public final class AIProto {
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
      */
-    java.util.List<? extends AIProto.NodeOrBuilder>
+    java.util.List<? extends NodeOrBuilder>
         getNodesOrBuilderList();
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
@@ -2449,7 +2981,7 @@ public final class AIProto {
             }
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                paths_ = new java.util.ArrayList<AIProto.Path>();
+                paths_ = new java.util.ArrayList<Path>();
                 mutable_bitField0_ |= 0x00000001;
               }
               paths_.add(
@@ -2458,7 +2990,7 @@ public final class AIProto {
             }
             case 18: {
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                nodes_ = new java.util.ArrayList<AIProto.Node>();
+                nodes_ = new java.util.ArrayList<Node>();
                 mutable_bitField0_ |= 0x00000002;
               }
               nodes_.add(
@@ -2495,17 +3027,17 @@ public final class AIProto {
     }
 
     public static final int PATHS_FIELD_NUMBER = 1;
-    private java.util.List<AIProto.Path> paths_;
+    private java.util.List<Path> paths_;
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
      */
-    public java.util.List<AIProto.Path> getPathsList() {
+    public java.util.List<Path> getPathsList() {
       return paths_;
     }
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
      */
-    public java.util.List<? extends AIProto.PathOrBuilder>
+    public java.util.List<? extends PathOrBuilder>
         getPathsOrBuilderList() {
       return paths_;
     }
@@ -2530,17 +3062,17 @@ public final class AIProto {
     }
 
     public static final int NODES_FIELD_NUMBER = 2;
-    private java.util.List<AIProto.Node> nodes_;
+    private java.util.List<Node> nodes_;
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
      */
-    public java.util.List<AIProto.Node> getNodesList() {
+    public java.util.List<Node> getNodesList() {
       return nodes_;
     }
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
      */
-    public java.util.List<? extends AIProto.NodeOrBuilder>
+    public java.util.List<? extends NodeOrBuilder>
         getNodesOrBuilderList() {
       return nodes_;
     }
@@ -2878,7 +3410,7 @@ public final class AIProto {
               pathsBuilder_ = null;
               paths_ = other.paths_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              pathsBuilder_ =
+              pathsBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getPathsFieldBuilder() : null;
             } else {
@@ -2904,7 +3436,7 @@ public final class AIProto {
               nodesBuilder_ = null;
               nodes_ = other.nodes_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              nodesBuilder_ =
+              nodesBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getNodesFieldBuilder() : null;
             } else {
@@ -2939,22 +3471,22 @@ public final class AIProto {
       }
       private int bitField0_;
 
-      private java.util.List<AIProto.Path> paths_ =
+      private java.util.List<Path> paths_ =
         java.util.Collections.emptyList();
       private void ensurePathsIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          paths_ = new java.util.ArrayList<AIProto.Path>(paths_);
+          paths_ = new java.util.ArrayList<Path>(paths_);
           bitField0_ |= 0x00000001;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          AIProto.Path, AIProto.Path.Builder, AIProto.PathOrBuilder> pathsBuilder_;
+          Path, Path.Builder, PathOrBuilder> pathsBuilder_;
 
       /**
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
        */
-      public java.util.List<AIProto.Path> getPathsList() {
+      public java.util.List<Path> getPathsList() {
         if (pathsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(paths_);
         } else {
@@ -3077,7 +3609,7 @@ public final class AIProto {
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
        */
       public Builder addAllPaths(
-          Iterable<? extends AIProto.Path> values) {
+          Iterable<? extends Path> values) {
         if (pathsBuilder_ == null) {
           ensurePathsIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -3134,7 +3666,7 @@ public final class AIProto {
       /**
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
        */
-      public java.util.List<? extends AIProto.PathOrBuilder>
+      public java.util.List<? extends PathOrBuilder>
            getPathsOrBuilderList() {
         if (pathsBuilder_ != null) {
           return pathsBuilder_.getMessageOrBuilderList();
@@ -3160,16 +3692,16 @@ public final class AIProto {
       /**
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Path paths = 1;</code>
        */
-      public java.util.List<AIProto.Path.Builder>
+      public java.util.List<Path.Builder>
            getPathsBuilderList() {
         return getPathsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          AIProto.Path, AIProto.Path.Builder, AIProto.PathOrBuilder>
+          Path, Path.Builder, PathOrBuilder>
           getPathsFieldBuilder() {
         if (pathsBuilder_ == null) {
           pathsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              AIProto.Path, AIProto.Path.Builder, AIProto.PathOrBuilder>(
+              Path, Path.Builder, PathOrBuilder>(
                   paths_,
                   ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
@@ -3179,22 +3711,22 @@ public final class AIProto {
         return pathsBuilder_;
       }
 
-      private java.util.List<AIProto.Node> nodes_ =
+      private java.util.List<Node> nodes_ =
         java.util.Collections.emptyList();
       private void ensureNodesIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          nodes_ = new java.util.ArrayList<AIProto.Node>(nodes_);
+          nodes_ = new java.util.ArrayList<Node>(nodes_);
           bitField0_ |= 0x00000002;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          AIProto.Node, AIProto.Node.Builder, AIProto.NodeOrBuilder> nodesBuilder_;
+          Node, Node.Builder, NodeOrBuilder> nodesBuilder_;
 
       /**
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
        */
-      public java.util.List<AIProto.Node> getNodesList() {
+      public java.util.List<Node> getNodesList() {
         if (nodesBuilder_ == null) {
           return java.util.Collections.unmodifiableList(nodes_);
         } else {
@@ -3317,7 +3849,7 @@ public final class AIProto {
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
        */
       public Builder addAllNodes(
-          Iterable<? extends AIProto.Node> values) {
+          Iterable<? extends Node> values) {
         if (nodesBuilder_ == null) {
           ensureNodesIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -3374,7 +3906,7 @@ public final class AIProto {
       /**
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
        */
-      public java.util.List<? extends AIProto.NodeOrBuilder>
+      public java.util.List<? extends NodeOrBuilder>
            getNodesOrBuilderList() {
         if (nodesBuilder_ != null) {
           return nodesBuilder_.getMessageOrBuilderList();
@@ -3400,16 +3932,16 @@ public final class AIProto {
       /**
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Node nodes = 2;</code>
        */
-      public java.util.List<AIProto.Node.Builder>
+      public java.util.List<Node.Builder>
            getNodesBuilderList() {
         return getNodesFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          AIProto.Node, AIProto.Node.Builder, AIProto.NodeOrBuilder>
+          Node, Node.Builder, NodeOrBuilder>
           getNodesFieldBuilder() {
         if (nodesBuilder_ == null) {
           nodesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              AIProto.Node, AIProto.Node.Builder, AIProto.NodeOrBuilder>(
+              Node, Node.Builder, NodeOrBuilder>(
                   nodes_,
                   ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
@@ -3887,7 +4419,7 @@ public final class AIProto {
        * <code>double policeIncomeEachTurn = 1;</code>
        */
       public Builder setPoliceIncomeEachTurn(double value) {
-
+        
         policeIncomeEachTurn_ = value;
         onChanged();
         return this;
@@ -3896,7 +4428,7 @@ public final class AIProto {
        * <code>double policeIncomeEachTurn = 1;</code>
        */
       public Builder clearPoliceIncomeEachTurn() {
-
+        
         policeIncomeEachTurn_ = 0D;
         onChanged();
         return this;
@@ -3913,7 +4445,7 @@ public final class AIProto {
        * <code>double thievesIncomeEachTurn = 2;</code>
        */
       public Builder setThievesIncomeEachTurn(double value) {
-
+        
         thievesIncomeEachTurn_ = value;
         onChanged();
         return this;
@@ -3922,7 +4454,7 @@ public final class AIProto {
        * <code>double thievesIncomeEachTurn = 2;</code>
        */
       public Builder clearThievesIncomeEachTurn() {
-
+        
         thievesIncomeEachTurn_ = 0D;
         onChanged();
         return this;
@@ -3981,9 +4513,9 @@ public final class AIProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 maxTurn = 1;</code>
+     * <code>int32 maxTurns = 1;</code>
      */
-    int getMaxTurn();
+    int getMaxTurns();
 
     /**
      * <code>repeated int32 visibleTurns = 2;</code>
@@ -4010,7 +4542,7 @@ public final class AIProto {
       super(builder);
     }
     private TurnSettings() {
-      maxTurn_ = 0;
+      maxTurns_ = 0;
       visibleTurns_ = java.util.Collections.emptyList();
     }
 
@@ -4041,7 +4573,7 @@ public final class AIProto {
             }
             case 8: {
 
-              maxTurn_ = input.readInt32();
+              maxTurns_ = input.readInt32();
               break;
             }
             case 16: {
@@ -4092,13 +4624,13 @@ public final class AIProto {
     }
 
     private int bitField0_;
-    public static final int MAXTURN_FIELD_NUMBER = 1;
-    private int maxTurn_;
+    public static final int MAXTURNS_FIELD_NUMBER = 1;
+    private int maxTurns_;
     /**
-     * <code>int32 maxTurn = 1;</code>
+     * <code>int32 maxTurns = 1;</code>
      */
-    public int getMaxTurn() {
-      return maxTurn_;
+    public int getMaxTurns() {
+      return maxTurns_;
     }
 
     public static final int VISIBLETURNS_FIELD_NUMBER = 2;
@@ -4137,8 +4669,8 @@ public final class AIProto {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (maxTurn_ != 0) {
-        output.writeInt32(1, maxTurn_);
+      if (maxTurns_ != 0) {
+        output.writeInt32(1, maxTurns_);
       }
       if (getVisibleTurnsList().size() > 0) {
         output.writeUInt32NoTag(18);
@@ -4154,9 +4686,9 @@ public final class AIProto {
       if (size != -1) return size;
 
       size = 0;
-      if (maxTurn_ != 0) {
+      if (maxTurns_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, maxTurn_);
+          .computeInt32Size(1, maxTurns_);
       }
       {
         int dataSize = 0;
@@ -4188,8 +4720,8 @@ public final class AIProto {
       AIProto.TurnSettings other = (AIProto.TurnSettings) obj;
 
       boolean result = true;
-      result = result && (getMaxTurn()
-          == other.getMaxTurn());
+      result = result && (getMaxTurns()
+          == other.getMaxTurns());
       result = result && getVisibleTurnsList()
           .equals(other.getVisibleTurnsList());
       return result;
@@ -4202,8 +4734,8 @@ public final class AIProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + MAXTURN_FIELD_NUMBER;
-      hash = (53 * hash) + getMaxTurn();
+      hash = (37 * hash) + MAXTURNS_FIELD_NUMBER;
+      hash = (53 * hash) + getMaxTurns();
       if (getVisibleTurnsCount() > 0) {
         hash = (37 * hash) + VISIBLETURNS_FIELD_NUMBER;
         hash = (53 * hash) + getVisibleTurnsList().hashCode();
@@ -4337,7 +4869,7 @@ public final class AIProto {
       }
       public Builder clear() {
         super.clear();
-        maxTurn_ = 0;
+        maxTurns_ = 0;
 
         visibleTurns_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -4365,7 +4897,7 @@ public final class AIProto {
         AIProto.TurnSettings result = new AIProto.TurnSettings(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        result.maxTurn_ = maxTurn_;
+        result.maxTurns_ = maxTurns_;
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           visibleTurns_ = java.util.Collections.unmodifiableList(visibleTurns_);
           bitField0_ = (bitField0_ & ~0x00000002);
@@ -4413,8 +4945,8 @@ public final class AIProto {
 
       public Builder mergeFrom(AIProto.TurnSettings other) {
         if (other == AIProto.TurnSettings.getDefaultInstance()) return this;
-        if (other.getMaxTurn() != 0) {
-          setMaxTurn(other.getMaxTurn());
+        if (other.getMaxTurns() != 0) {
+          setMaxTurns(other.getMaxTurns());
         }
         if (!other.visibleTurns_.isEmpty()) {
           if (visibleTurns_.isEmpty()) {
@@ -4453,28 +4985,28 @@ public final class AIProto {
       }
       private int bitField0_;
 
-      private int maxTurn_ ;
+      private int maxTurns_ ;
       /**
-       * <code>int32 maxTurn = 1;</code>
+       * <code>int32 maxTurns = 1;</code>
        */
-      public int getMaxTurn() {
-        return maxTurn_;
+      public int getMaxTurns() {
+        return maxTurns_;
       }
       /**
-       * <code>int32 maxTurn = 1;</code>
+       * <code>int32 maxTurns = 1;</code>
        */
-      public Builder setMaxTurn(int value) {
-
-        maxTurn_ = value;
+      public Builder setMaxTurns(int value) {
+        
+        maxTurns_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 maxTurn = 1;</code>
+       * <code>int32 maxTurns = 1;</code>
        */
-      public Builder clearMaxTurn() {
-
-        maxTurn_ = 0;
+      public Builder clearMaxTurns() {
+        
+        maxTurns_ = 0;
         onChanged();
         return this;
       }
@@ -4593,6 +5125,512 @@ public final class AIProto {
 
   }
 
+  public interface ChatSettingsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ir.sharif.aic.hideandseek.api.grpc.ChatSettings)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 chatBoxMaxSize = 1;</code>
+     */
+    int getChatBoxMaxSize();
+
+    /**
+     * <code>double chatCostPerCharacter = 2;</code>
+     */
+    double getChatCostPerCharacter();
+  }
+  /**
+   * Protobuf type {@code ir.sharif.aic.hideandseek.api.grpc.ChatSettings}
+   */
+  public  static final class ChatSettings extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ir.sharif.aic.hideandseek.api.grpc.ChatSettings)
+      ChatSettingsOrBuilder {
+    // Use ChatSettings.newBuilder() to construct.
+    private ChatSettings(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ChatSettings() {
+      chatBoxMaxSize_ = 0;
+      chatCostPerCharacter_ = 0D;
+    }
+
+    @Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private ChatSettings(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              chatBoxMaxSize_ = input.readInt32();
+              break;
+            }
+            case 17: {
+
+              chatCostPerCharacter_ = input.readDouble();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_descriptor;
+    }
+
+    protected FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              AIProto.ChatSettings.class, AIProto.ChatSettings.Builder.class);
+    }
+
+    public static final int CHATBOXMAXSIZE_FIELD_NUMBER = 1;
+    private int chatBoxMaxSize_;
+    /**
+     * <code>int32 chatBoxMaxSize = 1;</code>
+     */
+    public int getChatBoxMaxSize() {
+      return chatBoxMaxSize_;
+    }
+
+    public static final int CHATCOSTPERCHARACTER_FIELD_NUMBER = 2;
+    private double chatCostPerCharacter_;
+    /**
+     * <code>double chatCostPerCharacter = 2;</code>
+     */
+    public double getChatCostPerCharacter() {
+      return chatCostPerCharacter_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (chatBoxMaxSize_ != 0) {
+        output.writeInt32(1, chatBoxMaxSize_);
+      }
+      if (chatCostPerCharacter_ != 0D) {
+        output.writeDouble(2, chatCostPerCharacter_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (chatBoxMaxSize_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, chatBoxMaxSize_);
+      }
+      if (chatCostPerCharacter_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(2, chatCostPerCharacter_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @Override
+    public boolean equals(final Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof AIProto.ChatSettings)) {
+        return super.equals(obj);
+      }
+      AIProto.ChatSettings other = (AIProto.ChatSettings) obj;
+
+      boolean result = true;
+      result = result && (getChatBoxMaxSize()
+          == other.getChatBoxMaxSize());
+      result = result && (
+          Double.doubleToLongBits(getChatCostPerCharacter())
+          == Double.doubleToLongBits(
+              other.getChatCostPerCharacter()));
+      return result;
+    }
+
+    @Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + CHATBOXMAXSIZE_FIELD_NUMBER;
+      hash = (53 * hash) + getChatBoxMaxSize();
+      hash = (37 * hash) + CHATCOSTPERCHARACTER_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          Double.doubleToLongBits(getChatCostPerCharacter()));
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static AIProto.ChatSettings parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static AIProto.ChatSettings parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static AIProto.ChatSettings parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static AIProto.ChatSettings parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static AIProto.ChatSettings parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static AIProto.ChatSettings parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static AIProto.ChatSettings parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static AIProto.ChatSettings parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static AIProto.ChatSettings parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static AIProto.ChatSettings parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static AIProto.ChatSettings parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static AIProto.ChatSettings parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(AIProto.ChatSettings prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @Override
+    protected Builder newBuilderForType(
+        BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ir.sharif.aic.hideandseek.api.grpc.ChatSettings}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ir.sharif.aic.hideandseek.api.grpc.ChatSettings)
+        AIProto.ChatSettingsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_descriptor;
+      }
+
+      protected FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                AIProto.ChatSettings.class, AIProto.ChatSettings.Builder.class);
+      }
+
+      // Construct using ir.sharif.aic.hideandseek.api.grpc.AIProto.ChatSettings.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        chatBoxMaxSize_ = 0;
+
+        chatCostPerCharacter_ = 0D;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_descriptor;
+      }
+
+      public AIProto.ChatSettings getDefaultInstanceForType() {
+        return AIProto.ChatSettings.getDefaultInstance();
+      }
+
+      public AIProto.ChatSettings build() {
+        AIProto.ChatSettings result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public AIProto.ChatSettings buildPartial() {
+        AIProto.ChatSettings result = new AIProto.ChatSettings(this);
+        result.chatBoxMaxSize_ = chatBoxMaxSize_;
+        result.chatCostPerCharacter_ = chatCostPerCharacter_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof AIProto.ChatSettings) {
+          return mergeFrom((AIProto.ChatSettings)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(AIProto.ChatSettings other) {
+        if (other == AIProto.ChatSettings.getDefaultInstance()) return this;
+        if (other.getChatBoxMaxSize() != 0) {
+          setChatBoxMaxSize(other.getChatBoxMaxSize());
+        }
+        if (other.getChatCostPerCharacter() != 0D) {
+          setChatCostPerCharacter(other.getChatCostPerCharacter());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        AIProto.ChatSettings parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (AIProto.ChatSettings) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int chatBoxMaxSize_ ;
+      /**
+       * <code>int32 chatBoxMaxSize = 1;</code>
+       */
+      public int getChatBoxMaxSize() {
+        return chatBoxMaxSize_;
+      }
+      /**
+       * <code>int32 chatBoxMaxSize = 1;</code>
+       */
+      public Builder setChatBoxMaxSize(int value) {
+        
+        chatBoxMaxSize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 chatBoxMaxSize = 1;</code>
+       */
+      public Builder clearChatBoxMaxSize() {
+        
+        chatBoxMaxSize_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private double chatCostPerCharacter_ ;
+      /**
+       * <code>double chatCostPerCharacter = 2;</code>
+       */
+      public double getChatCostPerCharacter() {
+        return chatCostPerCharacter_;
+      }
+      /**
+       * <code>double chatCostPerCharacter = 2;</code>
+       */
+      public Builder setChatCostPerCharacter(double value) {
+        
+        chatCostPerCharacter_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double chatCostPerCharacter = 2;</code>
+       */
+      public Builder clearChatCostPerCharacter() {
+        
+        chatCostPerCharacter_ = 0D;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ir.sharif.aic.hideandseek.api.grpc.ChatSettings)
+    }
+
+    // @@protoc_insertion_point(class_scope:ir.sharif.aic.hideandseek.api.grpc.ChatSettings)
+    private static final AIProto.ChatSettings DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new AIProto.ChatSettings();
+    }
+
+    public static AIProto.ChatSettings getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ChatSettings>
+        PARSER = new com.google.protobuf.AbstractParser<ChatSettings>() {
+      public ChatSettings parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new ChatSettings(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ChatSettings> parser() {
+      return PARSER;
+    }
+
+    @Override
+    public com.google.protobuf.Parser<ChatSettings> getParserForType() {
+      return PARSER;
+    }
+
+    public AIProto.ChatSettings getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface GameConfigOrBuilder extends
       // @@protoc_insertion_point(interface_extends:ir.sharif.aic.hideandseek.api.grpc.GameConfig)
       com.google.protobuf.MessageOrBuilder {
@@ -4635,6 +5673,19 @@ public final class AIProto {
      * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnSettings turnSettings = 3;</code>
      */
     AIProto.TurnSettingsOrBuilder getTurnSettingsOrBuilder();
+
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+     */
+    boolean hasChatSettings();
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+     */
+    AIProto.ChatSettings getChatSettings();
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+     */
+    AIProto.ChatSettingsOrBuilder getChatSettingsOrBuilder();
   }
   /**
    * Protobuf type {@code ir.sharif.aic.hideandseek.api.grpc.GameConfig}
@@ -4710,6 +5761,19 @@ public final class AIProto {
               if (subBuilder != null) {
                 subBuilder.mergeFrom(turnSettings_);
                 turnSettings_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 34: {
+              AIProto.ChatSettings.Builder subBuilder = null;
+              if (chatSettings_ != null) {
+                subBuilder = chatSettings_.toBuilder();
+              }
+              chatSettings_ = input.readMessage(AIProto.ChatSettings.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(chatSettings_);
+                chatSettings_ = subBuilder.buildPartial();
               }
 
               break;
@@ -4800,6 +5864,27 @@ public final class AIProto {
       return getTurnSettings();
     }
 
+    public static final int CHATSETTINGS_FIELD_NUMBER = 4;
+    private AIProto.ChatSettings chatSettings_;
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+     */
+    public boolean hasChatSettings() {
+      return chatSettings_ != null;
+    }
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+     */
+    public AIProto.ChatSettings getChatSettings() {
+      return chatSettings_ == null ? AIProto.ChatSettings.getDefaultInstance() : chatSettings_;
+    }
+    /**
+     * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+     */
+    public AIProto.ChatSettingsOrBuilder getChatSettingsOrBuilder() {
+      return getChatSettings();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -4821,6 +5906,9 @@ public final class AIProto {
       if (turnSettings_ != null) {
         output.writeMessage(3, getTurnSettings());
       }
+      if (chatSettings_ != null) {
+        output.writeMessage(4, getChatSettings());
+      }
     }
 
     public int getSerializedSize() {
@@ -4839,6 +5927,10 @@ public final class AIProto {
       if (turnSettings_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getTurnSettings());
+      }
+      if (chatSettings_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, getChatSettings());
       }
       memoizedSize = size;
       return size;
@@ -4871,6 +5963,11 @@ public final class AIProto {
         result = result && getTurnSettings()
             .equals(other.getTurnSettings());
       }
+      result = result && (hasChatSettings() == other.hasChatSettings());
+      if (hasChatSettings()) {
+        result = result && getChatSettings()
+            .equals(other.getChatSettings());
+      }
       return result;
     }
 
@@ -4892,6 +5989,10 @@ public final class AIProto {
       if (hasTurnSettings()) {
         hash = (37 * hash) + TURNSETTINGS_FIELD_NUMBER;
         hash = (53 * hash) + getTurnSettings().hashCode();
+      }
+      if (hasChatSettings()) {
+        hash = (37 * hash) + CHATSETTINGS_FIELD_NUMBER;
+        hash = (53 * hash) + getChatSettings().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -5040,6 +6141,12 @@ public final class AIProto {
           turnSettings_ = null;
           turnSettingsBuilder_ = null;
         }
+        if (chatSettingsBuilder_ == null) {
+          chatSettings_ = null;
+        } else {
+          chatSettings_ = null;
+          chatSettingsBuilder_ = null;
+        }
         return this;
       }
 
@@ -5076,6 +6183,11 @@ public final class AIProto {
           result.turnSettings_ = turnSettings_;
         } else {
           result.turnSettings_ = turnSettingsBuilder_.build();
+        }
+        if (chatSettingsBuilder_ == null) {
+          result.chatSettings_ = chatSettings_;
+        } else {
+          result.chatSettings_ = chatSettingsBuilder_.build();
         }
         onBuilt();
         return result;
@@ -5127,6 +6239,9 @@ public final class AIProto {
         if (other.hasTurnSettings()) {
           mergeTurnSettings(other.getTurnSettings());
         }
+        if (other.hasChatSettings()) {
+          mergeChatSettings(other.getChatSettings());
+        }
         onChanged();
         return this;
       }
@@ -5155,7 +6270,7 @@ public final class AIProto {
 
       private AIProto.Graph graph_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.Graph, AIProto.Graph.Builder, AIProto.GraphOrBuilder> graphBuilder_;
+          Graph, Graph.Builder, GraphOrBuilder> graphBuilder_;
       /**
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Graph graph = 1;</code>
        */
@@ -5238,7 +6353,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Graph graph = 1;</code>
        */
       public AIProto.Graph.Builder getGraphBuilder() {
-
+        
         onChanged();
         return getGraphFieldBuilder().getBuilder();
       }
@@ -5257,11 +6372,11 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Graph graph = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.Graph, AIProto.Graph.Builder, AIProto.GraphOrBuilder>
+          Graph, Graph.Builder, GraphOrBuilder>
           getGraphFieldBuilder() {
         if (graphBuilder_ == null) {
           graphBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              AIProto.Graph, AIProto.Graph.Builder, AIProto.GraphOrBuilder>(
+              Graph, Graph.Builder, GraphOrBuilder>(
                   getGraph(),
                   getParentForChildren(),
                   isClean());
@@ -5272,7 +6387,7 @@ public final class AIProto {
 
       private AIProto.IncomeSettings incomeSettings_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.IncomeSettings, AIProto.IncomeSettings.Builder, AIProto.IncomeSettingsOrBuilder> incomeSettingsBuilder_;
+          IncomeSettings, IncomeSettings.Builder, IncomeSettingsOrBuilder> incomeSettingsBuilder_;
       /**
        * <code>.ir.sharif.aic.hideandseek.api.grpc.IncomeSettings incomeSettings = 2;</code>
        */
@@ -5355,7 +6470,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.IncomeSettings incomeSettings = 2;</code>
        */
       public AIProto.IncomeSettings.Builder getIncomeSettingsBuilder() {
-
+        
         onChanged();
         return getIncomeSettingsFieldBuilder().getBuilder();
       }
@@ -5374,11 +6489,11 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.IncomeSettings incomeSettings = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.IncomeSettings, AIProto.IncomeSettings.Builder, AIProto.IncomeSettingsOrBuilder>
+          IncomeSettings, IncomeSettings.Builder, IncomeSettingsOrBuilder>
           getIncomeSettingsFieldBuilder() {
         if (incomeSettingsBuilder_ == null) {
           incomeSettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              AIProto.IncomeSettings, AIProto.IncomeSettings.Builder, AIProto.IncomeSettingsOrBuilder>(
+              IncomeSettings, IncomeSettings.Builder, IncomeSettingsOrBuilder>(
                   getIncomeSettings(),
                   getParentForChildren(),
                   isClean());
@@ -5389,7 +6504,7 @@ public final class AIProto {
 
       private AIProto.TurnSettings turnSettings_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.TurnSettings, AIProto.TurnSettings.Builder, AIProto.TurnSettingsOrBuilder> turnSettingsBuilder_;
+          TurnSettings, TurnSettings.Builder, TurnSettingsOrBuilder> turnSettingsBuilder_;
       /**
        * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnSettings turnSettings = 3;</code>
        */
@@ -5472,7 +6587,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnSettings turnSettings = 3;</code>
        */
       public AIProto.TurnSettings.Builder getTurnSettingsBuilder() {
-
+        
         onChanged();
         return getTurnSettingsFieldBuilder().getBuilder();
       }
@@ -5491,17 +6606,134 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnSettings turnSettings = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.TurnSettings, AIProto.TurnSettings.Builder, AIProto.TurnSettingsOrBuilder>
+          TurnSettings, TurnSettings.Builder, TurnSettingsOrBuilder>
           getTurnSettingsFieldBuilder() {
         if (turnSettingsBuilder_ == null) {
           turnSettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              AIProto.TurnSettings, AIProto.TurnSettings.Builder, AIProto.TurnSettingsOrBuilder>(
+              TurnSettings, TurnSettings.Builder, TurnSettingsOrBuilder>(
                   getTurnSettings(),
                   getParentForChildren(),
                   isClean());
           turnSettings_ = null;
         }
         return turnSettingsBuilder_;
+      }
+
+      private AIProto.ChatSettings chatSettings_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          ChatSettings, ChatSettings.Builder, ChatSettingsOrBuilder> chatSettingsBuilder_;
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+       */
+      public boolean hasChatSettings() {
+        return chatSettingsBuilder_ != null || chatSettings_ != null;
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+       */
+      public AIProto.ChatSettings getChatSettings() {
+        if (chatSettingsBuilder_ == null) {
+          return chatSettings_ == null ? AIProto.ChatSettings.getDefaultInstance() : chatSettings_;
+        } else {
+          return chatSettingsBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+       */
+      public Builder setChatSettings(AIProto.ChatSettings value) {
+        if (chatSettingsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          chatSettings_ = value;
+          onChanged();
+        } else {
+          chatSettingsBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+       */
+      public Builder setChatSettings(
+          AIProto.ChatSettings.Builder builderForValue) {
+        if (chatSettingsBuilder_ == null) {
+          chatSettings_ = builderForValue.build();
+          onChanged();
+        } else {
+          chatSettingsBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+       */
+      public Builder mergeChatSettings(AIProto.ChatSettings value) {
+        if (chatSettingsBuilder_ == null) {
+          if (chatSettings_ != null) {
+            chatSettings_ =
+              AIProto.ChatSettings.newBuilder(chatSettings_).mergeFrom(value).buildPartial();
+          } else {
+            chatSettings_ = value;
+          }
+          onChanged();
+        } else {
+          chatSettingsBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+       */
+      public Builder clearChatSettings() {
+        if (chatSettingsBuilder_ == null) {
+          chatSettings_ = null;
+          onChanged();
+        } else {
+          chatSettings_ = null;
+          chatSettingsBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+       */
+      public AIProto.ChatSettings.Builder getChatSettingsBuilder() {
+        
+        onChanged();
+        return getChatSettingsFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+       */
+      public AIProto.ChatSettingsOrBuilder getChatSettingsOrBuilder() {
+        if (chatSettingsBuilder_ != null) {
+          return chatSettingsBuilder_.getMessageOrBuilder();
+        } else {
+          return chatSettings_ == null ?
+              AIProto.ChatSettings.getDefaultInstance() : chatSettings_;
+        }
+      }
+      /**
+       * <code>.ir.sharif.aic.hideandseek.api.grpc.ChatSettings chatSettings = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          ChatSettings, ChatSettings.Builder, ChatSettingsOrBuilder>
+          getChatSettingsFieldBuilder() {
+        if (chatSettingsBuilder_ == null) {
+          chatSettingsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              ChatSettings, ChatSettings.Builder, ChatSettingsOrBuilder>(
+                  getChatSettings(),
+                  getParentForChildren(),
+                  isClean());
+          chatSettings_ = null;
+        }
+        return chatSettingsBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -5656,7 +6888,7 @@ public final class AIProto {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         token_ = s;
@@ -5670,7 +6902,7 @@ public final class AIProto {
         getTokenBytes() {
       Object ref = token_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         token_ = b;
@@ -6009,7 +7241,7 @@ public final class AIProto {
           getTokenBytes() {
         Object ref = token_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
           token_ = b;
@@ -6026,7 +7258,7 @@ public final class AIProto {
         if (value == null) {
     throw new NullPointerException();
   }
-
+  
         token_ = value;
         onChanged();
         return this;
@@ -6035,7 +7267,7 @@ public final class AIProto {
        * <code>string token = 1;</code>
        */
       public Builder clearToken() {
-
+        
         token_ = getDefaultInstance().getToken();
         onChanged();
         return this;
@@ -6049,7 +7281,7 @@ public final class AIProto {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+        
         token_ = value;
         onChanged();
         return this;
@@ -6066,7 +7298,7 @@ public final class AIProto {
        * <code>int32 startNodeId = 2;</code>
        */
       public Builder setStartNodeId(int value) {
-
+        
         startNodeId_ = value;
         onChanged();
         return this;
@@ -6075,7 +7307,7 @@ public final class AIProto {
        * <code>int32 startNodeId = 2;</code>
        */
       public Builder clearStartNodeId() {
-
+        
         startNodeId_ = 0;
         onChanged();
         return this;
@@ -6233,7 +7465,7 @@ public final class AIProto {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         token_ = s;
@@ -6247,7 +7479,7 @@ public final class AIProto {
         getTokenBytes() {
       Object ref = token_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         token_ = b;
@@ -6586,7 +7818,7 @@ public final class AIProto {
           getTokenBytes() {
         Object ref = token_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
           token_ = b;
@@ -6603,7 +7835,7 @@ public final class AIProto {
         if (value == null) {
     throw new NullPointerException();
   }
-
+  
         token_ = value;
         onChanged();
         return this;
@@ -6612,7 +7844,7 @@ public final class AIProto {
        * <code>string token = 1;</code>
        */
       public Builder clearToken() {
-
+        
         token_ = getDefaultInstance().getToken();
         onChanged();
         return this;
@@ -6626,7 +7858,7 @@ public final class AIProto {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+        
         token_ = value;
         onChanged();
         return this;
@@ -6643,7 +7875,7 @@ public final class AIProto {
        * <code>int32 toNodeId = 2;</code>
        */
       public Builder setToNodeId(int value) {
-
+        
         toNodeId_ = value;
         onChanged();
         return this;
@@ -6652,7 +7884,7 @@ public final class AIProto {
        * <code>int32 toNodeId = 2;</code>
        */
       public Builder clearToNodeId() {
-
+        
         toNodeId_ = 0;
         onChanged();
         return this;
@@ -6799,7 +8031,7 @@ public final class AIProto {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         token_ = s;
@@ -6813,7 +8045,7 @@ public final class AIProto {
         getTokenBytes() {
       Object ref = token_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         token_ = b;
@@ -7126,7 +8358,7 @@ public final class AIProto {
           getTokenBytes() {
         Object ref = token_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
           token_ = b;
@@ -7143,7 +8375,7 @@ public final class AIProto {
         if (value == null) {
     throw new NullPointerException();
   }
-
+  
         token_ = value;
         onChanged();
         return this;
@@ -7152,7 +8384,7 @@ public final class AIProto {
        * <code>string token = 1;</code>
        */
       public Builder clearToken() {
-
+        
         token_ = getDefaultInstance().getToken();
         onChanged();
         return this;
@@ -7166,7 +8398,7 @@ public final class AIProto {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+        
         token_ = value;
         onChanged();
         return this;
@@ -7215,538 +8447,6 @@ public final class AIProto {
     }
 
     public AIProto.WatchCommand getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface TurnOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:ir.sharif.aic.hideandseek.api.grpc.Turn)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 turnNumber = 1;</code>
-     */
-    int getTurnNumber();
-
-    /**
-     * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
-     */
-    int getTurnTypeValue();
-    /**
-     * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
-     */
-    AIProto.TurnType getTurnType();
-  }
-  /**
-   * Protobuf type {@code ir.sharif.aic.hideandseek.api.grpc.Turn}
-   */
-  public  static final class Turn extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:ir.sharif.aic.hideandseek.api.grpc.Turn)
-      TurnOrBuilder {
-    // Use Turn.newBuilder() to construct.
-    private Turn(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private Turn() {
-      turnNumber_ = 0;
-      turnType_ = 0;
-    }
-
-    @Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
-    }
-    private Turn(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              turnNumber_ = input.readInt32();
-              break;
-            }
-            case 16: {
-              int rawValue = input.readEnum();
-
-              turnType_ = rawValue;
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor;
-    }
-
-    protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              AIProto.Turn.class, AIProto.Turn.Builder.class);
-    }
-
-    public static final int TURNNUMBER_FIELD_NUMBER = 1;
-    private int turnNumber_;
-    /**
-     * <code>int32 turnNumber = 1;</code>
-     */
-    public int getTurnNumber() {
-      return turnNumber_;
-    }
-
-    public static final int TURNTYPE_FIELD_NUMBER = 2;
-    private int turnType_;
-    /**
-     * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
-     */
-    public int getTurnTypeValue() {
-      return turnType_;
-    }
-    /**
-     * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
-     */
-    public AIProto.TurnType getTurnType() {
-      AIProto.TurnType result = AIProto.TurnType.valueOf(turnType_);
-      return result == null ? AIProto.TurnType.UNRECOGNIZED : result;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (turnNumber_ != 0) {
-        output.writeInt32(1, turnNumber_);
-      }
-      if (turnType_ != AIProto.TurnType.THIEF_TURN.getNumber()) {
-        output.writeEnum(2, turnType_);
-      }
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (turnNumber_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, turnNumber_);
-      }
-      if (turnType_ != AIProto.TurnType.THIEF_TURN.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, turnType_);
-      }
-      memoizedSize = size;
-      return size;
-    }
-
-    private static final long serialVersionUID = 0L;
-    @Override
-    public boolean equals(final Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof AIProto.Turn)) {
-        return super.equals(obj);
-      }
-      AIProto.Turn other = (AIProto.Turn) obj;
-
-      boolean result = true;
-      result = result && (getTurnNumber()
-          == other.getTurnNumber());
-      result = result && turnType_ == other.turnType_;
-      return result;
-    }
-
-    @Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TURNNUMBER_FIELD_NUMBER;
-      hash = (53 * hash) + getTurnNumber();
-      hash = (37 * hash) + TURNTYPE_FIELD_NUMBER;
-      hash = (53 * hash) + turnType_;
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static AIProto.Turn parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static AIProto.Turn parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static AIProto.Turn parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static AIProto.Turn parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static AIProto.Turn parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static AIProto.Turn parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static AIProto.Turn parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static AIProto.Turn parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static AIProto.Turn parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static AIProto.Turn parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static AIProto.Turn parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static AIProto.Turn parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(AIProto.Turn prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @Override
-    protected Builder newBuilderForType(
-        BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code ir.sharif.aic.hideandseek.api.grpc.Turn}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:ir.sharif.aic.hideandseek.api.grpc.Turn)
-        AIProto.TurnOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor;
-      }
-
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                AIProto.Turn.class, AIProto.Turn.Builder.class);
-      }
-
-      // Construct using ir.sharif.aic.hideandseek.api.grpc.AIProto.Turn.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        turnNumber_ = 0;
-
-        turnType_ = 0;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return AIProto.internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor;
-      }
-
-      public AIProto.Turn getDefaultInstanceForType() {
-        return AIProto.Turn.getDefaultInstance();
-      }
-
-      public AIProto.Turn build() {
-        AIProto.Turn result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public AIProto.Turn buildPartial() {
-        AIProto.Turn result = new AIProto.Turn(this);
-        result.turnNumber_ = turnNumber_;
-        result.turnType_ = turnType_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof AIProto.Turn) {
-          return mergeFrom((AIProto.Turn)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(AIProto.Turn other) {
-        if (other == AIProto.Turn.getDefaultInstance()) return this;
-        if (other.getTurnNumber() != 0) {
-          setTurnNumber(other.getTurnNumber());
-        }
-        if (other.turnType_ != 0) {
-          setTurnTypeValue(other.getTurnTypeValue());
-        }
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        AIProto.Turn parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (AIProto.Turn) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int turnNumber_ ;
-      /**
-       * <code>int32 turnNumber = 1;</code>
-       */
-      public int getTurnNumber() {
-        return turnNumber_;
-      }
-      /**
-       * <code>int32 turnNumber = 1;</code>
-       */
-      public Builder setTurnNumber(int value) {
-
-        turnNumber_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 turnNumber = 1;</code>
-       */
-      public Builder clearTurnNumber() {
-
-        turnNumber_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int turnType_ = 0;
-      /**
-       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
-       */
-      public int getTurnTypeValue() {
-        return turnType_;
-      }
-      /**
-       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
-       */
-      public Builder setTurnTypeValue(int value) {
-        turnType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
-       */
-      public AIProto.TurnType getTurnType() {
-        AIProto.TurnType result = AIProto.TurnType.valueOf(turnType_);
-        return result == null ? AIProto.TurnType.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
-       */
-      public Builder setTurnType(AIProto.TurnType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-
-        turnType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.ir.sharif.aic.hideandseek.api.grpc.TurnType turnType = 2;</code>
-       */
-      public Builder clearTurnType() {
-
-        turnType_ = 0;
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:ir.sharif.aic.hideandseek.api.grpc.Turn)
-    }
-
-    // @@protoc_insertion_point(class_scope:ir.sharif.aic.hideandseek.api.grpc.Turn)
-    private static final AIProto.Turn DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new AIProto.Turn();
-    }
-
-    public static AIProto.Turn getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<Turn>
-        PARSER = new com.google.protobuf.AbstractParser<Turn>() {
-      public Turn parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Turn(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<Turn> parser() {
-      return PARSER;
-    }
-
-    @Override
-    public com.google.protobuf.Parser<Turn> getParserForType() {
-      return PARSER;
-    }
-
-    public AIProto.Turn getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -7821,7 +8521,7 @@ public final class AIProto {
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
      */
-    java.util.List<AIProto.Agent>
+    java.util.List<Agent>
         getVisibleAgentsList();
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
@@ -7834,12 +8534,36 @@ public final class AIProto {
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
      */
-    java.util.List<? extends AIProto.AgentOrBuilder>
+    java.util.List<? extends AgentOrBuilder>
         getVisibleAgentsOrBuilderList();
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
      */
     AIProto.AgentOrBuilder getVisibleAgentsOrBuilder(
+        int index);
+
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    java.util.List<Chat>
+        getChatBoxList();
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    AIProto.Chat getChatBox(int index);
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    int getChatBoxCount();
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    java.util.List<? extends ChatOrBuilder>
+        getChatBoxOrBuilderList();
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    AIProto.ChatOrBuilder getChatBoxOrBuilder(
         int index);
   }
   /**
@@ -7858,6 +8582,7 @@ public final class AIProto {
       result_ = 0;
       balance_ = 0D;
       visibleAgents_ = java.util.Collections.emptyList();
+      chatBox_ = java.util.Collections.emptyList();
     }
 
     @Override
@@ -7943,11 +8668,20 @@ public final class AIProto {
             }
             case 58: {
               if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
-                visibleAgents_ = new java.util.ArrayList<AIProto.Agent>();
+                visibleAgents_ = new java.util.ArrayList<Agent>();
                 mutable_bitField0_ |= 0x00000040;
               }
               visibleAgents_.add(
                   input.readMessage(AIProto.Agent.parser(), extensionRegistry));
+              break;
+            }
+            case 66: {
+              if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+                chatBox_ = new java.util.ArrayList<Chat>();
+                mutable_bitField0_ |= 0x00000080;
+              }
+              chatBox_.add(
+                  input.readMessage(AIProto.Chat.parser(), extensionRegistry));
               break;
             }
           }
@@ -7960,6 +8694,9 @@ public final class AIProto {
       } finally {
         if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
           visibleAgents_ = java.util.Collections.unmodifiableList(visibleAgents_);
+        }
+        if (((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+          chatBox_ = java.util.Collections.unmodifiableList(chatBox_);
         }
         makeExtensionsImmutable();
       }
@@ -8082,17 +8819,17 @@ public final class AIProto {
     }
 
     public static final int VISIBLE_AGENTS_FIELD_NUMBER = 7;
-    private java.util.List<AIProto.Agent> visibleAgents_;
+    private java.util.List<Agent> visibleAgents_;
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
      */
-    public java.util.List<AIProto.Agent> getVisibleAgentsList() {
+    public java.util.List<Agent> getVisibleAgentsList() {
       return visibleAgents_;
     }
     /**
      * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
      */
-    public java.util.List<? extends AIProto.AgentOrBuilder>
+    public java.util.List<? extends AgentOrBuilder>
         getVisibleAgentsOrBuilderList() {
       return visibleAgents_;
     }
@@ -8114,6 +8851,41 @@ public final class AIProto {
     public AIProto.AgentOrBuilder getVisibleAgentsOrBuilder(
         int index) {
       return visibleAgents_.get(index);
+    }
+
+    public static final int CHATBOX_FIELD_NUMBER = 8;
+    private java.util.List<Chat> chatBox_;
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    public java.util.List<Chat> getChatBoxList() {
+      return chatBox_;
+    }
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    public java.util.List<? extends ChatOrBuilder>
+        getChatBoxOrBuilderList() {
+      return chatBox_;
+    }
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    public int getChatBoxCount() {
+      return chatBox_.size();
+    }
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    public AIProto.Chat getChatBox(int index) {
+      return chatBox_.get(index);
+    }
+    /**
+     * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+     */
+    public AIProto.ChatOrBuilder getChatBoxOrBuilder(
+        int index) {
+      return chatBox_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -8149,6 +8921,9 @@ public final class AIProto {
       for (int i = 0; i < visibleAgents_.size(); i++) {
         output.writeMessage(7, visibleAgents_.get(i));
       }
+      for (int i = 0; i < chatBox_.size(); i++) {
+        output.writeMessage(8, chatBox_.get(i));
+      }
     }
 
     public int getSerializedSize() {
@@ -8183,6 +8958,10 @@ public final class AIProto {
       for (int i = 0; i < visibleAgents_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(7, visibleAgents_.get(i));
+      }
+      for (int i = 0; i < chatBox_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(8, chatBox_.get(i));
       }
       memoizedSize = size;
       return size;
@@ -8223,6 +9002,8 @@ public final class AIProto {
               other.getBalance()));
       result = result && getVisibleAgentsList()
           .equals(other.getVisibleAgentsList());
+      result = result && getChatBoxList()
+          .equals(other.getChatBoxList());
       return result;
     }
 
@@ -8255,6 +9036,10 @@ public final class AIProto {
       if (getVisibleAgentsCount() > 0) {
         hash = (37 * hash) + VISIBLE_AGENTS_FIELD_NUMBER;
         hash = (53 * hash) + getVisibleAgentsList().hashCode();
+      }
+      if (getChatBoxCount() > 0) {
+        hash = (37 * hash) + CHATBOX_FIELD_NUMBER;
+        hash = (53 * hash) + getChatBoxList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -8382,6 +9167,7 @@ public final class AIProto {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
           getVisibleAgentsFieldBuilder();
+          getChatBoxFieldBuilder();
         }
       }
       public Builder clear() {
@@ -8415,6 +9201,12 @@ public final class AIProto {
           bitField0_ = (bitField0_ & ~0x00000040);
         } else {
           visibleAgentsBuilder_.clear();
+        }
+        if (chatBoxBuilder_ == null) {
+          chatBox_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000080);
+        } else {
+          chatBoxBuilder_.clear();
         }
         return this;
       }
@@ -8466,6 +9258,15 @@ public final class AIProto {
           result.visibleAgents_ = visibleAgents_;
         } else {
           result.visibleAgents_ = visibleAgentsBuilder_.build();
+        }
+        if (chatBoxBuilder_ == null) {
+          if (((bitField0_ & 0x00000080) == 0x00000080)) {
+            chatBox_ = java.util.Collections.unmodifiableList(chatBox_);
+            bitField0_ = (bitField0_ & ~0x00000080);
+          }
+          result.chatBox_ = chatBox_;
+        } else {
+          result.chatBox_ = chatBoxBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -8545,11 +9346,37 @@ public final class AIProto {
               visibleAgentsBuilder_ = null;
               visibleAgents_ = other.visibleAgents_;
               bitField0_ = (bitField0_ & ~0x00000040);
-              visibleAgentsBuilder_ =
+              visibleAgentsBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getVisibleAgentsFieldBuilder() : null;
             } else {
               visibleAgentsBuilder_.addAllMessages(other.visibleAgents_);
+            }
+          }
+        }
+        if (chatBoxBuilder_ == null) {
+          if (!other.chatBox_.isEmpty()) {
+            if (chatBox_.isEmpty()) {
+              chatBox_ = other.chatBox_;
+              bitField0_ = (bitField0_ & ~0x00000080);
+            } else {
+              ensureChatBoxIsMutable();
+              chatBox_.addAll(other.chatBox_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.chatBox_.isEmpty()) {
+            if (chatBoxBuilder_.isEmpty()) {
+              chatBoxBuilder_.dispose();
+              chatBoxBuilder_ = null;
+              chatBox_ = other.chatBox_;
+              bitField0_ = (bitField0_ & ~0x00000080);
+              chatBoxBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getChatBoxFieldBuilder() : null;
+            } else {
+              chatBoxBuilder_.addAllMessages(other.chatBox_);
             }
           }
         }
@@ -8609,7 +9436,7 @@ public final class AIProto {
         if (value == null) {
           throw new NullPointerException();
         }
-
+        
         status_ = value.getNumber();
         onChanged();
         return this;
@@ -8618,7 +9445,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.GameStatus status = 1;</code>
        */
       public Builder clearStatus() {
-
+        
         status_ = 0;
         onChanged();
         return this;
@@ -8653,7 +9480,7 @@ public final class AIProto {
         if (value == null) {
           throw new NullPointerException();
         }
-
+        
         result_ = value.getNumber();
         onChanged();
         return this;
@@ -8662,7 +9489,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.GameResult result = 2;</code>
        */
       public Builder clearResult() {
-
+        
         result_ = 0;
         onChanged();
         return this;
@@ -8670,7 +9497,7 @@ public final class AIProto {
 
       private AIProto.Turn turn_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.Turn, AIProto.Turn.Builder, AIProto.TurnOrBuilder> turnBuilder_;
+          Turn, Turn.Builder, TurnOrBuilder> turnBuilder_;
       /**
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Turn turn = 3;</code>
        */
@@ -8753,7 +9580,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Turn turn = 3;</code>
        */
       public AIProto.Turn.Builder getTurnBuilder() {
-
+        
         onChanged();
         return getTurnFieldBuilder().getBuilder();
       }
@@ -8772,11 +9599,11 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Turn turn = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.Turn, AIProto.Turn.Builder, AIProto.TurnOrBuilder>
+          Turn, Turn.Builder, TurnOrBuilder>
           getTurnFieldBuilder() {
         if (turnBuilder_ == null) {
           turnBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              AIProto.Turn, AIProto.Turn.Builder, AIProto.TurnOrBuilder>(
+              Turn, Turn.Builder, TurnOrBuilder>(
                   getTurn(),
                   getParentForChildren(),
                   isClean());
@@ -8787,7 +9614,7 @@ public final class AIProto {
 
       private AIProto.GameConfig config_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.GameConfig, AIProto.GameConfig.Builder, AIProto.GameConfigOrBuilder> configBuilder_;
+          GameConfig, GameConfig.Builder, GameConfigOrBuilder> configBuilder_;
       /**
        * <code>.ir.sharif.aic.hideandseek.api.grpc.GameConfig config = 4;</code>
        */
@@ -8870,7 +9697,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.GameConfig config = 4;</code>
        */
       public AIProto.GameConfig.Builder getConfigBuilder() {
-
+        
         onChanged();
         return getConfigFieldBuilder().getBuilder();
       }
@@ -8889,11 +9716,11 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.GameConfig config = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.GameConfig, AIProto.GameConfig.Builder, AIProto.GameConfigOrBuilder>
+          GameConfig, GameConfig.Builder, GameConfigOrBuilder>
           getConfigFieldBuilder() {
         if (configBuilder_ == null) {
           configBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              AIProto.GameConfig, AIProto.GameConfig.Builder, AIProto.GameConfigOrBuilder>(
+              GameConfig, GameConfig.Builder, GameConfigOrBuilder>(
                   getConfig(),
                   getParentForChildren(),
                   isClean());
@@ -8904,7 +9731,7 @@ public final class AIProto {
 
       private AIProto.Agent viewer_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.Agent, AIProto.Agent.Builder, AIProto.AgentOrBuilder> viewerBuilder_;
+          Agent, Agent.Builder, AgentOrBuilder> viewerBuilder_;
       /**
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Agent viewer = 5;</code>
        */
@@ -8987,7 +9814,7 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Agent viewer = 5;</code>
        */
       public AIProto.Agent.Builder getViewerBuilder() {
-
+        
         onChanged();
         return getViewerFieldBuilder().getBuilder();
       }
@@ -9006,11 +9833,11 @@ public final class AIProto {
        * <code>.ir.sharif.aic.hideandseek.api.grpc.Agent viewer = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          AIProto.Agent, AIProto.Agent.Builder, AIProto.AgentOrBuilder>
+          Agent, Agent.Builder, AgentOrBuilder>
           getViewerFieldBuilder() {
         if (viewerBuilder_ == null) {
           viewerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              AIProto.Agent, AIProto.Agent.Builder, AIProto.AgentOrBuilder>(
+              Agent, Agent.Builder, AgentOrBuilder>(
                   getViewer(),
                   getParentForChildren(),
                   isClean());
@@ -9030,7 +9857,7 @@ public final class AIProto {
        * <code>double balance = 6;</code>
        */
       public Builder setBalance(double value) {
-
+        
         balance_ = value;
         onChanged();
         return this;
@@ -9039,28 +9866,28 @@ public final class AIProto {
        * <code>double balance = 6;</code>
        */
       public Builder clearBalance() {
-
+        
         balance_ = 0D;
         onChanged();
         return this;
       }
 
-      private java.util.List<AIProto.Agent> visibleAgents_ =
+      private java.util.List<Agent> visibleAgents_ =
         java.util.Collections.emptyList();
       private void ensureVisibleAgentsIsMutable() {
         if (!((bitField0_ & 0x00000040) == 0x00000040)) {
-          visibleAgents_ = new java.util.ArrayList<AIProto.Agent>(visibleAgents_);
+          visibleAgents_ = new java.util.ArrayList<Agent>(visibleAgents_);
           bitField0_ |= 0x00000040;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          AIProto.Agent, AIProto.Agent.Builder, AIProto.AgentOrBuilder> visibleAgentsBuilder_;
+          Agent, Agent.Builder, AgentOrBuilder> visibleAgentsBuilder_;
 
       /**
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
        */
-      public java.util.List<AIProto.Agent> getVisibleAgentsList() {
+      public java.util.List<Agent> getVisibleAgentsList() {
         if (visibleAgentsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(visibleAgents_);
         } else {
@@ -9183,7 +10010,7 @@ public final class AIProto {
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
        */
       public Builder addAllVisibleAgents(
-          Iterable<? extends AIProto.Agent> values) {
+          Iterable<? extends Agent> values) {
         if (visibleAgentsBuilder_ == null) {
           ensureVisibleAgentsIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -9240,7 +10067,7 @@ public final class AIProto {
       /**
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
        */
-      public java.util.List<? extends AIProto.AgentOrBuilder>
+      public java.util.List<? extends AgentOrBuilder>
            getVisibleAgentsOrBuilderList() {
         if (visibleAgentsBuilder_ != null) {
           return visibleAgentsBuilder_.getMessageOrBuilderList();
@@ -9266,16 +10093,16 @@ public final class AIProto {
       /**
        * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Agent visible_agents = 7;</code>
        */
-      public java.util.List<AIProto.Agent.Builder>
+      public java.util.List<Agent.Builder>
            getVisibleAgentsBuilderList() {
         return getVisibleAgentsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          AIProto.Agent, AIProto.Agent.Builder, AIProto.AgentOrBuilder>
+          Agent, Agent.Builder, AgentOrBuilder>
           getVisibleAgentsFieldBuilder() {
         if (visibleAgentsBuilder_ == null) {
           visibleAgentsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              AIProto.Agent, AIProto.Agent.Builder, AIProto.AgentOrBuilder>(
+              Agent, Agent.Builder, AgentOrBuilder>(
                   visibleAgents_,
                   ((bitField0_ & 0x00000040) == 0x00000040),
                   getParentForChildren(),
@@ -9283,6 +10110,246 @@ public final class AIProto {
           visibleAgents_ = null;
         }
         return visibleAgentsBuilder_;
+      }
+
+      private java.util.List<Chat> chatBox_ =
+        java.util.Collections.emptyList();
+      private void ensureChatBoxIsMutable() {
+        if (!((bitField0_ & 0x00000080) == 0x00000080)) {
+          chatBox_ = new java.util.ArrayList<Chat>(chatBox_);
+          bitField0_ |= 0x00000080;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          Chat, Chat.Builder, ChatOrBuilder> chatBoxBuilder_;
+
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public java.util.List<Chat> getChatBoxList() {
+        if (chatBoxBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(chatBox_);
+        } else {
+          return chatBoxBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public int getChatBoxCount() {
+        if (chatBoxBuilder_ == null) {
+          return chatBox_.size();
+        } else {
+          return chatBoxBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public AIProto.Chat getChatBox(int index) {
+        if (chatBoxBuilder_ == null) {
+          return chatBox_.get(index);
+        } else {
+          return chatBoxBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public Builder setChatBox(
+          int index, AIProto.Chat value) {
+        if (chatBoxBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureChatBoxIsMutable();
+          chatBox_.set(index, value);
+          onChanged();
+        } else {
+          chatBoxBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public Builder setChatBox(
+          int index, AIProto.Chat.Builder builderForValue) {
+        if (chatBoxBuilder_ == null) {
+          ensureChatBoxIsMutable();
+          chatBox_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          chatBoxBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public Builder addChatBox(AIProto.Chat value) {
+        if (chatBoxBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureChatBoxIsMutable();
+          chatBox_.add(value);
+          onChanged();
+        } else {
+          chatBoxBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public Builder addChatBox(
+          int index, AIProto.Chat value) {
+        if (chatBoxBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureChatBoxIsMutable();
+          chatBox_.add(index, value);
+          onChanged();
+        } else {
+          chatBoxBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public Builder addChatBox(
+          AIProto.Chat.Builder builderForValue) {
+        if (chatBoxBuilder_ == null) {
+          ensureChatBoxIsMutable();
+          chatBox_.add(builderForValue.build());
+          onChanged();
+        } else {
+          chatBoxBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public Builder addChatBox(
+          int index, AIProto.Chat.Builder builderForValue) {
+        if (chatBoxBuilder_ == null) {
+          ensureChatBoxIsMutable();
+          chatBox_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          chatBoxBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public Builder addAllChatBox(
+          Iterable<? extends Chat> values) {
+        if (chatBoxBuilder_ == null) {
+          ensureChatBoxIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, chatBox_);
+          onChanged();
+        } else {
+          chatBoxBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public Builder clearChatBox() {
+        if (chatBoxBuilder_ == null) {
+          chatBox_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000080);
+          onChanged();
+        } else {
+          chatBoxBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public Builder removeChatBox(int index) {
+        if (chatBoxBuilder_ == null) {
+          ensureChatBoxIsMutable();
+          chatBox_.remove(index);
+          onChanged();
+        } else {
+          chatBoxBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public AIProto.Chat.Builder getChatBoxBuilder(
+          int index) {
+        return getChatBoxFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public AIProto.ChatOrBuilder getChatBoxOrBuilder(
+          int index) {
+        if (chatBoxBuilder_ == null) {
+          return chatBox_.get(index);  } else {
+          return chatBoxBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public java.util.List<? extends ChatOrBuilder>
+           getChatBoxOrBuilderList() {
+        if (chatBoxBuilder_ != null) {
+          return chatBoxBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(chatBox_);
+        }
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public AIProto.Chat.Builder addChatBoxBuilder() {
+        return getChatBoxFieldBuilder().addBuilder(
+            AIProto.Chat.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public AIProto.Chat.Builder addChatBoxBuilder(
+          int index) {
+        return getChatBoxFieldBuilder().addBuilder(
+            index, AIProto.Chat.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .ir.sharif.aic.hideandseek.api.grpc.Chat chatBox = 8;</code>
+       */
+      public java.util.List<Chat.Builder>
+           getChatBoxBuilderList() {
+        return getChatBoxFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          Chat, Chat.Builder, ChatOrBuilder>
+          getChatBoxFieldBuilder() {
+        if (chatBoxBuilder_ == null) {
+          chatBoxBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              Chat, Chat.Builder, ChatOrBuilder>(
+                  chatBox_,
+                  ((bitField0_ & 0x00000080) == 0x00000080),
+                  getParentForChildren(),
+                  isClean());
+          chatBox_ = null;
+        }
+        return chatBoxBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -9443,7 +10510,7 @@ public final class AIProto {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         token_ = s;
@@ -9457,7 +10524,7 @@ public final class AIProto {
         getTokenBytes() {
       Object ref = token_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         token_ = b;
@@ -9477,7 +10544,7 @@ public final class AIProto {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         text_ = s;
@@ -9491,7 +10558,7 @@ public final class AIProto {
         getTextBytes() {
       Object ref = text_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         text_ = b;
@@ -9821,7 +10888,7 @@ public final class AIProto {
           getTokenBytes() {
         Object ref = token_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
           token_ = b;
@@ -9838,7 +10905,7 @@ public final class AIProto {
         if (value == null) {
     throw new NullPointerException();
   }
-
+  
         token_ = value;
         onChanged();
         return this;
@@ -9847,7 +10914,7 @@ public final class AIProto {
        * <code>string token = 1;</code>
        */
       public Builder clearToken() {
-
+        
         token_ = getDefaultInstance().getToken();
         onChanged();
         return this;
@@ -9861,7 +10928,7 @@ public final class AIProto {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+        
         token_ = value;
         onChanged();
         return this;
@@ -9890,7 +10957,7 @@ public final class AIProto {
           getTextBytes() {
         Object ref = text_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
           text_ = b;
@@ -9907,7 +10974,7 @@ public final class AIProto {
         if (value == null) {
     throw new NullPointerException();
   }
-
+  
         text_ = value;
         onChanged();
         return this;
@@ -9916,7 +10983,7 @@ public final class AIProto {
        * <code>string text = 2;</code>
        */
       public Builder clearText() {
-
+        
         text_ = getDefaultInstance().getText();
         onChanged();
         return this;
@@ -9930,7 +10997,7 @@ public final class AIProto {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+        
         text_ = value;
         onChanged();
         return this;
@@ -10131,7 +11198,7 @@ public final class AIProto {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         id_ = s;
@@ -10145,7 +11212,7 @@ public final class AIProto {
         getIdBytes() {
       Object ref = id_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         id_ = b;
@@ -10174,7 +11241,7 @@ public final class AIProto {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         text_ = s;
@@ -10188,7 +11255,7 @@ public final class AIProto {
         getTextBytes() {
       Object ref = text_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         text_ = b;
@@ -10586,7 +11653,7 @@ public final class AIProto {
           getIdBytes() {
         Object ref = id_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
           id_ = b;
@@ -10603,7 +11670,7 @@ public final class AIProto {
         if (value == null) {
     throw new NullPointerException();
   }
-
+  
         id_ = value;
         onChanged();
         return this;
@@ -10612,7 +11679,7 @@ public final class AIProto {
        * <code>string id = 1;</code>
        */
       public Builder clearId() {
-
+        
         id_ = getDefaultInstance().getId();
         onChanged();
         return this;
@@ -10626,7 +11693,7 @@ public final class AIProto {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+        
         id_ = value;
         onChanged();
         return this;
@@ -10643,7 +11710,7 @@ public final class AIProto {
        * <code>int32 fromAgentId = 2;</code>
        */
       public Builder setFromAgentId(int value) {
-
+        
         fromAgentId_ = value;
         onChanged();
         return this;
@@ -10652,7 +11719,7 @@ public final class AIProto {
        * <code>int32 fromAgentId = 2;</code>
        */
       public Builder clearFromAgentId() {
-
+        
         fromAgentId_ = 0;
         onChanged();
         return this;
@@ -10681,7 +11748,7 @@ public final class AIProto {
           getTextBytes() {
         Object ref = text_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
           text_ = b;
@@ -10698,7 +11765,7 @@ public final class AIProto {
         if (value == null) {
     throw new NullPointerException();
   }
-
+  
         text_ = value;
         onChanged();
         return this;
@@ -10707,7 +11774,7 @@ public final class AIProto {
        * <code>string text = 3;</code>
        */
       public Builder clearText() {
-
+        
         text_ = getDefaultInstance().getText();
         onChanged();
         return this;
@@ -10721,7 +11788,7 @@ public final class AIProto {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+        
         text_ = value;
         onChanged();
         return this;
@@ -10812,7 +11879,7 @@ public final class AIProto {
        * <code>.google.protobuf.Timestamp timeStamp = 4;</code>
        */
       public com.google.protobuf.Timestamp.Builder getTimeStampBuilder() {
-
+        
         onChanged();
         return getTimeStampFieldBuilder().getBuilder();
       }
@@ -10831,7 +11898,7 @@ public final class AIProto {
        * <code>.google.protobuf.Timestamp timeStamp = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder>
+          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> 
           getTimeStampFieldBuilder() {
         if (timeStampBuilder_ == null) {
           timeStampBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -10893,73 +11960,78 @@ public final class AIProto {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Agent_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_Agent_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Node_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_Node_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Path_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_Path_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Graph_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_Graph_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_IncomeSettings_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_IncomeSettings_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_TurnSettings_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_TurnSettings_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_GameConfig_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_GameConfig_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_DeclareReadinessCommand_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_DeclareReadinessCommand_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_MoveCommand_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_MoveCommand_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_WatchCommand_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_WatchCommand_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor;
-  private static final
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_GameView_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_GameView_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatCommand_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatCommand_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Chat_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ir_sharif_aic_hideandseek_api_grpc_Chat_fieldAccessorTable;
 
@@ -10973,62 +12045,67 @@ public final class AIProto {
     String[] descriptorData = {
       "\n\rAIProto.proto\022\"ir.sharif.aic.hideandse" +
       "ek.api.grpc\032\033google/protobuf/empty.proto" +
-      "\032\037google/protobuf/timestamp.proto\"\252\001\n\005Ag" +
-      "ent\022\n\n\002id\030\001 \001(\005\0226\n\004team\030\002 \001(\0162(.ir.shari" +
-      "f.aic.hideandseek.api.grpc.Team\022;\n\004type\030" +
-      "\003 \001(\0162-.ir.sharif.aic.hideandseek.api.gr" +
-      "pc.AgentType\022\017\n\007node_id\030\004 \001(\005\022\017\n\007is_dead" +
-      "\030\005 \001(\010\"\022\n\004Node\022\n\n\002id\030\001 \001(\005\"P\n\004Path\022\n\n\002id" +
-      "\030\001 \001(\005\022\025\n\rfirst_node_id\030\002 \001(\005\022\026\n\016second_" +
-      "node_id\030\003 \001(\005\022\r\n\005price\030\004 \001(\001\"y\n\005Graph\0227\n",
-      "\005paths\030\001 \003(\0132(.ir.sharif.aic.hideandseek" +
-      ".api.grpc.Path\0227\n\005nodes\030\002 \003(\0132(.ir.shari" +
-      "f.aic.hideandseek.api.grpc.Node\"M\n\016Incom" +
-      "eSettings\022\034\n\024policeIncomeEachTurn\030\001 \001(\001\022" +
-      "\035\n\025thievesIncomeEachTurn\030\002 \001(\001\"5\n\014TurnSe" +
-      "ttings\022\017\n\007maxTurn\030\001 \001(\005\022\024\n\014visibleTurns\030" +
-      "\002 \003(\005\"\332\001\n\nGameConfig\0228\n\005graph\030\001 \001(\0132).ir" +
-      ".sharif.aic.hideandseek.api.grpc.Graph\022J" +
-      "\n\016incomeSettings\030\002 \001(\01322.ir.sharif.aic.h" +
-      "ideandseek.api.grpc.IncomeSettings\022F\n\014tu",
-      "rnSettings\030\003 \001(\01320.ir.sharif.aic.hideand" +
-      "seek.api.grpc.TurnSettings\"=\n\027DeclareRea" +
-      "dinessCommand\022\r\n\005token\030\001 \001(\t\022\023\n\013startNod" +
-      "eId\030\002 \001(\005\".\n\013MoveCommand\022\r\n\005token\030\001 \001(\t\022" +
-      "\020\n\010toNodeId\030\002 \001(\005\"\035\n\014WatchCommand\022\r\n\005tok" +
-      "en\030\001 \001(\t\"Z\n\004Turn\022\022\n\nturnNumber\030\001 \001(\005\022>\n\010" +
-      "turnType\030\002 \001(\0162,.ir.sharif.aic.hideandse" +
-      "ek.api.grpc.TurnType\"\221\003\n\010GameView\022>\n\006sta" +
-      "tus\030\001 \001(\0162..ir.sharif.aic.hideandseek.ap" +
-      "i.grpc.GameStatus\022>\n\006result\030\002 \001(\0162..ir.s",
-      "harif.aic.hideandseek.api.grpc.GameResul" +
-      "t\0226\n\004turn\030\003 \001(\0132(.ir.sharif.aic.hideands" +
-      "eek.api.grpc.Turn\022>\n\006config\030\004 \001(\0132..ir.s" +
-      "harif.aic.hideandseek.api.grpc.GameConfi" +
-      "g\0229\n\006viewer\030\005 \001(\0132).ir.sharif.aic.hidean" +
-      "dseek.api.grpc.Agent\022\017\n\007balance\030\006 \001(\001\022A\n" +
-      "\016visible_agents\030\007 \003(\0132).ir.sharif.aic.hi" +
-      "deandseek.api.grpc.Agent\"*\n\013ChatCommand\022" +
-      "\r\n\005token\030\001 \001(\t\022\014\n\004text\030\002 \001(\t\"d\n\004Chat\022\n\n\002" +
-      "id\030\001 \001(\t\022\023\n\013fromAgentId\030\002 \001(\005\022\014\n\004text\030\003 ",
-      "\001(\t\022-\n\ttimeStamp\030\004 \001(\0132\032.google.protobuf" +
-      ".Timestamp*\035\n\004Team\022\t\n\005FIRST\020\000\022\n\n\006SECOND\020" +
-      "\001*+\n\010TurnType\022\016\n\nTHIEF_TURN\020\000\022\017\n\013POLICE_" +
-      "TURN\020\001*\"\n\tAgentType\022\t\n\005THIEF\020\000\022\n\n\006POLICE" +
-      "\020\001*4\n\nGameStatus\022\013\n\007PENDING\020\000\022\013\n\007ONGOING" +
-      "\020\001\022\014\n\010FINISHED\020\002*C\n\nGameResult\022\013\n\007UNKNOW" +
-      "N\020\000\022\016\n\nFIRST_WINS\020\001\022\017\n\013SECOND_WINS\020\002\022\007\n\003" +
-      "TIE\020\0032\212\003\n\013GameHandler\022g\n\020DeclareReadines" +
-      "s\022;.ir.sharif.aic.hideandseek.api.grpc.D" +
-      "eclareReadinessCommand\032\026.google.protobuf",
-      ".Empty\022i\n\005Watch\0220.ir.sharif.aic.hideands" +
-      "eek.api.grpc.WatchCommand\032,.ir.sharif.ai" +
-      "c.hideandseek.api.grpc.GameView0\001\022O\n\004Mov" +
-      "e\022/.ir.sharif.aic.hideandseek.api.grpc.M" +
-      "oveCommand\032\026.google.protobuf.Empty\022V\n\013Se" +
-      "ndMessage\022/.ir.sharif.aic.hideandseek.ap" +
-      "i.grpc.ChatCommand\032\026.google.protobuf.Emp" +
-      "tyb\006proto3"
+      "\032\037google/protobuf/timestamp.proto\"Z\n\004Tur" +
+      "n\022\022\n\nturnNumber\030\001 \001(\005\022>\n\010turnType\030\002 \001(\0162" +
+      ",.ir.sharif.aic.hideandseek.api.grpc.Tur" +
+      "nType\"\252\001\n\005Agent\022\n\n\002id\030\001 \001(\005\0226\n\004team\030\002 \001(" +
+      "\0162(.ir.sharif.aic.hideandseek.api.grpc.T" +
+      "eam\022;\n\004type\030\003 \001(\0162-.ir.sharif.aic.hidean" +
+      "dseek.api.grpc.AgentType\022\017\n\007node_id\030\004 \001(" +
+      "\005\022\017\n\007is_dead\030\005 \001(\010\"\022\n\004Node\022\n\n\002id\030\001 \001(\005\"P",
+      "\n\004Path\022\n\n\002id\030\001 \001(\005\022\025\n\rfirst_node_id\030\002 \001(" +
+      "\005\022\026\n\016second_node_id\030\003 \001(\005\022\r\n\005price\030\004 \001(\001" +
+      "\"y\n\005Graph\0227\n\005paths\030\001 \003(\0132(.ir.sharif.aic" +
+      ".hideandseek.api.grpc.Path\0227\n\005nodes\030\002 \003(" +
+      "\0132(.ir.sharif.aic.hideandseek.api.grpc.N" +
+      "ode\"M\n\016IncomeSettings\022\034\n\024policeIncomeEac" +
+      "hTurn\030\001 \001(\001\022\035\n\025thievesIncomeEachTurn\030\002 \001" +
+      "(\001\"6\n\014TurnSettings\022\020\n\010maxTurns\030\001 \001(\005\022\024\n\014" +
+      "visibleTurns\030\002 \003(\005\"D\n\014ChatSettings\022\026\n\016ch" +
+      "atBoxMaxSize\030\001 \001(\005\022\034\n\024chatCostPerCharact",
+      "er\030\002 \001(\001\"\242\002\n\nGameConfig\0228\n\005graph\030\001 \001(\0132)" +
+      ".ir.sharif.aic.hideandseek.api.grpc.Grap" +
+      "h\022J\n\016incomeSettings\030\002 \001(\01322.ir.sharif.ai" +
+      "c.hideandseek.api.grpc.IncomeSettings\022F\n" +
+      "\014turnSettings\030\003 \001(\01320.ir.sharif.aic.hide" +
+      "andseek.api.grpc.TurnSettings\022F\n\014chatSet" +
+      "tings\030\004 \001(\01320.ir.sharif.aic.hideandseek." +
+      "api.grpc.ChatSettings\"=\n\027DeclareReadines" +
+      "sCommand\022\r\n\005token\030\001 \001(\t\022\023\n\013startNodeId\030\002" +
+      " \001(\005\".\n\013MoveCommand\022\r\n\005token\030\001 \001(\t\022\020\n\010to",
+      "NodeId\030\002 \001(\005\"\035\n\014WatchCommand\022\r\n\005token\030\001 " +
+      "\001(\t\"\314\003\n\010GameView\022>\n\006status\030\001 \001(\0162..ir.sh" +
+      "arif.aic.hideandseek.api.grpc.GameStatus" +
+      "\022>\n\006result\030\002 \001(\0162..ir.sharif.aic.hideand" +
+      "seek.api.grpc.GameResult\0226\n\004turn\030\003 \001(\0132(" +
+      ".ir.sharif.aic.hideandseek.api.grpc.Turn" +
+      "\022>\n\006config\030\004 \001(\0132..ir.sharif.aic.hideand" +
+      "seek.api.grpc.GameConfig\0229\n\006viewer\030\005 \001(\013" +
+      "2).ir.sharif.aic.hideandseek.api.grpc.Ag" +
+      "ent\022\017\n\007balance\030\006 \001(\001\022A\n\016visible_agents\030\007",
+      " \003(\0132).ir.sharif.aic.hideandseek.api.grp" +
+      "c.Agent\0229\n\007chatBox\030\010 \003(\0132(.ir.sharif.aic" +
+      ".hideandseek.api.grpc.Chat\"*\n\013ChatComman" +
+      "d\022\r\n\005token\030\001 \001(\t\022\014\n\004text\030\002 \001(\t\"d\n\004Chat\022\n" +
+      "\n\002id\030\001 \001(\t\022\023\n\013fromAgentId\030\002 \001(\005\022\014\n\004text\030" +
+      "\003 \001(\t\022-\n\ttimeStamp\030\004 \001(\0132\032.google.protob" +
+      "uf.Timestamp*\035\n\004Team\022\t\n\005FIRST\020\000\022\n\n\006SECON" +
+      "D\020\001*+\n\010TurnType\022\016\n\nTHIEF_TURN\020\000\022\017\n\013POLIC" +
+      "E_TURN\020\001*\"\n\tAgentType\022\t\n\005THIEF\020\000\022\n\n\006POLI" +
+      "CE\020\001*4\n\nGameStatus\022\013\n\007PENDING\020\000\022\013\n\007ONGOI",
+      "NG\020\001\022\014\n\010FINISHED\020\002*C\n\nGameResult\022\013\n\007UNKN" +
+      "OWN\020\000\022\016\n\nFIRST_WINS\020\001\022\017\n\013SECOND_WINS\020\002\022\007" +
+      "\n\003TIE\020\0032\212\003\n\013GameHandler\022g\n\020DeclareReadin" +
+      "ess\022;.ir.sharif.aic.hideandseek.api.grpc" +
+      ".DeclareReadinessCommand\032\026.google.protob" +
+      "uf.Empty\022i\n\005Watch\0220.ir.sharif.aic.hidean" +
+      "dseek.api.grpc.WatchCommand\032,.ir.sharif." +
+      "aic.hideandseek.api.grpc.GameView0\001\022O\n\004M" +
+      "ove\022/.ir.sharif.aic.hideandseek.api.grpc" +
+      ".MoveCommand\032\026.google.protobuf.Empty\022V\n\013",
+      "SendMessage\022/.ir.sharif.aic.hideandseek." +
+      "api.grpc.ChatCommand\032\026.google.protobuf.E" +
+      "mptyb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -11044,86 +12121,92 @@ public final class AIProto {
           com.google.protobuf.EmptyProto.getDescriptor(),
           com.google.protobuf.TimestampProto.getDescriptor(),
         }, assigner);
-    internal_static_ir_sharif_aic_hideandseek_api_grpc_Agent_descriptor =
+    internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor =
       getDescriptor().getMessageTypes().get(0);
+    internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor,
+        new String[] { "TurnNumber", "TurnType", });
+    internal_static_ir_sharif_aic_hideandseek_api_grpc_Agent_descriptor =
+      getDescriptor().getMessageTypes().get(1);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Agent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_Agent_descriptor,
         new String[] { "Id", "Team", "Type", "NodeId", "IsDead", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Node_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Node_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_Node_descriptor,
         new String[] { "Id", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Path_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Path_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_Path_descriptor,
         new String[] { "Id", "FirstNodeId", "SecondNodeId", "Price", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Graph_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Graph_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_Graph_descriptor,
         new String[] { "Paths", "Nodes", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_IncomeSettings_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_IncomeSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_IncomeSettings_descriptor,
         new String[] { "PoliceIncomeEachTurn", "ThievesIncomeEachTurn", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_TurnSettings_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_TurnSettings_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_TurnSettings_descriptor,
-        new String[] { "MaxTurn", "VisibleTurns", });
+        new String[] { "MaxTurns", "VisibleTurns", });
+    internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatSettings_descriptor,
+        new String[] { "ChatBoxMaxSize", "ChatCostPerCharacter", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_GameConfig_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_GameConfig_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_GameConfig_descriptor,
-        new String[] { "Graph", "IncomeSettings", "TurnSettings", });
+        new String[] { "Graph", "IncomeSettings", "TurnSettings", "ChatSettings", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_DeclareReadinessCommand_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_DeclareReadinessCommand_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_DeclareReadinessCommand_descriptor,
         new String[] { "Token", "StartNodeId", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_MoveCommand_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_MoveCommand_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_MoveCommand_descriptor,
         new String[] { "Token", "ToNodeId", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_WatchCommand_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_WatchCommand_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_WatchCommand_descriptor,
         new String[] { "Token", });
-    internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor =
-      getDescriptor().getMessageTypes().get(10);
-    internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ir_sharif_aic_hideandseek_api_grpc_Turn_descriptor,
-        new String[] { "TurnNumber", "TurnType", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_GameView_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_GameView_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_GameView_descriptor,
-        new String[] { "Status", "Result", "Turn", "Config", "Viewer", "Balance", "VisibleAgents", });
+        new String[] { "Status", "Result", "Turn", "Config", "Viewer", "Balance", "VisibleAgents", "ChatBox", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatCommand_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatCommand_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_ChatCommand_descriptor,
         new String[] { "Token", "Text", });
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Chat_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_ir_sharif_aic_hideandseek_api_grpc_Chat_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ir_sharif_aic_hideandseek_api_grpc_Chat_descriptor,
