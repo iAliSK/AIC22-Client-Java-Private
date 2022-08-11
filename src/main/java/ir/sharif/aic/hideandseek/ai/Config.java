@@ -4,6 +4,7 @@ import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Path;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Config {
 
@@ -12,12 +13,14 @@ public class Config {
     private final int[][] dist;
     private ArrayList<Integer>[] next;
     private double[][] cost;
+    private final int nodesCount;
 
     private Config(GameView gameView) {
         grid = new Grid(gameView);
         dist = grid.floyd();
         initCost(gameView);
         initNext(gameView);
+        nodesCount = gameView.getConfig().getGraph().getNodesCount();
     }
 
     public static Config getInstance(GameView gameView) {
@@ -46,6 +49,9 @@ public class Config {
         }
     }
 
+    public int getNodesCount() {
+        return nodesCount;
+    }
 
     public double getPathCost(int fromNodeId, int toNodeId) {
         return cost[fromNodeId - 1][toNodeId - 1];
@@ -55,8 +61,20 @@ public class Config {
         return dist[fromNodeId - 1][toNodeId - 1];
     }
 
+    public int[] getMinDistances(int fromNodeId) {
+        return dist[fromNodeId - 1];
+    }
+
     public ArrayList<Integer> getNeighborNodes(int nodeId) {
         return next[nodeId - 1];
+    }
+
+    public int getNeighborNodesCount(int nodeId) {
+        return getNeighborNodes(nodeId).size();
+    }
+
+    public int getRandInt(int bound, int seed) {
+        return new Random(seed).nextInt(bound);
     }
 
 
