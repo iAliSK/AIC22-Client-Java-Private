@@ -22,6 +22,7 @@ public class PoliceAI extends AI {
      */
     @Override
     public int move(GameView gameView) {
+        this.config = Config.getInstance(gameView);
         return 1;
     }
 

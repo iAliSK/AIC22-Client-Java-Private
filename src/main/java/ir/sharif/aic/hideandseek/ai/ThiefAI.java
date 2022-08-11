@@ -14,6 +14,21 @@ public class ThiefAI extends AI {
      */
     @Override
     public int getStartingNode(GameView gameView) {
+        this.config = Config.getInstance(gameView);
+
+//        int nodeId = gameView.getViewer().getNodeId();
+//        System.out.printf("""
+//                        node_id: %d
+//                        neighbor_nodes: %s
+//                        pathCost[1][46]: %f
+//                        minDist[1][43]: %d
+//                        """,
+//                nodeId,
+//                config.getNeighborNodes(nodeId),
+//                config.getPathCost(1, 46),
+//                config.getMinDistance(1, 43)
+//        );
+
         return 2;
     }
 
@@ -22,6 +37,7 @@ public class ThiefAI extends AI {
      */
     @Override
     public int move(GameView gameView) {
+        this.config = Config.getInstance(gameView);
         return 2;
     }
 
