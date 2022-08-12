@@ -69,13 +69,17 @@ public class Config {
         return next[nodeId - 1];
     }
 
-    public int getNeighborNodesCount(int nodeId) {
-        return getNeighborNodes(nodeId).size();
+    public boolean isNeighbor(int nodeId1, int nodeId2) {
+        return getNeighborNodes(nodeId1).contains(nodeId2);
     }
 
     public int getRandInt(int bound, int seed) {
-        return new Random(seed).nextInt(bound);
+        Random random = new Random();
+        random.setSeed(seed+random.nextInt());
+        return random.nextInt(bound);
     }
 
-
+    public int getNeighborNodesCount(int nodeId) {
+        return getNeighborNodes(nodeId).size();
+    }
 }
