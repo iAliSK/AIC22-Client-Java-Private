@@ -1,11 +1,15 @@
 package ir.sharif.aic.hideandseek.ai;
 
 import ir.sharif.aic.hideandseek.client.Phone;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.IntStream;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ThiefAI extends AI {
 
@@ -46,7 +50,31 @@ public class ThiefAI extends AI {
     @Override
     public int move(GameView gameView) {
         this.config = Config.getInstance(gameView);
-        return gameView.getViewer().getNodeId();
+        return getSafestNode(gameView.getViewer().getNodeId(), gameView);
+    }
+
+    private ArrayList<Integer> getOpponentPoliceList(GameView gameView) {
+        ArrayList<Integer> opponentPolice = new ArrayList<>();
+        for (Agent agent : gameView.getVisibleAgentsList()) {
+            boolean teammate = agent.getTeamValue() == gameView.getViewer().getTeamValue();
+            boolean sameType = agent.getTypeValue() == gameView.getViewer().getTypeValue();
+            if (teammate || sameType) {
+                continue;
+            }
+            opponentPolice.add(agent.getNodeId());
+        }
+        return opponentPolice;
+    }
+
+    private int getNearestPoliceDistance(int nodeId, GameView gameView) {
+        int minDist = Integer.MAX_VALUE;
+        for (int agentNodeId : getOpponentPoliceList(gameView)) {
+            minDist = Math.min(
+                    minDist,
+                    config.getMinDistance(nodeId, agentNodeId)
+            );
+        }
+        return minDist;
     }
 
     private int getFarthestRandomNodeFromPoliceStation(int seed) {
@@ -68,5 +96,25 @@ public class ThiefAI extends AI {
 
         int randIndex = config.getRandInt(farthestNodes.length / 2, seed);
         return farthestNodes[randIndex];
+    }
+    private int getSafestNode(int nodeId, GameView gameView) {
+
+//        if(getNearestPoliceDistance(nodeId, gameView) > 3) {
+//            return nodeId;
+//        }
+
+        ArrayList<Integer> neighborNodes = config.getNeighborNodes(nodeId);
+        neighborNodes.add(nodeId);
+
+        neighborNodes.sort(Comparator
+                .comparingInt(d -> getNearestPoliceDistance((Integer) d, gameView)).reversed());
+
+        for (int node : neighborNodes) {
+            if (config.getPathCost(nodeId, node) <= gameView.getBalance()) {
+                return node;
+            }
+        }
+        return nodeId;
+
     }
 }
