@@ -17,10 +17,10 @@ public class Config {
 
     private Config(GameView gameView) {
         grid = new Grid(gameView);
+        nodesCount = gameView.getConfig().getGraph().getNodesCount();
         dist = grid.floyd();
         initCost(gameView);
-        initNext(gameView);
-        nodesCount = gameView.getConfig().getGraph().getNodesCount();
+        initNext();
     }
 
     public static Config getInstance(GameView gameView) {
@@ -31,7 +31,7 @@ public class Config {
     }
 
     private void initCost(GameView gameView) {
-        int n = gameView.getConfig().getGraph().getNodesCount();
+        int n = nodesCount;
         cost = new double[n][n];
         for (Path path : gameView.getConfig().getGraph().getPathsList()) {
             int i = path.getFirstNodeId() - 1;
@@ -41,8 +41,8 @@ public class Config {
     }
 
     @SuppressWarnings("unchecked")
-    private void initNext(GameView gameView) {
-        int n = gameView.getConfig().getGraph().getNodesCount();
+    private void initNext() {
+        int n = nodesCount;
         next = new ArrayList[n];
         for (int i = 0; i < n; i++) {
             next[i] = grid.getNeighborNodes(i);
@@ -65,6 +65,10 @@ public class Config {
         return dist[fromNodeId - 1];
     }
 
+    public ArrayList<ArrayList<Integer>> getAllShortestPaths(int fromNodeId, int toNodeId) {
+        return grid.getAllShortestPaths(fromNodeId - 1, toNodeId - 1);
+    }
+
     public ArrayList<Integer> getNeighborNodes(int nodeId) {
         return next[nodeId - 1];
     }
@@ -75,7 +79,7 @@ public class Config {
 
     public int getRandInt(int bound, int seed) {
         Random random = new Random();
-        random.setSeed(seed+random.nextInt());
+        random.setSeed(seed + random.nextInt());
         return random.nextInt(bound);
     }
 
