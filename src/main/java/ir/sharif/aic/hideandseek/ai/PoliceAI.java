@@ -42,6 +42,7 @@ public class PoliceAI extends AI {
         if (gameView.getTurn().getTurnNumber() <= 2) {
             dest = getFarthestRandomNodeFromPoliceStation(agentId);
             this.path = getCheaperPath(curNodeID,dest);
+            System.out.println("set dest");
         }
 
         if (gameView.getConfig().getTurnSettings().getVisibleTurnsList()
@@ -50,6 +51,7 @@ public class PoliceAI extends AI {
             setTarget(gameView);
             setDest(gameView);
             this.path = getCheaperPath(curNodeID,dest);
+            System.out.println("visible turn " + gameView.getTurn().getTurnNumber());
         }
 
         // decide next move in case of reaching destination
@@ -60,8 +62,10 @@ public class PoliceAI extends AI {
     private int getNextProperNode(int nodeId, GameView gameView) {
         double budget = gameView.getBalance();
 
-        if (config.isNeighbor(target,nodeId) &&
-                budget <= config.getPathCost(nodeId, target)) return target;
+        System.out.println("is neighbor: " + target);
+
+        if (target > 0 && config.isNeighbor(target,nodeId) &&
+                budget >= config.getPathCost(nodeId, target)) return target;
 
         int index = this.path.indexOf(nodeId);
         int next;
@@ -71,7 +75,7 @@ public class PoliceAI extends AI {
         else
             next = this.path.get(index + 1);
 
-        if (budget <= config.getPathCost(nodeId, next))
+        if (budget >= config.getPathCost(nodeId, next))
             return next;
         else {
             //System.out.println("nooooooooooo mmmmmmmmmmmmmmoneyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
@@ -139,10 +143,14 @@ public class PoliceAI extends AI {
     }
 
     private ArrayList<Agent> getCurrentTeamPolices(GameView gameView) {
-        ArrayList<Agent> police = (ArrayList<Agent>) gameView.getVisibleAgentsList();
-        police.removeIf(agent -> (agent.getType().equals(AgentType.THIEF)));
-        police.removeIf(agent -> (agent.getTeamValue() != gameView.getViewer().getTeamValue()));
-        police.add(gameView.getViewer());
+        ArrayList<Agent> police = new ArrayList<>();
+        for (Agent agent : gameView.getVisibleAgentsList()) {
+            boolean teammate = agent.getTeamValue() == gameView.getViewer().getTeamValue();
+            boolean sameType = agent.getTypeValue() == gameView.getViewer().getTypeValue();
+            if (teammate && sameType) {
+                police.add(agent);
+            }
+        }
         return police;
     }
 
