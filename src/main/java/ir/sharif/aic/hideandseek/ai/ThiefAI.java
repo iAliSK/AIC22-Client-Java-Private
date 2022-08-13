@@ -4,12 +4,10 @@ import ir.sharif.aic.hideandseek.client.Phone;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.IntStream;
-
-import java.util.ArrayList;
-import java.util.Comparator;
 
 public class ThiefAI extends AI {
 
@@ -106,8 +104,7 @@ public class ThiefAI extends AI {
         ArrayList<Integer> neighborNodes = config.getNeighborNodes(nodeId);
         neighborNodes.add(nodeId);
 
-        neighborNodes.sort(Comparator
-                .comparingInt(d -> getNearestPoliceDistance((Integer) d, gameView)).reversed());
+        neighborNodes.sort((d1, d2) -> nextMoveComparator(nodeId, d1,  d2, gameView));
 
         for (int node : neighborNodes) {
             if (config.getPathCost(nodeId, node) <= gameView.getBalance()) {
@@ -116,5 +113,21 @@ public class ThiefAI extends AI {
         }
         return nodeId;
 
+    }
+
+    private int nextMoveComparator(int currNodeId, int nodeId1, int nodeId2, GameView gameView) {
+        int dist1 = getNearestPoliceDistance(nodeId1, gameView);
+        int dist2 = getNearestPoliceDistance(nodeId2, gameView);
+        if (dist1 == dist2 || Math.min(dist1, dist2) > 3) {
+            double cost1 = config.getPathCost(currNodeId, nodeId1);
+            double cost2 = config.getPathCost(currNodeId, nodeId2);
+            if (cost1 == cost2) {
+                int ways1 = config.getNeighborNodesCount(nodeId1);
+                int ways2 = config.getNeighborNodesCount(nodeId2);
+                return Integer.compare(ways2, ways1);
+            }
+            return Double.compare(cost1, cost2);
+        }
+        return Integer.compare(dist2, dist1);
     }
 }
