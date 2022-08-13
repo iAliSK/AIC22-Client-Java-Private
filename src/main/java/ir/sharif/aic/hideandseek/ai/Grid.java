@@ -3,8 +3,7 @@ package ir.sharif.aic.hideandseek.ai;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Path;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Grid {
 
@@ -55,4 +54,57 @@ public class Grid {
         }
         return dist;
     }
+
+    private void bfs(ArrayList<ArrayList<Integer>> parent, int src) {
+        int n = size;
+        int[] dist = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(src);
+        parent.get(src).clear();
+        parent.get(src).add(-1);
+        dist[src] = 0;
+        while (!q.isEmpty()) {
+            int u = q.poll();
+            for (int v = 0; v < n; v++) {
+                if (D[u][v] != 1) continue;
+                if (dist[v] > dist[u] + 1) {
+                    dist[v] = dist[u] + 1;
+                    q.offer(v);
+                    parent.get(v).clear();
+                    parent.get(v).add(u);
+                } else if (dist[v] == dist[u] + 1) {
+                    parent.get(v).add(u);
+                }
+            }
+        }
+    }
+
+    private void findPaths(ArrayList<ArrayList<Integer>> paths, ArrayList<Integer> path,
+                           ArrayList<ArrayList<Integer>> parent, int n, int u) {
+        if (u == -1) {
+            paths.add(new ArrayList<>(path));
+            return;
+        }
+        for (int par : parent.get(u)) {
+            path.add(u+1);
+            findPaths(paths, path, parent, n, par);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    public ArrayList<ArrayList<Integer>> getAllShortestPaths(int src, int dst) {
+        int n = size;
+        ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
+        ArrayList<Integer> path = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> parent = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            parent.add(new ArrayList<>());
+        }
+        bfs(parent, dst);
+        findPaths(paths, path, parent, n, src);
+        return paths;
+    }
+
+
 }
