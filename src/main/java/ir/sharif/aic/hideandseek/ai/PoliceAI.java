@@ -12,9 +12,10 @@ import java.util.stream.IntStream;
 
 public class PoliceAI extends AI {
 
-    public int dest;
-    public ArrayList<Integer> thiefNodeIDs;
-    public int target;
+    public int dest = -1;
+    public ArrayList<Integer> path = new ArrayList<>();
+    public ArrayList<Integer> thiefNodeIDs = new ArrayList<>();
+    public int target = -1;
 
     public PoliceAI(Phone phone) {
         this.phone = phone;
@@ -36,9 +37,11 @@ public class PoliceAI extends AI {
         this.config = Config.getInstance(gameView);
 
         int agentId = gameView.getViewer().getId();
+        int curNodeID = gameView.getViewer().getNodeId();
 
         if (gameView.getTurn().getTurnNumber() <= 2) {
             dest = getFarthestRandomNodeFromPoliceStation(agentId);
+            this.path = getCheaperPath(curNodeID,dest);
         }
 
         if (gameView.getConfig().getTurnSettings().getVisibleTurnsList()
@@ -46,18 +49,57 @@ public class PoliceAI extends AI {
             setThiefNodeIDs(gameView);
             setTarget(gameView);
             setDest(gameView);
-        }
-
-        if (gameView.getTurn().getTurnNumber() <
-                gameView.getConfig().getTurnSettings().getVisibleTurns(0)) {
-
-        } else {
-
+            this.path = getCheaperPath(curNodeID,dest);
         }
 
         // decide next move in case of reaching destination
 
-        return 1;
+        return getNextProperNode(curNodeID, gameView);
+    }
+
+    private int getNextProperNode(int nodeId, GameView gameView) {
+        double budget = gameView.getBalance();
+
+        if (config.isNeighbor(target,nodeId) &&
+                budget <= config.getPathCost(nodeId, target)) return target;
+
+        int index = this.path.indexOf(nodeId);
+        int next;
+
+        if (index == path.size()-1)
+            return nodeId;
+        else
+            next = this.path.get(index + 1);
+
+        if (budget <= config.getPathCost(nodeId, next))
+            return next;
+        else {
+            //System.out.println("nooooooooooo mmmmmmmmmmmmmmoneyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+            return nodeId;
+        }
+
+    }
+
+    private ArrayList<Integer> getCheaperPath(int start , int end) {
+        this.path.clear();
+
+        int min = 9999999;
+        ArrayList<Integer> temp = null;
+        for (ArrayList<Integer> path : config.getAllShortestPaths(start,end)) {
+            int cost = 0;
+            for (int i = 1; i < path.size(); i++) {
+                cost += config.getPathCost(path.get(i-1),path.get(i));
+            }
+
+            if (cost < min) {
+                min = cost;
+                temp = path;
+            }
+        }
+
+        //System.out.println(temp);
+
+        return temp;
     }
 
     private void setTarget(GameView gameView) {
