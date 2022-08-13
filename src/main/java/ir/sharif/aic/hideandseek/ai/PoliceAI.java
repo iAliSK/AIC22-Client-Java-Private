@@ -1,13 +1,12 @@
 package ir.sharif.aic.hideandseek.ai;
 
 import ir.sharif.aic.hideandseek.client.Phone;
-import ir.sharif.aic.hideandseek.protobuf.AIProto;
-import ir.sharif.aic.hideandseek.protobuf.AIProto.*;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.IntStream;
 
 public class PoliceAI extends AI {
@@ -16,6 +15,7 @@ public class PoliceAI extends AI {
     public ArrayList<Integer> path = new ArrayList<>();
     public ArrayList<Integer> thiefNodeIDs = new ArrayList<>();
     public int target = -1;
+//    ArrayList<Integer> moved = new ArrayList<>();
 
     public PoliceAI(Phone phone) {
         this.phone = phone;
@@ -36,13 +36,16 @@ public class PoliceAI extends AI {
     public int move(GameView gameView) {
         this.config = Config.getInstance(gameView);
 
+//        if(moved.isEmpty())
+//            moved.add(1);
+
         int agentId = gameView.getViewer().getId();
         int curNodeID = gameView.getViewer().getNodeId();
 
         if (gameView.getTurn().getTurnNumber() <= 2) {
             dest = getFarthestRandomNodeFromPoliceStation(agentId);
-            this.path = getCheaperPath(curNodeID,dest);
-            System.out.println("set dest");
+            this.path = getCheaperPath(curNodeID, dest);
+//            System.out.println("set dest");
         }
 
         if (gameView.getConfig().getTurnSettings().getVisibleTurnsList()
@@ -50,8 +53,8 @@ public class PoliceAI extends AI {
             setThiefNodeIDs(gameView);
             setTarget(gameView);
             setDest(gameView);
-            this.path = getCheaperPath(curNodeID,dest);
-            System.out.println("visible turn " + gameView.getTurn().getTurnNumber());
+            this.path = getCheaperPath(curNodeID, dest);
+//            System.out.println("visible turn " + gameView.getTurn().getTurnNumber());
         }
 
         // decide next move in case of reaching destination
@@ -62,37 +65,55 @@ public class PoliceAI extends AI {
     private int getNextProperNode(int nodeId, GameView gameView) {
         double budget = gameView.getBalance();
 
-        System.out.println("is neighbor: " + target);
+//        System.out.println("is neighbor: " + target);
 
-        if (target > 0 && config.isNeighbor(target,nodeId) &&
-                budget >= config.getPathCost(nodeId, target)) return target;
+        if (target > 0 && config.isNeighbor(target, nodeId) &&
+                budget >= config.getPathCost(nodeId, target)) {
+            dest = target;
+            return target;
+        }
 
         int index = this.path.indexOf(nodeId);
         int next;
 
-        if (index == path.size()-1)
-            return nodeId;
-        else
-            next = this.path.get(index + 1);
+        int agentId = gameView.getViewer().getId();
 
-        if (budget >= config.getPathCost(nodeId, next))
-            return next;
-        else {
-            //System.out.println("nooooooooooo mmmmmmmmmmmmmmoneyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-            return nodeId;
+
+        int choseNode = nodeId;
+
+        if (index >= 0 && index < path.size() - 1) {
+            next = this.path.get(index + 1);
+            if (budget >= config.getPathCost(nodeId, next))
+                choseNode = next;
         }
 
+
+//        moved.add(choseNode);
+//
+//        System.out.printf("turn:%d   agent_id: %d   node_id: %d   chose_node: %d   dest: %d   neighbor_nodes: %s   path: %s    path_index: %d     moved: %s",
+//                gameView.getTurn().getTurnNumber(),
+//                agentId,
+//                nodeId,
+//                choseNode,
+//                dest,
+//                config.getNeighborNodes(nodeId),
+//                path,
+//                index,
+//                moved
+//        );
+
+        return choseNode;
     }
 
-    private ArrayList<Integer> getCheaperPath(int start , int end) {
+    private ArrayList<Integer> getCheaperPath(int start, int end) {
         this.path.clear();
 
         int min = 9999999;
         ArrayList<Integer> temp = null;
-        for (ArrayList<Integer> path : config.getAllShortestPaths(start,end)) {
+        for (ArrayList<Integer> path : config.getAllShortestPaths(start, end)) {
             int cost = 0;
             for (int i = 1; i < path.size(); i++) {
-                cost += config.getPathCost(path.get(i-1),path.get(i));
+                cost += config.getPathCost(path.get(i - 1), path.get(i));
             }
 
             if (cost < min) {
@@ -111,7 +132,7 @@ public class PoliceAI extends AI {
 
         int minDist = 9999999;
         for (int dest : thiefNodeIDs) {
-            int temp = config.getMinDistance(policeMinID.getNodeId(),dest);
+            int temp = config.getMinDistance(policeMinID.getNodeId(), dest);
             if (temp < minDist) {
                 minDist = temp;
                 target = dest;
@@ -151,6 +172,7 @@ public class PoliceAI extends AI {
                 police.add(agent);
             }
         }
+        police.add(gameView.getViewer());
         return police;
     }
 
