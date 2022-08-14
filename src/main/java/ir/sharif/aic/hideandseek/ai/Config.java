@@ -4,7 +4,6 @@ import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Path;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Config {
 
@@ -15,25 +14,25 @@ public class Config {
     private double[][] cost;
     private final int nodesCount;
 
-    private Config(GameView gameView) {
-        grid = new Grid(gameView);
-        nodesCount = gameView.getConfig().getGraph().getNodesCount();
+    private Config(GameView view) {
+        grid = new Grid(view);
+        nodesCount = view.getConfig().getGraph().getNodesCount();
         dist = grid.floyd();
-        initCost(gameView);
+        initCost(view);
         initNext();
     }
 
-    public static Config getInstance(GameView gameView) {
+    public static Config getInstance(GameView view) {
         if (instance == null) {
-            instance = new Config(gameView);
+            instance = new Config(view);
         }
         return instance;
     }
 
-    private void initCost(GameView gameView) {
+    private void initCost(GameView view) {
         int n = nodesCount;
         cost = new double[n][n];
-        for (Path path : gameView.getConfig().getGraph().getPathsList()) {
+        for (Path path : view.getConfig().getGraph().getPathsList()) {
             int i = path.getFirstNodeId() - 1;
             int j = path.getSecondNodeId() - 1;
             cost[i][j] = cost[j][i] = path.getPrice();
@@ -77,13 +76,10 @@ public class Config {
         return getNeighborNodes(nodeId1).contains(nodeId2);
     }
 
-    public int getRandInt(int bound, int seed) {
-        Random random = new Random();
-        random.setSeed(seed + random.nextInt());
-        return random.nextInt(bound);
-    }
 
     public int getNeighborNodesCount(int nodeId) {
         return getNeighborNodes(nodeId).size();
     }
+
+
 }
