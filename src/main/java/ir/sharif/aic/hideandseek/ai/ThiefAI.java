@@ -46,7 +46,16 @@ public class ThiefAI extends AI {
                     int dist1 = getNearestTeammateThiefDistance(getNextInPath(p1));
                     int dist2 = getNearestTeammateThiefDistance(getNextInPath(p1));
                     if (dist1 == dist2) {
-                        if (getNearestPoliceDistance(currNodeId) <= getRemainingVisibleTurns()) {
+
+                        int ways1 = getAllowedNeighborNodesCount(getNextInPath(p1));
+                        int ways2 = getAllowedNeighborNodesCount(getNextInPath(p2));
+
+                        if (ways1 != ways2) {
+                            return Integer.compare(ways2, ways1);
+                        }
+
+
+                        if (getNearestPoliceDistance(currNodeId) <= getRemainingVisibleTurns() || view.getBalance() >= 300) {
                             if (p1.size() == p2.size()) {
                                 double cost1 = config.getPathCost(p1);
                                 double cost2 = config.getPathCost(p2);
@@ -66,26 +75,44 @@ public class ThiefAI extends AI {
                 }).toList();
 
         for (ArrayList<Integer> path : allPaths) {
+            int next = getNextInPath(path);
+
+            if (next == currNodeId && getNearestPoliceDistance(currNodeId) == 1) {
+                continue;
+            }
+            if (!isMoneyEnoughToMove(currNodeId, next)) {
+                continue;
+            }
+
+
+            if (isVerySafePath(path)) {
+                this.path = path;
+
+                return next;
+            }
+
             if (isSafePath(path)) {
                 this.path = path;
-                int next = getNextInPath();
 
-                if (next == currNodeId && getNearestPoliceDistance(currNodeId) == 1) {
-                    continue;
-                }
-
-                if (getTeammateThieves(false).stream()
+                List<Integer> thieves = getTeammateThieves(false).stream()
                         .map(Agent::getNodeId)
-                        .toList()
-                        .contains(next)
-                ) {
+                        .toList();
+                if (thieves.contains(next))
                     continue;
-                }
 
-                if (isMoneyEnoughToMove(currNodeId, next)) {
-                    return next;
+                boolean changePath = false;
+                for (Agent agent : getTeammateThieves(false)) {
+                    if (agent.getNodeId() == currNodeId && getNearestPoliceDistance(currNodeId) == 1) {
+                        if (Math.min(agent.getId(), currAgentId) == currAgentId) {
+                            changePath = true;
+                            break;
+                        }
+                    }
                 }
+                if (changePath)
+                    continue;
 
+                return next;
             }
         }
 
@@ -115,6 +142,15 @@ public class ThiefAI extends AI {
     private boolean isSafePath(ArrayList<Integer> path) {
         for (int i = 1; i < path.size(); i++) {
             if (getNearestPoliceDistance(path.get(i)) <= 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isVerySafePath(ArrayList<Integer> path) {
+        for (int i = 1; i < path.size(); i++) {
+            if (getNearestPoliceDistance(path.get(i)) <= i) {
                 return false;
             }
         }
@@ -188,5 +224,16 @@ public class ThiefAI extends AI {
 //        }
 //        return safety;
 //    }
+
+    private int getAllowedNeighborNodesCount(int nodeId) {
+        double nextBalance = view.getBalance() - config.getPathCost(currNodeId, nodeId);
+        int allowedNeighbors = 0;
+        for (int node : config.getNeighborNodes(nodeId)) {
+            if (config.getPathCost(nodeId, node) <= nextBalance) {
+                allowedNeighbors++;
+            }
+        }
+        return allowedNeighbors;
+    }
 
 }

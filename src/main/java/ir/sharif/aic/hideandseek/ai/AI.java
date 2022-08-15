@@ -31,14 +31,18 @@ public abstract class AI {
     }
 
     protected int getFarthestRandomNodeFromPoliceStation(double percent) {
-        int[] distances = config.getMinDistances(1);
+        return getFarthestRandomNode(1, percent);
+    }
+
+    protected int getFarthestRandomNode(int fromNodeId, double percent) {
+        int[] distances = config.getMinDistances(fromNodeId);
 
         int maxDist = Arrays.stream(distances).max().orElse(2);
 
         int minDist = (int) (percent * maxDist);
 
-        Integer[] farthestNodes = IntStream.range(0, distances.length)
-                .filter(i -> distances[i] >= minDist)
+        Integer[] farthestNodes = IntStream.range(1, distances.length + 1)
+                .filter(i -> distances[i - 1] >= minDist)
                 .boxed().toArray(Integer[]::new);
 
 
