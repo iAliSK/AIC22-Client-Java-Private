@@ -50,10 +50,10 @@ public class PoliceAI extends AI {
         Agent leader = getPoliceWithMinId();
 
         int target = getNearestThief(leader.getNodeId());
-        List<Integer> neighborNodes = config.getNeighborNodes(target);
-
         List<Agent> polices = getTeammatePolice(true).stream()
                 .sorted(Comparator.comparingInt(Agent::getId)).toList();
+
+        List<Integer> neighborNodes = config.getNearestNodes(target,polices.size());
 
         int index = polices.indexOf(view.getViewer());
         int dest = neighborNodes.get(index % neighborNodes.size());

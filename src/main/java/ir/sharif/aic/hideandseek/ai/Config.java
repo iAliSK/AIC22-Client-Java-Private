@@ -4,6 +4,7 @@ import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Path;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Config {
 
@@ -70,6 +71,16 @@ public class Config {
 
     public ArrayList<Integer> getNeighborNodes(int nodeId) {
         return next[nodeId - 1];
+    }
+
+    public ArrayList<Integer> getNearestNodes(int nodeId, int nodesCount) {
+        ArrayList<Integer> neighborNodes = next[nodeId - 1];
+        HashSet<Integer> nodes = new HashSet<>();
+        for (Integer node : neighborNodes) {
+            if (nodes.size() >= nodesCount) break;
+            nodes.addAll(getNeighborNodes(node));
+        }
+        return new ArrayList<>(nodes);
     }
 
     public boolean isNeighbor(int nodeId1, int nodeId2) {
