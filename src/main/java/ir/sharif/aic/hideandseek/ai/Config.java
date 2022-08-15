@@ -69,6 +69,10 @@ public class Config {
         return grid.getAllShortestPaths(fromNodeId - 1, toNodeId - 1);
     }
 
+    public ArrayList<ArrayList<Integer>> getAllPaths(int fromNodeId, int toNodeId) {
+        return grid.getAllPaths(fromNodeId - 1, toNodeId - 1);
+    }
+
     public ArrayList<Integer> getNeighborNodes(int nodeId) {
         return next[nodeId - 1];
     }
@@ -92,5 +96,12 @@ public class Config {
         return getNeighborNodes(nodeId).size();
     }
 
+    public double getPathCost(ArrayList<Integer> path) {
+        double pathCost = 0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            pathCost += getPathCost(path.get(i), path.get(i + 1));
+        }
+        return pathCost;
+    }
 
 }

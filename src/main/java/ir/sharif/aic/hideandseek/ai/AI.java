@@ -6,10 +6,7 @@ import ir.sharif.aic.hideandseek.protobuf.AIProto.AgentType;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Team;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public abstract class AI {
@@ -19,6 +16,7 @@ public abstract class AI {
     protected Phone phone;
     protected int currNodeId;
     protected int currAgentId;
+    protected int lastNodeId;
 
 
     public abstract int getStartingNode(GameView view);
@@ -32,15 +30,19 @@ public abstract class AI {
         this.currAgentId = view.getViewer().getId();
     }
 
-    protected int getFarthestRandomNodeFromPoliceStation() {
-        int[] distances = config.getMinDistances(1);
+    protected int getFarthestRandomNodeFromPoliceStation(double percent) {
+        return getFarthestRandomNode(1, percent);
+    }
+
+    protected int getFarthestRandomNode(int fromNodeId, double percent) {
+        int[] distances = config.getMinDistances(fromNodeId);
 
         int maxDist = Arrays.stream(distances).max().orElse(2);
 
-        int minDist = (int) (0.8 * maxDist);
+        int minDist = (int) (percent * maxDist);
 
-        Integer[] farthestNodes = IntStream.range(0, distances.length)
-                .filter(i -> distances[i] >= minDist)
+        Integer[] farthestNodes = IntStream.range(1, distances.length + 1)
+                .filter(i -> distances[i - 1] >= minDist)
                 .boxed().toArray(Integer[]::new);
 
 
@@ -72,7 +74,7 @@ public abstract class AI {
 
     public ArrayList<Agent> getTeammateThieves(boolean includeMe) {
         return getAgents(view.getViewer().getTeamValue(),
-                AgentType.POLICE_VALUE, includeMe
+                AgentType.THIEF_VALUE, includeMe
         );
     }
 
@@ -127,4 +129,15 @@ public abstract class AI {
     public boolean isMoneyEnoughToMove(int fromNodeId, int toNodeId) {
         return config.getPathCost(fromNodeId, toNodeId) <= view.getBalance();
     }
+
+    protected int getRemainingVisibleTurns() {
+        int currTurn = view.getTurn().getTurnNumber();
+        List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
+        int i = 0;
+        while (visibleTurns.get(i) <= currTurn) {
+            i++;
+        }
+        return visibleTurns.get(i) - currTurn;
+    }
+
 }

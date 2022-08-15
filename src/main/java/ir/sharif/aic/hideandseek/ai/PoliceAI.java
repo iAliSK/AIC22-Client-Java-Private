@@ -40,7 +40,7 @@ public class PoliceAI extends AI {
 
     void initPath() {
         path = getCheaperPath(currNodeId,
-                getFarthestRandomNodeFromPoliceStation()
+                getFarthestRandomNodeFromPoliceStation(0.7)
         );
     }
 

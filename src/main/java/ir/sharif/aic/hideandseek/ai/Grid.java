@@ -81,14 +81,14 @@ public class Grid {
     }
 
     private void findPaths(ArrayList<ArrayList<Integer>> paths, ArrayList<Integer> path,
-                           ArrayList<ArrayList<Integer>> parent, int n, int u) {
+                           ArrayList<ArrayList<Integer>> parent, int u) {
         if (u == -1) {
             paths.add(new ArrayList<>(path));
             return;
         }
         for (int par : parent.get(u)) {
-            path.add(u+1);
-            findPaths(paths, path, parent, n, par);
+            path.add(u + 1);
+            findPaths(paths, path, parent, par);
             path.remove(path.size() - 1);
         }
     }
@@ -102,8 +102,36 @@ public class Grid {
             parent.add(new ArrayList<>());
         }
         bfs(parent, dst);
-        findPaths(paths, path, parent, n, src);
+        findPaths(paths, path, parent, src);
         return paths;
+    }
+
+
+    public ArrayList<ArrayList<Integer>> getAllPaths(int src, int dst) {
+        ArrayList<ArrayList<Integer>> allPaths = new ArrayList<>();
+        Queue<List<Integer>> queue = new LinkedList<>();
+
+        List<Integer> path = new ArrayList<>();
+        path.add(src);
+        queue.offer(path);
+
+        while (!queue.isEmpty()) {
+            path = queue.poll();
+            int last = path.get(path.size() - 1);
+
+            if (last == dst) {
+                allPaths.add(new ArrayList<>(path));
+            }
+
+            for (int node : getNeighborNodes(last)) {
+                if (!path.contains(node-1)) {
+                    List<Integer> newpath = new ArrayList<>(path);
+                    newpath.add(node-1);
+                    queue.offer(newpath);
+                }
+            }
+        }
+        return allPaths;
     }
 
 
