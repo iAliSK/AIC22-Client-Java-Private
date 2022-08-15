@@ -74,10 +74,6 @@ public class ThiefAI extends AI {
                     continue;
                 }
 
-                if (next == lastNodeId) {
-                    continue;
-                }
-
                 if (getTeammateThieves(false).stream()
                         .map(Agent::getNodeId)
                         .toList()
