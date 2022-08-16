@@ -50,8 +50,17 @@ public class PoliceAI extends AI {
         Agent leader = getPoliceWithMinId();
 
         int target = getNearestThief(leader.getNodeId());
+        /*
+        System.out.println(
+                "  TARGET : " + target +
+                "  AgentID : " + currAgentId +
+                "  NodeID : " + currNodeId +
+                "  LEADER_ID : " + leader.getId() +
+                "  LEADER_NodeID : " + leader.getNodeId())
+         */
         List<Agent> polices = getTeammatePolice(true).stream()
-                .sorted(Comparator.comparingInt(Agent::getId)).toList();
+                .sorted(Comparator.comparingInt((Agent o) -> config.getMinDistance(o.getNodeId(), target))
+                        .thenComparingInt(Agent::getId).reversed()).toList();
 
         List<Integer> neighborNodes = config.getNearestNodes(target,polices.size());
 
@@ -59,7 +68,6 @@ public class PoliceAI extends AI {
         int dest = neighborNodes.get(index % neighborNodes.size());
 
         path = getCheaperPath(currNodeId, dest);
-        path.add(target);
     }
 
     private int getNextInPath() {
