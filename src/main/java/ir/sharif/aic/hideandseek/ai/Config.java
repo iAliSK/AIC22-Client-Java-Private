@@ -3,7 +3,6 @@ package ir.sharif.aic.hideandseek.ai;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.*;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
 
 public class Config {
@@ -77,10 +76,11 @@ public class Config {
         return next[nodeId - 1];
     }
 
-    public ArrayList<Integer> getNearestNodes(int nodeId, int nodesCount) {
+    public ArrayList<Integer> getNearestNodes(int nodeId) {
         ArrayList<Integer> neighborNodes = getNeighborNodes(nodeId);
         ArrayList<Integer> temp = new ArrayList<>();
         HashSet<Integer> nodes = new HashSet<>(neighborNodes);
+        nodes.add(nodeId);
 
         for (Integer node : neighborNodes) {
             nodes.addAll(getNeighborNodes(node));
@@ -91,10 +91,13 @@ public class Config {
         }
 
         ArrayList<Integer> selectedNodes = new ArrayList<>(nodes);
-        if (!selectedNodes.contains(nodeId))
-            selectedNodes.add(0,nodeId);
-        selectedNodes.sort(Comparator.comparingInt(node -> getMinDistance(nodeId, (Integer) node)).reversed()
-                                     .thenComparing(count -> getNeighborNodesCount(nodeId)).reversed());
+        selectedNodes.sort((o1, o2) -> {
+            int temp1 = Integer.compare(getMinDistance(o1, nodeId), getMinDistance(o2, nodeId));
+            if (temp1 != 0) return temp1;
+            int temp2 = Integer.compare(getNeighborNodesCount(o2), getNeighborNodesCount(o1));
+            if (temp2 != 0) return temp2;
+            return Integer.compare(o1, o2);
+        });
 
         return selectedNodes;
     }

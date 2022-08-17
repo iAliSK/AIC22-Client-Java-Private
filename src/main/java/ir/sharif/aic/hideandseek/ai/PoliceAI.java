@@ -58,14 +58,32 @@ public class PoliceAI extends AI {
                 "  LEADER_ID : " + leader.getId() +
                 "  LEADER_NodeID : " + leader.getNodeId())
          */
-        List<Agent> polices = getTeammatePolice(true).stream()
-                .sorted(Comparator.comparingInt((Agent o) -> config.getMinDistance(o.getNodeId(), target))
-                        .thenComparingInt(Agent::getId).reversed()).toList();
+        ArrayList<Agent> polices = getTeammatePolice(false);
+        polices.sort((Comparator.comparingInt
+                        ((Agent o) -> config.getMinDistance(o.getNodeId(), target)).reversed()
+                .thenComparingInt(Agent::getId)));
 
-        List<Integer> neighborNodes = config.getNearestNodes(target,polices.size());
+        ArrayList<Integer> neighborNodes = config.getNearestNodes(target);
+
+        /*
+        StringBuilder sb = new StringBuilder();
+        for (Agent a:polices) {
+            sb.append(a.getId()).append(" ");
+        }
+
+         */
+
+
+        //System.out.println("TargetNode : " + target + " leaderID : " + leader.getId() + " neighborNodes" + neighborNodes);
+        //System.out.println("polices :::: " + polices.size() + " :::: " + sb);
+
+
 
         int index = polices.indexOf(view.getViewer());
         int dest = neighborNodes.get(index % neighborNodes.size());
+
+        //System.out.println("index " + index);
+        //System.out.println("dest " + dest);
 
         path = getCheaperPath(currNodeId, dest);
     }
@@ -83,12 +101,18 @@ public class PoliceAI extends AI {
     }
 
     private int getNearestThief(int nodeId) {
-        return thievesLocation.stream().min(Comparator.comparingInt(thiefNodeId ->
-                config.getMinDistance(nodeId, thiefNodeId))).orElse(-1);
+        return thievesLocation.stream().min((o1, o2) -> {
+            int temp1 = Integer.compare(config.getMinDistance(o1, nodeId), config.getMinDistance(o2, nodeId));
+            if (temp1 != 0) return temp1;
+            int temp2 = Integer.compare(config.getNeighborNodesCount(o1), config.getNeighborNodesCount(o2));
+            if (temp2 != 0) return temp2;
+            return Integer.compare(o1, o2);
+        })
+                .orElse(-1);
     }
 
     private Agent getPoliceWithMinId() {
-        return getTeammatePolice(true).stream()
+        return getTeammatePolice(false).stream()
                 .min(Comparator.comparingInt(Agent::getId)).orElse(null);
     }
 
