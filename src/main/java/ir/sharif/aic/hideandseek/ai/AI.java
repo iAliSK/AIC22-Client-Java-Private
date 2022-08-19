@@ -1,5 +1,6 @@
 package ir.sharif.aic.hideandseek.ai;
 
+import ir.sharif.aic.hideandseek.Logger;
 import ir.sharif.aic.hideandseek.client.Phone;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.AgentType;
@@ -17,6 +18,7 @@ public abstract class AI {
     protected int currNodeId;
     protected int currAgentId;
     protected int lastNodeId;
+    protected Logger logger;
 
 
     public abstract int getStartingNode(GameView view);

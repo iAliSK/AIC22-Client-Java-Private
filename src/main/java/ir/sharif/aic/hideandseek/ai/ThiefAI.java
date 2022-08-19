@@ -1,5 +1,6 @@
 package ir.sharif.aic.hideandseek.ai;
 
+import ir.sharif.aic.hideandseek.Logger;
 import ir.sharif.aic.hideandseek.client.Phone;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
@@ -20,6 +21,8 @@ public class ThiefAI extends AI {
     public int getStartingNode(GameView view) {
         updateGame(view);
         path = new ArrayList<>();
+        logger = new Logger(String.format("logs/thief-%d.log", currAgentId));
+        logger.enableLogging(true);
         lastNodeId = getFarthestRandomNodeFromPoliceStation(0.8);
         return lastNodeId;
     }
