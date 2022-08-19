@@ -26,7 +26,7 @@ public class PoliceAI extends AI {
     public int getStartingNode(GameView view) {
         updateGame(view);
         logger = new Logger(String.format("logs/police-%d.log", currAgentId));
-        logger.enableLogging(true);
+        logger.enableLogging(false);
         initPath();
         return 1;
     }
@@ -71,7 +71,7 @@ public class PoliceAI extends AI {
 
         for (Agent node : polices) {
             if (neighborNodes.contains(node.getNodeId()))
-               return true;
+                return true;
         }
 
         return false;

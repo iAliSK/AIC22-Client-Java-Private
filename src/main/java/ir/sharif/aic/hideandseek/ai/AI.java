@@ -132,6 +132,16 @@ public abstract class AI {
         return config.getPathCost(fromNodeId, toNodeId) <= view.getBalance();
     }
 
+    public boolean isMoneyEnoughToMove(ArrayList<Integer> path) {
+        double cost = 0;
+        for (int i = 1; i < path.size(); i++) {
+            cost += config.getPathCost(path.get(i), path.get(i - 1));
+        }
+        cost -= (path.size() - 1) * view.getConfig().getIncomeSettings().getThievesIncomeEachTurn();
+
+        return cost <= view.getBalance();
+    }
+
     protected int getRemainingVisibleTurns() {
         int currTurn = view.getTurn().getTurnNumber();
         List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
@@ -142,6 +152,16 @@ public abstract class AI {
         return visibleTurns.get(i) - currTurn;
     }
 
+    protected int getTurnsPassedAfterLastVisibility() {
+        int currTurn = view.getTurn().getTurnNumber();
+        List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
+        int i = 0;
+        while (visibleTurns.get(i) <= currTurn) {
+            i++;
+        }
+        if (i == 0) return Integer.MAX_VALUE;
+        return currTurn - visibleTurns.get(i - 1);
+    }
     protected int getVisibleTurnsDiff() {
         int currTurn = view.getTurn().getTurnNumber();
         List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
