@@ -21,8 +21,8 @@ public class ThiefAI extends AI {
     public int getStartingNode(GameView view) {
         updateGame(view);
         path = new ArrayList<>();
-        logger = new Logger(String.format("logs/thief-%d.log", currAgentId));
-        logger.enableLogging(true);
+//        logger = new Logger(String.format("logs/thief-%d.log", currAgentId));
+//        logger.enableLogging(true);
         return getFarthestRandomNodeFromPoliceStation(0.7);
     }
 
@@ -57,19 +57,26 @@ public class ThiefAI extends AI {
         allPaths.sort((p1, p2) -> {
             int next1 = getNextInPath(p1);
             int next2 = getNextInPath(p2);
+            int last1 = p1.get(p1.size() - 1);
+            int last2 = p2.get(p2.size() - 1);
 
             int compPathSafety = comparePathSafety(p1, p2);
             int compPathCost = comparePathCost(p1, p2);
             int compPathSize = comparePathSize(p1, p2);
             int compThievesCount = comparePathThievesCount(p1, p2);
 //            int compWaysCount = compareNeighborNodes(next1, next2);
-            int compThievesDist = compareThievesDistance(p1.get(p1.size() - 1), p2.get(p2.size() - 1));
+            int compThievesDist = compareThievesDistance(next1, next2);
 //            int compNodeSafety = compareNodesSafety(next1, next2);
 //            int compPoliceDist = comparePoliceDist(next1, next2);
 
+            int compWaysCount = compareNeighborNodes(last1, last2);
+
+
             if (compPathSafety != 0) return compPathSafety;
+            if (compWaysCount != 0) return compWaysCount;
+            if (compPathSize != 0) return compPathSize;
+
 //            if (compThievesDist != 0) return compThievesDist;
-//            if (compPathSize != 0) return compPathSize;
 //            if (compThievesCount != 0) return compThievesCount;
 
             return compPathCost;
@@ -95,6 +102,10 @@ public class ThiefAI extends AI {
         for (ArrayList<Integer> path : allPaths) {
             int next = getNextInPath(path);
 
+            if (isPoliceNeighbor(next)) {
+                continue;
+            }
+
             if (next == currNodeId && getNearestPoliceDistance(currNodeId) == 1) {
                 continue;
             }
@@ -116,24 +127,6 @@ public class ThiefAI extends AI {
 
             if (isVerySafePath(path)) {
                 verySafePaths.add(path);
-
-                if (isTeammateThiefHere(currNodeId)
-                        && !isPoliceNeighbor(currNodeId)
-                        && config.getNeighborNodesCount(currNodeId) >= 3) {
-
-                    if (getRandInt(10) % 2 == 0) {
-                        ignoredPaths.add(path);
-                        continue;
-                    }
-                }
-
-                if (isTeammateThiefHere(next)
-                        && !isPoliceNeighbor(currNodeId)
-                        && config.getNeighborNodesCount(currNodeId) >= 3) {
-
-                    ignoredPaths.add(path);
-                    continue;
-                }
             }
 
             if (isSafePath(path)) {
@@ -150,7 +143,7 @@ public class ThiefAI extends AI {
             type = "safe";
         }
 
-        if (verySafePaths.size() > 0 && verySafePaths.get(0).size() >= 2) {
+        if (verySafePaths.size() > 0 && verySafePaths.get(0).size() >= 3) {
             path = verySafePaths.get(0);
             type = "very-safe";
         }
@@ -163,24 +156,24 @@ public class ThiefAI extends AI {
 
         nextMove = getNextInPath(path);
 
-        logger.log(
-                "turn:%d\t" +
-                        "curr:%d\t" +
-                        "next:%d\t" +
-                        "path:%s\t" +
-                        "type:%s\t" +
-                        "vs:%d s:%d ig:%d\t" +
-                        "vs:%s\n",
-                view.getTurn().getTurnNumber(),
-                currNodeId,
-                nextMove,
-                path.toString(),
-                type,
-                verySafePaths.size(),
-                safePaths.size(),
-                ignoredPaths.size(),
-                verySafePaths
-        );
+//        logger.log(
+//                "turn:%d\t" +
+//                        "curr:%d\t" +
+//                        "next:%d\t" +
+//                        "path:%s\t" +
+//                        "type:%s\t" +
+//                        "vs:%d s:%d ig:%d\t" +
+//                        "vs:%s\n",
+//                view.getTurn().getTurnNumber(),
+//                currNodeId,
+//                nextMove,
+//                path.toString(),
+//                type,
+//                verySafePaths.size(),
+//                safePaths.size(),
+//                ignoredPaths.size(),
+//                verySafePaths
+//        );
 
         return nextMove;
     }
@@ -283,8 +276,8 @@ public class ThiefAI extends AI {
 
     private int compareNeighborNodes(int node1, int node2) {
         return Integer.compare(
-                getAllowedNeighborNodesCount(node2),
-                getAllowedNeighborNodesCount(node1)
+                config.getNeighborNodesCount(node2),
+                config.getNeighborNodesCount(node1)
         );
     }
 
@@ -352,6 +345,23 @@ public class ThiefAI extends AI {
                 getTotalPoliceDist(node2),
                 getTotalPoliceDist(node1)
         );
+    }
+
+    private boolean shouldGetAwayFromTeammateThief(int next) {
+        if (isPoliceNeighbor(currNodeId))
+            return false;
+
+        List<Agent> teammateThieves = getTeammateThieves(false);
+        int minId = currAgentId;
+        for (Agent agent : teammateThieves) {
+            if (agent.getNodeId() == next) {
+                return true;
+            }
+            if (agent.getNodeId() == currNodeId && agent.getId() < minId) {
+                minId = agent.getId();
+            }
+        }
+        return minId == currAgentId;
     }
 
 }

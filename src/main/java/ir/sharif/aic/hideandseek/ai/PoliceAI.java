@@ -23,8 +23,8 @@ public class PoliceAI extends AI {
     @Override
     public int getStartingNode(GameView view) {
         updateGame(view);
-        logger = new Logger(String.format("logs/police-%d.log", currAgentId));
-        logger.enableLogging(false);
+//        logger = new Logger(String.format("logs/police-%d.log", currAgentId));
+//        logger.enableLogging(false);
         initPath();
         return 1;
     }
