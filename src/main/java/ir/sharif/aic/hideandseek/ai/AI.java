@@ -17,6 +17,7 @@ public abstract class AI {
     protected Phone phone;
     protected int currNodeId;
     protected int currAgentId;
+    protected int lastNodeId;
     protected Logger logger;
 
 
@@ -161,4 +162,23 @@ public abstract class AI {
         if (i == 0) return Integer.MAX_VALUE;
         return currTurn - visibleTurns.get(i - 1);
     }
+    protected int getVisibleTurnsDiff() {
+        int currTurn = view.getTurn().getTurnNumber();
+        List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
+        int i = 0;
+        while (visibleTurns.get(i) <= currTurn) {
+            i++;
+        }
+        if (i == 0) return visibleTurns.get(i);
+        return visibleTurns.get(i) - visibleTurns.get(i-1);
+    }
+
+    protected List<Integer> getVisibleTurns() {
+        return  view.getConfig().getTurnSettings().getVisibleTurnsList();
+    }
+
+    protected int getMaxTurn() {
+        return view.getConfig().getTurnSettings().getMaxTurns();
+    }
+
 }
