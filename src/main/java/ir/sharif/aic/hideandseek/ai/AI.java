@@ -16,8 +16,6 @@ public abstract class AI {
     protected Phone phone;
     protected int currNodeId;
     protected int currAgentId;
-    protected int lastNodeId;
-
 
     public abstract int getStartingNode(GameView view);
 
@@ -25,9 +23,9 @@ public abstract class AI {
 
     protected void updateGame(GameView view) {
         this.config = Config.getInstance(view);
+        this.currAgentId = view.getViewer().getId();
         this.view = view;
         this.currNodeId = view.getViewer().getNodeId();
-        this.currAgentId = view.getViewer().getId();
     }
 
     protected int getFarthestRandomNodeFromPoliceStation(double percent) {
@@ -51,7 +49,7 @@ public abstract class AI {
                 comparingInt(d -> config.getNeighborNodesCount((Integer) d)).reversed());
 
 
-        int randIndex = getRandInt(farthestNodes.length / 2);
+        int randIndex = getRandInt((int) (farthestNodes.length / 1.5));
         return farthestNodes[randIndex];
     }
 
@@ -130,6 +128,16 @@ public abstract class AI {
         return config.getPathCost(fromNodeId, toNodeId) <= view.getBalance();
     }
 
+    public boolean isMoneyEnoughToMove(ArrayList<Integer> path) {
+        double cost = 0;
+        for (int i = 1; i < path.size(); i++) {
+            cost += config.getPathCost(path.get(i), path.get(i - 1));
+        }
+        cost -= (path.size() - 1) * view.getConfig().getIncomeSettings().getThievesIncomeEachTurn();
+
+        return cost <= view.getBalance();
+    }
+
     protected int getRemainingVisibleTurns() {
         int currTurn = view.getTurn().getTurnNumber();
         List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
@@ -140,4 +148,14 @@ public abstract class AI {
         return visibleTurns.get(i) - currTurn;
     }
 
+    protected int getTurnsPassedAfterLastVisibility() {
+        int currTurn = view.getTurn().getTurnNumber();
+        List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
+        int i = 0;
+        while (visibleTurns.get(i) <= currTurn) {
+            i++;
+        }
+        if (i == 0) return Integer.MAX_VALUE;
+        return currTurn - visibleTurns.get(i - 1);
+    }
 }

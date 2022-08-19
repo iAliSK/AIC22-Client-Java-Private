@@ -76,7 +76,7 @@ public class PoliceAI extends AI {
 
     private int getNearestThief(int nodeId) {
         return thievesLocation.stream().min(Comparator.comparingInt(thiefNodeId ->
-                config.getMinDistance(nodeId, thiefNodeId))).orElse(-1);
+                config.getMinDistance(nodeId, thiefNodeId))).orElse(getFarthestRandomNodeFromPoliceStation(0.6));
     }
 
     private Agent getPoliceWithMinId() {
