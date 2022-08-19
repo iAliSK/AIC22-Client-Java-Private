@@ -1,9 +1,9 @@
 package ir.sharif.aic.hideandseek.ai;
 
-import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
-import ir.sharif.aic.hideandseek.protobuf.AIProto.Path;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Config {
 
@@ -74,6 +74,32 @@ public class Config {
 
     public ArrayList<Integer> getNeighborNodes(int nodeId) {
         return next[nodeId - 1];
+    }
+
+    public ArrayList<Integer> getNearestNodes(int nodeId) {
+        ArrayList<Integer> neighborNodes = getNeighborNodes(nodeId);
+        ArrayList<Integer> temp = new ArrayList<>();
+        HashSet<Integer> nodes = new HashSet<>(neighborNodes);
+        nodes.add(nodeId);
+
+        for (Integer node : neighborNodes) {
+            nodes.addAll(getNeighborNodes(node));
+            temp.addAll(getNeighborNodes(node));
+        }
+        for (Integer node : temp) {
+            nodes.addAll(getNeighborNodes(node));
+        }
+
+        ArrayList<Integer> selectedNodes = new ArrayList<>(nodes);
+        selectedNodes.sort((o1, o2) -> {
+            int temp1 = Integer.compare(getMinDistance(o1, nodeId), getMinDistance(o2, nodeId));
+            if (temp1 != 0) return temp1;
+            int temp2 = Integer.compare(getNeighborNodesCount(o2), getNeighborNodesCount(o1));
+            if (temp2 != 0) return temp2;
+            return Integer.compare(o1, o2);
+        });
+
+        return selectedNodes;
     }
 
     public boolean isNeighbor(int nodeId1, int nodeId2) {

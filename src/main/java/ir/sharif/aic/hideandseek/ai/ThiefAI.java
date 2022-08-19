@@ -1,5 +1,6 @@
 package ir.sharif.aic.hideandseek.ai;
 
+import ir.sharif.aic.hideandseek.Logger;
 import ir.sharif.aic.hideandseek.client.Phone;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
@@ -20,6 +21,8 @@ public class ThiefAI extends AI {
     public int getStartingNode(GameView view) {
         updateGame(view);
         path = new ArrayList<>();
+        logger = new Logger(String.format("logs/thief-%d.log", currAgentId));
+        logger.enableLogging(true);
         return getFarthestRandomNodeFromPoliceStation(0.7);
     }
 
@@ -65,8 +68,8 @@ public class ThiefAI extends AI {
 //            int compPoliceDist = comparePoliceDist(next1, next2);
 
             if (compPathSafety != 0) return compPathSafety;
-            if (compThievesDist != 0) return -compThievesDist;
-            if (compPathSize != 0) return compPathSize;
+//            if (compThievesDist != 0) return compThievesDist;
+//            if (compPathSize != 0) return compPathSize;
 //            if (compThievesCount != 0) return compThievesCount;
 
             return compPathCost;
@@ -160,25 +163,24 @@ public class ThiefAI extends AI {
 
         nextMove = getNextInPath(path);
 
-//        logger.append(String.format(
-//                "turn:%d\t" +
-//                        "curr:%d\t" +
-//                        "next:%d\t" +
-//                        "path:%s\t" +
-//                        "type:%s\t" +
-//                        "vs:%d s:%d ig:%d\t" +
-//                        "vs:%s\n",
-//                view.getTurn().getTurnNumber(),
-//                currNodeId,
-//                nextMove,
-//                path.toString(),
-//                type,
-//                verySafePaths.size(),
-//                safePaths.size(),
-//                ignoredPaths.size(),
-//                verySafePaths
-//        ));
-//        logger.flush();
+        logger.log(
+                "turn:%d\t" +
+                        "curr:%d\t" +
+                        "next:%d\t" +
+                        "path:%s\t" +
+                        "type:%s\t" +
+                        "vs:%d s:%d ig:%d\t" +
+                        "vs:%s\n",
+                view.getTurn().getTurnNumber(),
+                currNodeId,
+                nextMove,
+                path.toString(),
+                type,
+                verySafePaths.size(),
+                safePaths.size(),
+                ignoredPaths.size(),
+                verySafePaths
+        );
 
         return nextMove;
     }

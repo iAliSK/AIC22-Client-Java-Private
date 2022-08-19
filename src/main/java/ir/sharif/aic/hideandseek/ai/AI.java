@@ -1,5 +1,6 @@
 package ir.sharif.aic.hideandseek.ai;
 
+import ir.sharif.aic.hideandseek.Logger;
 import ir.sharif.aic.hideandseek.client.Phone;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.AgentType;
@@ -16,6 +17,8 @@ public abstract class AI {
     protected Phone phone;
     protected int currNodeId;
     protected int currAgentId;
+    protected Logger logger;
+
 
     public abstract int getStartingNode(GameView view);
 
@@ -23,9 +26,9 @@ public abstract class AI {
 
     protected void updateGame(GameView view) {
         this.config = Config.getInstance(view);
-        this.currAgentId = view.getViewer().getId();
         this.view = view;
         this.currNodeId = view.getViewer().getNodeId();
+        this.currAgentId = view.getViewer().getId();
     }
 
     protected int getFarthestRandomNodeFromPoliceStation(double percent) {
@@ -49,7 +52,7 @@ public abstract class AI {
                 comparingInt(d -> config.getNeighborNodesCount((Integer) d)).reversed());
 
 
-        int randIndex = getRandInt((int) (farthestNodes.length / 1.5));
+        int randIndex = getRandInt(farthestNodes.length / 2);
         return farthestNodes[randIndex];
     }
 

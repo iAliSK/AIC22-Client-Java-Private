@@ -1,5 +1,6 @@
 package ir.sharif.aic.hideandseek.ai;
 
+import ir.sharif.aic.hideandseek.Logger;
 import ir.sharif.aic.hideandseek.client.Phone;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
@@ -22,6 +23,8 @@ public class PoliceAI extends AI {
     @Override
     public int getStartingNode(GameView view) {
         updateGame(view);
+        logger = new Logger(String.format("logs/police-%d.log", currAgentId));
+        logger.enableLogging(false);
         initPath();
         return 1;
     }
