@@ -142,4 +142,23 @@ public abstract class AI {
         return visibleTurns.get(i) - currTurn;
     }
 
+    protected int getVisibleTurnsDiff() {
+        int currTurn = view.getTurn().getTurnNumber();
+        List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
+        int i = 0;
+        while (visibleTurns.get(i) <= currTurn) {
+            i++;
+        }
+        if (i == 0) return visibleTurns.get(i);
+        return visibleTurns.get(i) - visibleTurns.get(i-1);
+    }
+
+    protected List<Integer> getVisibleTurns() {
+        return  view.getConfig().getTurnSettings().getVisibleTurnsList();
+    }
+
+    protected int getMaxTurn() {
+        return view.getConfig().getTurnSettings().getMaxTurns();
+    }
+
 }

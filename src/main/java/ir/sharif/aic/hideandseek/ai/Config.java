@@ -76,6 +76,25 @@ public class Config {
         return next[nodeId - 1];
     }
 
+    public ArrayList<Integer> getNeighborNodes(ArrayList<Integer> nodeId, int degree,
+                                               HashSet<Integer> nodes, boolean onlyDegree) {
+        if (degree == 0) {
+            if (!onlyDegree) return new ArrayList<>(nodes);
+            return nodeId;
+        }
+
+        ArrayList<Integer> temp = new ArrayList<>();
+        for (Integer node : nodeId) {
+            for (Integer neighbor : getNeighborNodes(node)) {
+                if (!nodes.contains(neighbor))
+                    temp.add(neighbor);
+            }
+        }
+
+        nodes.addAll(temp);
+        return getNeighborNodes(temp,degree-1,nodes,onlyDegree);
+    }
+
     public ArrayList<Integer> getNearestNodes(int nodeId) {
         ArrayList<Integer> neighborNodes = getNeighborNodes(nodeId);
         ArrayList<Integer> temp = new ArrayList<>();
