@@ -25,9 +25,10 @@ public class PoliceAI extends AI {
     @Override
     public int getStartingNode(GameView view) {
         updateGame(view);
-//        logger = new Logger(String.format("logs/police-%d.log", currAgentId));
-//        logger.enableLogging(true);
-        initPath();
+        logger = new Logger(String.format("logs/police-%d.log", currAgentId));
+        logger.enableLogging(false);
+        int RemainingTurnsToFirstVisibleTurn = (getVisibleTurns().get(0) - 2) / 2;
+        initPath(RemainingTurnsToFirstVisibleTurn);
         return 1;
     }
 
@@ -38,16 +39,117 @@ public class PoliceAI extends AI {
     public int move(GameView view) {
         updateGame(view);
 
-        if (isVisibleTurn()) {
-            setThievesLocation();
-            target = getNearestThief();
-            updatePath(target);
-        }
-        if (target > 0 && !isVisibleTurn() && isPoliceWithDis1())
-            updatePath(bestPossibilityForThief());
+        if (view.getTurn().getTurnNumber() < getVisibleTurns().get(0)) {
+            return getNextInPath();
+        } else if (isVisibleTurn()) {
 
-        return getNextInPath();
+        } else {
+
+        }
+        return 1;
     }
+
+    ArrayList<Integer> findNodesWithMaxDiff(ArrayList<Integer> nodes, int count) {
+
+        if (count >= nodes.size()) return nodes;
+
+        int n = nodes.size();
+        int[] allNodes = new int[n];
+        int c = 0;
+        for (Integer nodeID : nodes) {
+            allNodes[c] = nodeID;
+            c++;
+        }
+
+        int[][] diff = new int[n][n];
+        int max = -1;
+        int m = 0,k = 0;
+        for (int i = 0; i < n-1; i++) {
+            for (int j = i+1; j < n; j++) {
+                diff[i][j] = config.getMinDistance(allNodes[i],allNodes[j]);
+                diff[j][i] = diff[i][j];
+                if (diff[i][j] > max) {
+                    max = diff[i][j];
+                    m = allNodes[i];
+                    k = allNodes[j];
+                }
+            }
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>(count);
+        ans.add(allNodes[m]);
+        ans.add(allNodes[k]);
+        if (count == 2)
+            return ans;
+
+        //=======================
+        nodes.sort((o1, o2) -> Integer.compare(
+                config.getMinDistance(o2, ans.get(0)) * config.getMinDistance(o2, ans.get(1)),
+                config.getMinDistance(o1, ans.get(0)) * config.getMinDistance(o1, ans.get(1))));
+        if (count == 3) {
+            ans.add(nodes.get(0));
+        } else {
+            int counter = 0;
+            for (Integer node : nodes) {
+                if (counter == count-2) break;
+                ans.add(node);
+                counter++;
+            }
+        }
+
+        return ans;
+    }
+
+    void initPath(int number) {
+        ArrayList<Integer> start = new ArrayList<>();
+        start.add(1);
+        ArrayList<Integer> nodes = config.getNeighborNodes(start,number,new HashSet<>(),true);
+
+        nodes.sort((o1, o2) -> {
+            int temp1 = Integer.compare(config.getNeighborNodesCount(o2), config.getNeighborNodesCount(o1));
+            if (temp1 != 0) return temp1;
+            int temp2 = Double.compare(config.getPathCost(getCheaperPath(1,o1)),
+                    config.getPathCost(getCheaperPath(1,o2)));
+            if (temp2 != 0) return temp2;
+            return Integer.compare(o1, o2);
+        });
+
+        ArrayList<Agent> polices = getTeammatePolice(true);
+        polices.sort(Comparator.comparingInt(Agent::getId));
+
+        int index = polices.indexOf(view.getViewer());
+        int dest = nodes.get(index % nodes.size());
+
+        path = getCheaperPath(1,dest);
+    }
+
+    private int getNextInPath() {
+        int index = path.indexOf(currNodeId);
+        int choseNode = currNodeId;
+        if (index >= 0 && index < path.size() - 1) {
+            int next = path.get(index + 1);
+            if (isMoneyEnoughToMove(currNodeId, next)) {
+                choseNode = next;
+            }
+        }
+        return choseNode;
+    }
+
+
+//
+//    public int move(GameView view) {
+//        updateGame(view);
+//
+//        if (isVisibleTurn()) {
+//            setThievesLocation();
+//            target = getNearestThief();
+//            updatePath(target);
+//        }
+//        if (target > 0 && !isVisibleTurn() && isPoliceWithDis1())
+//            updatePath(bestPossibilityForThief());
+//
+//        return getNextInPath();
+//    }
 
     boolean isSurrounded() {
         return emptyNodes().size() == 0;
@@ -101,11 +203,7 @@ public class PoliceAI extends AI {
         return neighborNodes.get(0);
     }
 
-    void initPath() {
-        path = getCheaperPath(currNodeId,
-                getFarthestRandomNodeFromPoliceStation(0.7)
-        );
-    }
+
 
     void updatePath(int tg) {
 
@@ -170,18 +268,18 @@ public class PoliceAI extends AI {
 
         int index = polices.indexOf(view.getViewer());
 
-//        logger.log(
-//                "turn:%d\t" +
-//                        "curr:%d\t" +
-//                        "path:%s\t" +
-//                        "polices:%s\t" +
-//                        "index:%d\n",
-//                view.getTurn().getTurnNumber(),
-//                currNodeId,
-//                path.toString(),
-//                polices.toString(),
-//                index
-//        );
+        logger.log(
+                "turn:%d\t" +
+                        "curr:%d\t" +
+                        "path:%s\t" +
+                        "polices:%s\t" +
+                        "index:%d\n",
+                view.getTurn().getTurnNumber(),
+                currNodeId,
+                path.toString(),
+                polices.toString(),
+                index
+        );
 
         int dest = neighborNodes.get(index % neighborNodes.size());
 
@@ -190,18 +288,6 @@ public class PoliceAI extends AI {
         //if (config.getMinDistance(currNodeId,target) <= 2) dest = currNodeId;
 
         path = getCheaperPath(currNodeId, dest);
-    }
-
-    private int getNextInPath() {
-        int index = path.indexOf(currNodeId);
-        int choseNode = currNodeId;
-        if (index >= 0 && index < path.size() - 1) {
-            int next = path.get(index + 1);
-            if (isMoneyEnoughToMove(currNodeId, next)) {
-                choseNode = next;
-            }
-        }
-        return choseNode;
     }
 
 //    private int getNextBeginning() {
