@@ -10,6 +10,10 @@ import ir.sharif.aic.hideandseek.protobuf.AIProto.Team;
 import java.util.*;
 import java.util.stream.IntStream;
 
+enum Safety {
+    LOW, MEDIUM, HIGH
+}
+
 public abstract class AI {
     protected Config config;
     protected GameView view;
@@ -41,7 +45,7 @@ public abstract class AI {
 
         int maxDist = Arrays.stream(distances).max().orElse(2);
 
-        int minDist = (int) (percent * maxDist);
+        int minDist = (int) Math.ceil(percent * maxDist);
 
         Integer[] farthestNodes = IntStream.range(1, distances.length + 1)
                 .filter(i -> distances[i - 1] >= minDist)
@@ -97,14 +101,19 @@ public abstract class AI {
         );
     }
 
+    public List<Integer> mapToAgentId(ArrayList<Agent> agents) {
+        return agents.stream().map(Agent::getId).toList();
+    }
+
+    public List<Integer> mapToNodeId(ArrayList<Agent> agents) {
+        return agents.stream().map(Agent::getNodeId).toList();
+    }
 
     public boolean isVisibleTurn() {
-        return view.getConfig().getTurnSettings().getVisibleTurnsList()
-                .contains(view.getTurn().getTurnNumber());
+        return getTurnsPassedAfterLastVisibility() <= 1;
     }
 
     public ArrayList<Integer> getCheaperPath(int fromNodeId, int toNodeId) {
-
         int min = Integer.MAX_VALUE;
         ArrayList<Integer> temp = null;
         for (ArrayList<Integer> path : config.getAllShortestPaths(fromNodeId, toNodeId)) {
@@ -112,13 +121,11 @@ public abstract class AI {
             for (int i = 1; i < path.size(); i++) {
                 cost += config.getPathCost(path.get(i - 1), path.get(i));
             }
-
             if (cost < min) {
                 min = cost;
                 temp = path;
             }
         }
-
         return temp;
     }
 
@@ -138,7 +145,6 @@ public abstract class AI {
             cost += config.getPathCost(path.get(i), path.get(i - 1));
         }
         cost -= (path.size() - 1) * view.getConfig().getIncomeSettings().getThievesIncomeEachTurn();
-
         return cost <= view.getBalance();
     }
 
@@ -162,6 +168,7 @@ public abstract class AI {
         if (i == 0) return Integer.MAX_VALUE;
         return currTurn - visibleTurns.get(i - 1);
     }
+
     protected int getVisibleTurnsDiff() {
         int currTurn = view.getTurn().getTurnNumber();
         List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
@@ -170,11 +177,11 @@ public abstract class AI {
             i++;
         }
         if (i == 0) return visibleTurns.get(i);
-        return visibleTurns.get(i) - visibleTurns.get(i-1);
+        return visibleTurns.get(i) - visibleTurns.get(i - 1);
     }
 
     protected List<Integer> getVisibleTurns() {
-        return  view.getConfig().getTurnSettings().getVisibleTurnsList();
+        return view.getConfig().getTurnSettings().getVisibleTurnsList();
     }
 
     protected int getMaxTurn() {

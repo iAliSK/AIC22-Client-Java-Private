@@ -68,10 +68,6 @@ public class Config {
         return grid.getAllShortestPaths(fromNodeId - 1, toNodeId - 1);
     }
 
-    public ArrayList<ArrayList<Integer>> getAllPaths(int fromNodeId, int toNodeId) {
-        return grid.getAllPaths(fromNodeId - 1, toNodeId - 1);
-    }
-
     public ArrayList<Integer> getNeighborNodes(int nodeId) {
         return next[nodeId - 1];
     }

@@ -7,12 +7,21 @@ import java.util.*;
 
 public class Grid {
 
+    public static ArrayList<Integer> filter;
     private int[][] D;
     private int size;
 
     public Grid(GameView gameView) {
         initGrid(gameView);
+        filter = new ArrayList<>();
     }
+
+    public Grid(int[][] grid) {
+        D = grid;
+        size = grid.length;
+        filter = new ArrayList<>();
+    }
+
 
     private void initGrid(GameView gameView) {
         size = gameView.getConfig().getGraph().getNodesCount();
@@ -67,7 +76,7 @@ public class Grid {
         while (!q.isEmpty()) {
             int u = q.poll();
             for (int v = 0; v < n; v++) {
-                if (D[u][v] != 1) continue;
+                if (D[u][v] != 1 || filter.contains(v + 1)) continue;
                 if (dist[v] > dist[u] + 1) {
                     dist[v] = dist[u] + 1;
                     q.offer(v);
@@ -104,34 +113,6 @@ public class Grid {
         bfs(parent, dst);
         findPaths(paths, path, parent, src);
         return paths;
-    }
-
-
-    public ArrayList<ArrayList<Integer>> getAllPaths(int src, int dst) {
-        ArrayList<ArrayList<Integer>> allPaths = new ArrayList<>();
-        Queue<List<Integer>> queue = new LinkedList<>();
-
-        List<Integer> path = new ArrayList<>();
-        path.add(src);
-        queue.offer(path);
-
-        while (!queue.isEmpty()) {
-            path = queue.poll();
-            int last = path.get(path.size() - 1);
-
-            if (last == dst) {
-                allPaths.add(new ArrayList<>(path));
-            }
-
-            for (int node : getNeighborNodes(last)) {
-                if (!path.contains(node-1)) {
-                    List<Integer> newpath = new ArrayList<>(path);
-                    newpath.add(node-1);
-                    queue.offer(newpath);
-                }
-            }
-        }
-        return allPaths;
     }
 
 
