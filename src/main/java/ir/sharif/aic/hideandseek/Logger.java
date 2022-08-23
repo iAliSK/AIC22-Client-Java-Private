@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Logger {
-    private PrintWriter out;
     boolean enableLogging;
+    private PrintWriter out;
 
     public Logger(String fileName) {
         try {

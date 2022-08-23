@@ -25,8 +25,8 @@ public class PoliceAI extends AI {
     @Override
     public int getStartingNode(GameView view) {
         updateGame(view);
-        logger = new Logger(String.format("logs/police-%d.log", currAgentId));
-        logger.enableLogging(true);
+//        logger = new Logger(String.format("logs/police-%d.log", currAgentId));
+//        logger.enableLogging(true);
         initPath();
         return 1;
     }
@@ -170,18 +170,18 @@ public class PoliceAI extends AI {
 
         int index = polices.indexOf(view.getViewer());
 
-        logger.log(
-                "turn:%d\t" +
-                        "curr:%d\t" +
-                        "path:%s\t" +
-                        "polices:%s\t" +
-                        "index:%d\n",
-                view.getTurn().getTurnNumber(),
-                currNodeId,
-                path.toString(),
-                polices.toString(),
-                index
-        );
+//        logger.log(
+//                "turn:%d\t" +
+//                        "curr:%d\t" +
+//                        "path:%s\t" +
+//                        "polices:%s\t" +
+//                        "index:%d\n",
+//                view.getTurn().getTurnNumber(),
+//                currNodeId,
+//                path.toString(),
+//                polices.toString(),
+//                index
+//        );
 
         int dest = neighborNodes.get(index % neighborNodes.size());
 
