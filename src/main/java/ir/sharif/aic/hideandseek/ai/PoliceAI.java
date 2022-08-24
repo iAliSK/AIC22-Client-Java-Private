@@ -14,6 +14,7 @@ public class PoliceAI extends AI {
 
     public List<Integer> thievesLocation = new ArrayList<>();
     public int target = -1;
+    public int stepInPath = -1;
 
     public PoliceAI(Phone phone) {
         this.phone = phone;
@@ -38,7 +39,7 @@ public class PoliceAI extends AI {
     @Override
     public int move(GameView view) {
         updateGame(view);
-        if (target > 0 && view.getViewer().getId() == (isPoliceWithDis1())) {
+        if (target > 0 && view.getViewer().getId() == isPoliceWithDis1()) {
             // همشون میرن روی نود دزد
             // بعد از رسیدن تکلیفشون مشخص نیست
             path.add(target);
@@ -52,12 +53,13 @@ public class PoliceAI extends AI {
     }
 
     private int getNextInPath() {
-        int index = path.indexOf(currNodeId);
+        int index = stepInPath;
         int choseNode = currNodeId;
         if (index >= 0 && index < path.size() - 1) {
             int next = path.get(index + 1);
             if (isMoneyEnoughToMove(currNodeId, next)) {
                 choseNode = next;
+                stepInPath++;
             }
         }
         return choseNode;
@@ -74,11 +76,7 @@ public class PoliceAI extends AI {
 
         Grid.filter.clear();
 
-        ArrayList<Integer> targets = new ArrayList<>();
-        targets.add(target);
-
-        ArrayList<Integer> neighborNodes = config.getNeighborNodes
-                (targets, 1, new HashSet<>(targets), true);
+        ArrayList<Integer> neighborNodes = new ArrayList<>(config.getNeighborNodes(target));
 
         neighborNodes.sort((o1, o2) -> {
             int temp1 = Integer.compare(config.getMinDistance(o1, target), config.getMinDistance(o2, target));
@@ -117,9 +115,9 @@ public class PoliceAI extends AI {
             counter++;
             int dest = neighborNodes.get(index);
             //=======
-            ArrayList<Integer> tgs = new ArrayList<>();
-            tgs.add(target);
-            Grid.filter = config.getNeighborNodes(tgs, 1, new HashSet<>(tgs), false);
+
+            Grid.filter = new ArrayList<>(config.getNeighborNodes(target));
+            Grid.filter.add(target);
             Grid.filter.remove((Integer) dest);
 
             // اینجا ممکنه اکسپشن نال بده اگه مسیری نباشه
@@ -143,8 +141,10 @@ public class PoliceAI extends AI {
         Grid.filter.remove((Integer) dest);
 
         ArrayList<Integer> temp = getCheaperPath(currNodeId,dest);
-        if (temp != null && temp.size() > 0)
+        if (temp != null && temp.size() > 0) {
             path = temp;
+            stepInPath = 0;
+        }
 
         if (path.size() < max) {
             for (int i = 0; i < max-path.size(); i++) {
@@ -196,6 +196,7 @@ public class PoliceAI extends AI {
         int dest = nodes.get(index % nodes.size());
 
         path = getCheaperPath(1, dest);
+        stepInPath = 0;
     }
 
     private int getNearestThief() {
@@ -218,7 +219,7 @@ public class PoliceAI extends AI {
     }
 
     private int getDisToAllPolices(int thiefLoc) {
-        ArrayList<Agent> polices = getTeammatePolice(false);
+        ArrayList<Agent> polices = getTeammatePolice(true);
         int sum = 0;
         for (Agent police : polices) {
             sum += config.getMinDistance(police.getNodeId(), thiefLoc);
@@ -227,7 +228,7 @@ public class PoliceAI extends AI {
     }
 
     private int isPoliceWithDis1() {
-        ArrayList<Agent> polices = getTeammatePolice(false);
+        ArrayList<Agent> polices = getTeammatePolice(true);
 
         ArrayList<Integer> neighborNodes = config.getNeighborNodes(target);
 
@@ -320,7 +321,7 @@ public class PoliceAI extends AI {
     }
 
     ArrayList<Integer> emptyNodes() {
-        ArrayList<Agent> polices = getTeammatePolice(false);
+        ArrayList<Agent> polices = getTeammatePolice(true);
 
         ArrayList<Integer> neighborNodes = config.getNeighborNodes(target);
 
@@ -334,7 +335,7 @@ public class PoliceAI extends AI {
     }
 
     int bestPossibilityForThief() {
-        ArrayList<Agent> polices = getTeammatePolice(false);
+        ArrayList<Agent> polices = getTeammatePolice(true);
 
         ArrayList<Integer> neighborNodes = config.getNeighborNodes(target);
 
@@ -463,7 +464,7 @@ public class PoliceAI extends AI {
     }
 
     private Agent getPoliceWithMinId() {
-        return getTeammatePolice(false).stream()
+        return getTeammatePolice(true).stream()
                 .min(Comparator.comparingInt(Agent::getId)).orElse(null);
     }
 
