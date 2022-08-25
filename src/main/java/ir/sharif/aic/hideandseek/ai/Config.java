@@ -71,7 +71,7 @@ public class Config {
     }
 
     public ArrayList<Integer> getNeighborNodes(int nodeId) {
-        return next[nodeId - 1];
+        return new ArrayList<>(next[nodeId - 1]);
     }
 
 
