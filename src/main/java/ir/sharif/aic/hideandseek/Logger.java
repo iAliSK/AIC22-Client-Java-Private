@@ -6,10 +6,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Logger {
-    boolean enableLogging;
+    private boolean enableLogging;
     private PrintWriter out;
+    private final String fileName;
 
     public Logger(String fileName) {
+        this.fileName = fileName;
+    }
+
+    private void createFile() {
         try {
             out = new PrintWriter(new BufferedWriter(
                     new FileWriter(fileName, true)
@@ -20,6 +25,9 @@ public class Logger {
 
     public void log(String format, Object... args) {
         if (enableLogging) {
+            if (out == null) {
+                createFile();
+            }
             out.printf(format, args);
             out.flush();
         }
