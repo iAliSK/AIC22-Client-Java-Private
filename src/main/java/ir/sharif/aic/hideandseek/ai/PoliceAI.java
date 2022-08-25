@@ -105,7 +105,7 @@ public class PoliceAI extends AI {
                 neighborNodes.toString(),
                 path.toString(),
                 config.getNeighborNodes(target),
-                polices.toString()
+                mapToNodeId(polices, false)
         );
 
         int counter = 0;
@@ -170,7 +170,7 @@ public class PoliceAI extends AI {
                 currNodeId,
                 path.toString(),
                 index,
-                polices.toString()
+                mapToNodeId(polices, false)
 
         );
     }
