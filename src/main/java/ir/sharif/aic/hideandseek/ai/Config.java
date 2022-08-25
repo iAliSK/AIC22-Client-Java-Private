@@ -1,8 +1,10 @@
 package ir.sharif.aic.hideandseek.ai;
 
-import ir.sharif.aic.hideandseek.protobuf.AIProto.*;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
+import ir.sharif.aic.hideandseek.protobuf.AIProto.Path;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Config {
@@ -72,6 +74,7 @@ public class Config {
         return new ArrayList<>(next[nodeId - 1]);
     }
 
+
     public ArrayList<Integer> getNeighborNodes(ArrayList<Integer> nodeId, int degree,
                                                HashSet<Integer> nodes, boolean onlyDegree) {
         if (degree == 0) {
@@ -88,7 +91,7 @@ public class Config {
         }
 
         nodes.addAll(temp);
-        return getNeighborNodes(temp,degree-1,nodes,onlyDegree);
+        return getNeighborNodes(temp, degree - 1, nodes, onlyDegree);
     }
 
     public ArrayList<Integer> getNearestNodes(int nodeId) {
