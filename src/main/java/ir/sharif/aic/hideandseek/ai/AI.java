@@ -103,10 +103,17 @@ public abstract class AI {
         ArrayList<Agent> agents = new ArrayList<>();
         for (Agent agent : view.getVisibleAgentsList()) {
             if (agent.getTeamValue() == team && agent.getTypeValue() == type) {
-                agents.add(agent);
+                if (!agents.contains(agent)) {
+                    agents.add(agent);
+                }
             }
         }
-        if (includeMe) agents.add(view.getViewer());
+        if (includeMe && !agents.contains(view.getViewer())) {
+            agents.add(view.getViewer());
+        } else if (!includeMe) {
+            agents.remove(view.getViewer());
+        }
+
         return agents;
     }
 
