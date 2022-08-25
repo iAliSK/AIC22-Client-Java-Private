@@ -40,6 +40,33 @@ public abstract class AI {
         return getFarthestRandomNode(1, percent);
     }
 
+    protected int getFarthest(int fromNodeId, double percent) {
+        int[] distances = config.getMinDistances(fromNodeId);
+
+        int maxDist = Arrays.stream(distances).max().orElse(2);
+
+        int minDist = (int) Math.ceil(percent * maxDist);
+
+        Integer[] farthestNodes = IntStream.range(1, distances.length + 1)
+                .filter(i -> distances[i - 1] >= minDist)
+                .boxed().toArray(Integer[]::new);
+
+
+        ArrayList<Integer> nodes = findNodesWithMaxDiff(
+                new ArrayList<>(Arrays.asList(farthestNodes)),
+                3
+        );
+
+//        // sort by max neighbor nodes count
+//        Arrays.sort(farthestNodes, Comparator.
+//                comparingInt(d -> config.getNeighborNodesCount((Integer) d)).reversed());
+//
+//        int randIndex = getRandInt(farthestNodes.length / 2);
+//        return farthestNodes[randIndex];
+
+        return nodes.get(Math.min(getThiefStrategy(), nodes.size() - 1));
+    }
+
     protected int getFarthestRandomNode(int fromNodeId, double percent) {
         int[] distances = config.getMinDistances(fromNodeId);
 
@@ -52,13 +79,24 @@ public abstract class AI {
                 .boxed().toArray(Integer[]::new);
 
 
-        // sort by max neighbor nodes count
+//        ArrayList<Integer> nodes = findNodesWithMaxDiff(
+//                new ArrayList<>(Arrays.asList(farthestNodes)),
+//                3
+//        );
+
+//        // sort by max neighbor nodes count
         Arrays.sort(farthestNodes, Comparator.
                 comparingInt(d -> config.getNeighborNodesCount((Integer) d)).reversed());
 
-
         int randIndex = getRandInt(farthestNodes.length / 2);
         return farthestNodes[randIndex];
+
+//        return nodes.get(Math.min(getThiefStrategy(), nodes.size() - 1));
+    }
+
+    private int getThiefStrategy() {
+        return getTeammateThieves(true).stream()
+                .map(Agent::getId).sorted().toList().indexOf(currAgentId);
     }
 
     private ArrayList<Agent> getAgents(int team, int type, boolean includeMe) {
@@ -101,12 +139,68 @@ public abstract class AI {
         );
     }
 
-    public List<Integer> mapToAgentId(ArrayList<Agent> agents) {
-        return agents.stream().map(Agent::getId).toList();
+    ArrayList<Integer> findNodesWithMaxDiff(ArrayList<Integer> nodes, int count) {
+
+        if (count >= nodes.size()) return nodes;
+
+        int n = nodes.size();
+        int[] allNodes = new int[n];
+        int c = 0;
+        for (Integer nodeID : nodes) {
+            allNodes[c] = nodeID;
+            c++;
+        }
+
+        int[][] diff = new int[n][n];
+        int max = -1;
+        int m = 0, k = 0;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                diff[i][j] = config.getMinDistance(allNodes[i], allNodes[j]);
+                diff[j][i] = diff[i][j];
+                if (diff[i][j] > max) {
+                    max = diff[i][j];
+                    m = i;
+                    k = j;
+                }
+            }
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>();
+        ans.add(allNodes[m]);
+        ans.add(allNodes[k]);
+        if (count == 2)
+            return ans;
+
+        //=======================
+        nodes.sort((o1, o2) -> Integer.compare(
+                config.getMinDistance(o2, ans.get(0)) * config.getMinDistance(o2, ans.get(1)),
+                config.getMinDistance(o1, ans.get(0)) * config.getMinDistance(o1, ans.get(1))));
+
+        int counter = 0;
+        for (Integer node : nodes) {
+            if (counter == count - 2) break;
+            ans.add(node);
+            counter++;
+        }
+
+        return ans;
     }
 
-    public List<Integer> mapToNodeId(ArrayList<Agent> agents) {
-        return agents.stream().map(Agent::getNodeId).toList();
+    public List<Integer> mapToAgentId(ArrayList<Agent> agents, boolean sorted) {
+        if (sorted) {
+            return agents.stream().map(Agent::getId).sorted().toList();
+        } else {
+            return agents.stream().map(Agent::getId).toList();
+        }
+    }
+
+    public List<Integer> mapToNodeId(ArrayList<Agent> agents, boolean sorted) {
+        if (sorted) {
+            return agents.stream().map(Agent::getNodeId).sorted().toList();
+        } else {
+            return agents.stream().map(Agent::getNodeId).toList();
+        }
     }
 
     public boolean isVisibleTurn() {
@@ -162,7 +256,7 @@ public abstract class AI {
         int currTurn = view.getTurn().getTurnNumber();
         List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
         int i = 0;
-        while (visibleTurns.get(i) <= currTurn) {
+        while (i < visibleTurns.size() && visibleTurns.get(i) <= currTurn) {
             i++;
         }
         if (i == 0) return Integer.MAX_VALUE;

@@ -3,8 +3,15 @@ package ir.sharif.aic.hideandseek.ai;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 class GridTest {
+
+    Grid grid;
+
+    public ArrayList<ArrayList<Integer>> getAllShortestPaths(int fromNodeId, int toNodeId) {
+        return grid.getAllShortestPaths(fromNodeId - 1, toNodeId - 1);
+    }
 
     @Test
     void getAllPaths() {
@@ -14,12 +21,11 @@ class GridTest {
                 {1, 1, 0, 1},
                 {1, 1, 1, 0}
         };
-        Grid grid = new Grid(graph);
+        grid = new Grid(graph);
 
-        ArrayList<Integer> filter = new ArrayList<>();
-        filter.add(2);
+        ArrayList<Integer> filter = new ArrayList<>(Arrays.asList(3, 2));
         Grid.filter = filter;
 
-        System.out.println(grid.getAllShortestPaths(0, 1));
+        System.out.println(getAllShortestPaths(1, 2));
     }
 }

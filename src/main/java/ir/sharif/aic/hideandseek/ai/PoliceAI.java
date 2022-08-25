@@ -25,8 +25,8 @@ public class PoliceAI extends AI {
     @Override
     public int getStartingNode(GameView view) {
         updateGame(view);
-//        logger = new Logger(String.format("logs/police-%d.log", currAgentId));
-//        logger.enableLogging(true);
+        logger = new Logger(String.format("logs/police-%d.log", currAgentId));
+        logger.enableLogging(true);
         initPath();
         return 1;
     }
@@ -80,7 +80,15 @@ public class PoliceAI extends AI {
         return false;
     }
 
-    int bestPossibilityForThief() {
+
+
+    private int getStrategy() {
+        return getTeammatePolice(true).stream()
+                .map(Agent::getId).sorted().toList()
+                .indexOf(currAgentId);
+    }
+
+    int  bestPossibilityForThief() {
         ArrayList<Agent> polices = getTeammatePolice(false);
 
         ArrayList<Integer> neighborNodes = config.getNeighborNodes(target);
@@ -147,8 +155,7 @@ public class PoliceAI extends AI {
         ArrayList<Integer> targets = new ArrayList<>();
         targets.add(target);
 
-        ArrayList<Integer> neighborNodes = new ArrayList<>(config.getNeighborNodes
-                (targets,3,new HashSet<>(targets),false));
+        ArrayList<Integer> neighborNodes = new ArrayList<>(config.getNeighborNodes(targets,3,new HashSet<>(targets),false));
 
         neighborNodes.sort((o1, o2) -> {
             int temp1 = Integer.compare(config.getMinDistance(o1, target), config.getMinDistance(o2, target));
@@ -170,18 +177,6 @@ public class PoliceAI extends AI {
 
         int index = polices.indexOf(view.getViewer());
 
-//        logger.log(
-//                "turn:%d\t" +
-//                        "curr:%d\t" +
-//                        "path:%s\t" +
-//                        "polices:%s\t" +
-//                        "index:%d\n",
-//                view.getTurn().getTurnNumber(),
-//                currNodeId,
-//                path.toString(),
-//                polices.toString(),
-//                index
-//        );
 
         int dest = neighborNodes.get(index % neighborNodes.size());
 
@@ -190,6 +185,22 @@ public class PoliceAI extends AI {
         //if (config.getMinDistance(currNodeId,target) <= 2) dest = currNodeId;
 
         path = getCheaperPath(currNodeId, dest);
+
+
+        logger.log(
+                "turn:%d\t" +
+                        "curr:%d\t" +
+                        "path:%s\t" +
+                        "polices:%s\t" +
+                        "index:%d\t" +
+                        "neigh:%s\n",
+                view.getTurn().getTurnNumber(),
+                currNodeId,
+                path.toString(),
+                polices.toString(),
+                index,
+                neighborNodes.toString()
+        );
     }
 
     private int getNextInPath() {
