@@ -24,9 +24,10 @@ public class ThiefAI extends AI {
         updateGame(view);
         path = new ArrayList<>();
         logger = new Logger(String.format("logs/thief-%d.log", currAgentId));
-        logger.enableLogging(true);
+        logger.enableLogging(false);
         updateLastPoliceLoc();
         return getFarthest(1, 0.55);
+//        return getFarthestRandomNodeFromPoliceStation(0.55);
     }
 
     /**
@@ -55,7 +56,7 @@ public class ThiefAI extends AI {
         return mapToAgentId(getTeammateThieves(true), true).indexOf(currAgentId);
     }
 
-    private ArrayList<ArrayList<Integer>> getAllAllowedPaths(int fromNodeId) {
+    protected ArrayList<ArrayList<Integer>> getAllAllowedPaths(int fromNodeId) {
         ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
         for (int i = 1; i <= config.getNodesCount(); i++) {
             for (ArrayList<Integer> path : config.getAllShortestPaths(fromNodeId, i)) {
@@ -218,15 +219,6 @@ public class ThiefAI extends AI {
         return mapToNodeId(getTeammateThieves(false), false).contains(nodeId);
     }
 
-    private int getNextInPath(ArrayList<Integer> path) {
-        int index = path.indexOf(currNodeId);
-        if (index >= 0 && index < path.size() - 1) {
-            return path.get(index + 1);
-        }
-        return currNodeId;
-    }
-
-
     private boolean isSafePath(ArrayList<Integer> path, boolean very) {
         for (int i = 1; i < path.size(); i++) {
             if (getNearestPoliceDistance(path.get(i)) <= (very ? i : 1)) {
@@ -284,13 +276,6 @@ public class ThiefAI extends AI {
         return Integer.compare(
                 getAllowedNeighborNodesCount(node2),
                 getAllowedNeighborNodesCount(node1)
-        );
-    }
-
-    private int comparePathCost(ArrayList<Integer> p1, ArrayList<Integer> p2) {
-        return Double.compare(
-                config.getPathCost(p1),
-                config.getPathCost(p2)
         );
     }
 

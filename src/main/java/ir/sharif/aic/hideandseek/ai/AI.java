@@ -289,4 +289,19 @@ public abstract class AI {
         return view.getConfig().getTurnSettings().getMaxTurns();
     }
 
+    protected int getNextInPath(ArrayList<Integer> path) {
+        int index = path.indexOf(currNodeId);
+        if (index >= 0 && index < path.size() - 1) {
+            return path.get(index + 1);
+        }
+        return currNodeId;
+    }
+
+    protected int comparePathCost(ArrayList<Integer> p1, ArrayList<Integer> p2) {
+        return Double.compare(
+                config.getPathCost(p1),
+                config.getPathCost(p2)
+        );
+    }
+
 }
