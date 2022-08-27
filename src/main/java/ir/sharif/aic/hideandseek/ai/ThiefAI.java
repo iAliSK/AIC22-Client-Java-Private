@@ -30,7 +30,6 @@ public class ThiefAI extends AI {
         logger.enableLogging(false);
         updateLastPoliceLoc();
         return getFarthestRandomNodeFromPoliceStation(0.55);
-//        return getFarthestRandomNodeFromPoliceStation(0.55);
     }
 
     /**
@@ -55,7 +54,7 @@ public class ThiefAI extends AI {
         }
     }
 
-    private int getStrategy() {
+    private int getUniqueIndex() {
         return mapToAgentId(getTeammateThieves(true), true).indexOf(currAgentId);
     }
 
@@ -99,14 +98,13 @@ public class ThiefAI extends AI {
                 if (compPathCost != 0) return compPathCost;
             }
 
-            // todo for dest with 2 neighbors
             if (compPathSafety != 0) return compPathSafety;
 
             if (getNearestPoliceDistance(fromNodeId) <= 2) {
                 if (compAllowedNodes != 0) return compAllowedNodes;
             }
 
-            switch (getStrategy()) {
+            switch (getUniqueIndex()) {
                 case 0 -> {
                     if (compAllowedNodes != 0) return compAllowedNodes;
                 }
@@ -161,18 +159,11 @@ public class ThiefAI extends AI {
     private ArrayList<Integer> selectBestPath(ArrayList<ArrayList<Integer>> paths) {
         ArrayList<Integer> path;
         if (isTeammateThiefHere(currNodeId) && getNearestPoliceDistance(currNodeId) >= 3) {
-            path = paths.get(Math.min(getStrategy(), paths.size() - 1));
+            path = paths.get(Math.min(getUniqueIndex(), paths.size() - 1));
         } else {
             path = paths.get(0);
         }
         return path;
-    }
-
-    private int getLastInPath(ArrayList<Integer> path) {
-        if (path.size() > 0) {
-            return path.get(path.size() - 1);
-        }
-        return currNodeId;
     }
 
     private int getNextMove() {
@@ -241,15 +232,6 @@ public class ThiefAI extends AI {
 
     private boolean isTeammateThiefHere(int nodeId) {
         return mapToNodeId(getTeammateThieves(false), false).contains(nodeId);
-    }
-
-    private boolean isSafePath(ArrayList<Integer> path, boolean very) {
-        for (int i = 1; i < path.size(); i++) {
-            if (getNearestPoliceDistance(path.get(i)) <= (very ? i : 1)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private int getNearestThiefDistance(int nodeId) {
@@ -333,23 +315,6 @@ public class ThiefAI extends AI {
                 config.getMinDistance(currNodeId, node2),
                 config.getMinDistance(currNodeId, node1)
         );
-    }
-
-    private ArrayList<ArrayList<Integer>> getIncomingPolicePaths() {
-        ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
-
-        for (Agent agent : getOpponentPolice()) {
-
-            int lastNodeId = lastPoliceLoc.get(agent.getId());
-            for (ArrayList<Integer> path :
-                    config.getAllShortestPaths(currNodeId, lastNodeId)) {
-                if (path.contains(agent.getNodeId())) {
-                    paths.add(path);
-                }
-            }
-
-        }
-        return paths;
     }
 
     private int incomingPoliceCount(int nodeId) {

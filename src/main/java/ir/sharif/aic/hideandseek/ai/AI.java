@@ -21,7 +21,6 @@ public abstract class AI {
     protected Phone phone;
     protected int currNodeId;
     protected int currAgentId;
-    protected int lastNodeId;
     protected Logger logger;
 
 
@@ -40,7 +39,7 @@ public abstract class AI {
         return getFarthestRandomNode(1, percent);
     }
 
-    protected int getFarthest(int fromNodeId, double percent) {
+    protected int getFarthestUniqueNode(int fromNodeId, double percent) {
         int[] distances = config.getMinDistances(fromNodeId);
 
         int maxDist = Arrays.stream(distances).max().orElse(2);
@@ -53,16 +52,8 @@ public abstract class AI {
 
 
         ArrayList<Integer> nodes = findNodesWithMaxDiff(
-                new ArrayList<>(Arrays.asList(farthestNodes)),
-                3
+                new ArrayList<>(Arrays.asList(farthestNodes)), 3
         );
-
-//        // sort by max neighbor nodes count
-//        Arrays.sort(farthestNodes, Comparator.
-//                comparingInt(d -> config.getNeighborNodesCount((Integer) d)).reversed());
-//
-//        int randIndex = getRandInt(farthestNodes.length / 2);
-//        return farthestNodes[randIndex];
 
         return nodes.get(Math.min(getThiefStrategy(), nodes.size() - 1));
     }
@@ -285,7 +276,7 @@ public abstract class AI {
         return view.getConfig().getTurnSettings().getVisibleTurnsList();
     }
 
-    protected int getMaxTurn() {
+    protected int getMaxTurns() {
         return view.getConfig().getTurnSettings().getMaxTurns();
     }
 
@@ -293,6 +284,13 @@ public abstract class AI {
         int index = path.indexOf(currNodeId);
         if (index >= 0 && index < path.size() - 1) {
             return path.get(index + 1);
+        }
+        return currNodeId;
+    }
+
+    protected int getLastInPath(ArrayList<Integer> path) {
+        if (path.size() > 0) {
+            return path.get(path.size() - 1);
         }
         return currNodeId;
     }

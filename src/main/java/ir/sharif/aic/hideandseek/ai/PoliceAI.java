@@ -43,7 +43,7 @@ public class PoliceAI extends AI {
                 target = getNearestThief();
                 updatePath(target);
             }
-            if (target > 0 && !isVisibleTurn() && isPoliceWithDis1())
+            if (target > 0 && !isVisibleTurn() && isPoliceWithDist1())
                 updatePath(bestPossibilityForThief());
 
             return getNextInPath();
@@ -70,7 +70,7 @@ public class PoliceAI extends AI {
 
     }
 
-    boolean isPoliceWithDis1() {
+    boolean isPoliceWithDist1() {
         ArrayList<Agent> polices = getTeammatePolice(false);
 
         ArrayList<Integer> neighborNodes = config.getNeighborNodes(target);
@@ -83,11 +83,8 @@ public class PoliceAI extends AI {
         return false;
     }
 
-
-    private int getStrategy() {
-        return getTeammatePolice(true).stream()
-                .map(Agent::getId).sorted().toList()
-                .indexOf(currAgentId);
+    private int getUniqueIndex() {
+        return mapToAgentId(getTeammatePolice(true), true).indexOf(currAgentId);
     }
 
     int bestPossibilityForThief() {
@@ -216,15 +213,6 @@ public class PoliceAI extends AI {
         return choseNode;
     }
 
-//    private int getNextBeginning() {
-//        int target = getNearestThief();
-//        ArrayList<Integer> nodes = config.getNeighborNodes(currNodeId);
-//        nodes.sort(Comparator.comparingDouble((Integer o) -> config.getPathCost(o, currNodeId))
-//                .thenComparingInt(o -> config.getMinDistance(o, target)));
-//        if (config.getPathCost(nodes.get(0), currNodeId) <= view.getBalance()) return nodes.get(0);
-//        return currNodeId;
-//    }
-
     private int getNearestThief() {
         return thievesLocation.stream().min((o1, o2) -> {
 
@@ -245,12 +233,6 @@ public class PoliceAI extends AI {
         }
         return sum;
     }
-
-    private Agent getPoliceWithMinId() {
-        return getTeammatePolice(false).stream()
-                .min(Comparator.comparingInt(Agent::getId)).orElse(null);
-    }
-
 
     private void setThievesLocation() {
         thievesLocation = getOpponentThieves().stream()
