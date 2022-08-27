@@ -5,7 +5,10 @@ import ir.sharif.aic.hideandseek.client.Phone;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ThiefAI extends AI {
 
@@ -24,9 +27,10 @@ public class ThiefAI extends AI {
         updateGame(view);
         path = new ArrayList<>();
         logger = new Logger(String.format("logs/thief-%d.log", currAgentId));
-        logger.enableLogging(true);
+        logger.enableLogging(false);
         updateLastPoliceLoc();
-        return getFarthest(1, 0.55);
+        return getFarthestRandomNodeFromPoliceStation(0.55);
+//        return getFarthestRandomNodeFromPoliceStation(0.55);
     }
 
     /**
@@ -35,13 +39,13 @@ public class ThiefAI extends AI {
     @Override
     public int move(GameView view) {
         updateGame(view);
-//        try {
-        int nextMove = getNextMove();
-        updateLastPoliceLoc();
-        return nextMove;
-//        } catch (Exception ignored) {
-//        }
-//        return view.getViewer().getNodeId();
+        try {
+            int nextMove = getNextMove();
+            updateLastPoliceLoc();
+            return nextMove;
+        } catch (Exception ignored) {
+        }
+        return view.getViewer().getNodeId();
     }
 
 
@@ -55,7 +59,7 @@ public class ThiefAI extends AI {
         return mapToAgentId(getTeammateThieves(true), true).indexOf(currAgentId);
     }
 
-    private ArrayList<ArrayList<Integer>> getAllAllowedPaths(int fromNodeId) {
+    protected ArrayList<ArrayList<Integer>> getAllAllowedPaths(int fromNodeId) {
         ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
         for (int i = 1; i <= config.getNodesCount(); i++) {
             for (ArrayList<Integer> path : config.getAllShortestPaths(fromNodeId, i)) {
@@ -164,6 +168,13 @@ public class ThiefAI extends AI {
         return path;
     }
 
+    private int getLastInPath(ArrayList<Integer> path) {
+        if (path.size() > 0) {
+            return path.get(path.size() - 1);
+        }
+        return currNodeId;
+    }
+
     private int getNextMove() {
 
         Grid.filter = new ArrayList<>(mapToNodeId(getOpponentPolice(), false));
@@ -184,6 +195,20 @@ public class ThiefAI extends AI {
         if (getNearestPoliceDistance(nextMove) <= 1) {
             sec = true;
             path = arrangeBySecondStrategy(paths);
+        }
+
+        int safety = getPathSafetyLength(path);
+        int last = path.get(safety - 1);
+        if (config.getNeighborNodesCount(last) <= 2) {
+            for (ArrayList<Integer> path : paths) {
+                safety = getPathSafetyLength(path);
+                last = path.get(safety - 1);
+                if (config.getNeighborNodesCount(last) >= 3
+                        && getPathSafetyLength(path) >= 3) {
+                    this.path = path;
+                    break;
+                }
+            }
         }
 
         nextMove = getNextInPath(path);
@@ -217,15 +242,6 @@ public class ThiefAI extends AI {
     private boolean isTeammateThiefHere(int nodeId) {
         return mapToNodeId(getTeammateThieves(false), false).contains(nodeId);
     }
-
-    private int getNextInPath(ArrayList<Integer> path) {
-        int index = path.indexOf(currNodeId);
-        if (index >= 0 && index < path.size() - 1) {
-            return path.get(index + 1);
-        }
-        return currNodeId;
-    }
-
 
     private boolean isSafePath(ArrayList<Integer> path, boolean very) {
         for (int i = 1; i < path.size(); i++) {
@@ -284,13 +300,6 @@ public class ThiefAI extends AI {
         return Integer.compare(
                 getAllowedNeighborNodesCount(node2),
                 getAllowedNeighborNodesCount(node1)
-        );
-    }
-
-    private int comparePathCost(ArrayList<Integer> p1, ArrayList<Integer> p2) {
-        return Double.compare(
-                config.getPathCost(p1),
-                config.getPathCost(p2)
         );
     }
 

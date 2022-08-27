@@ -23,7 +23,7 @@ class GridTest {
         };
         grid = new Grid(graph);
 
-        ArrayList<Integer> filter = new ArrayList<>(Arrays.asList(3, 2));
+        ArrayList<Integer> filter = new ArrayList<>(Arrays.asList(2, 3));
         Grid.filter = filter;
 
         System.out.println(getAllShortestPaths(1, 2));
