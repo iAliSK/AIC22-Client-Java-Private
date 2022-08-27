@@ -14,7 +14,6 @@ public class PoliceAI extends AI {
 
     public List<Integer> thievesLocation = new ArrayList<>();
     public int target = -1;
-    private int nextTarget = -1;
 
     public PoliceAI(Phone phone) {
         this.phone = phone;
@@ -38,35 +37,19 @@ public class PoliceAI extends AI {
     @Override
     public int move(GameView view) {
         updateGame(view);
-
-        logger.log("-------------\n");
-
-        if (isVisibleTurn()) {
-            setThievesLocation();
-            target = getNearestThief();
-            updatePath(target);
-            logger.log("turn:%d\tvisible\n", view.getTurn().getTurnNumber());
-        }
-
-        if (getTurnsPassedAfterLastVisibility() == 2) {
-            nextTarget = getSafestDestForThief(target);
-            logger.log("turn:%d\tnext target updated:%d\n", view.getTurn().getTurnNumber(), nextTarget);
-        }
-
-        if (target > 0 && !isVisibleTurn() && isPoliceWithDis1()) {
-            if (nextTarget != -1) {
-                updatePath(nextTarget);
-                logger.log("turn:%d\tnextTarget:%d\n", view.getTurn().getTurnNumber(), nextTarget);
-            } else {
-                int best = bestPossibilityForThief();
-                updatePath(best);
-                logger.log("turn:%d\tnoTarget:%d\n", view.getTurn().getTurnNumber(), best);
+        try {
+            if (isVisibleTurn()) {
+                setThievesLocation();
+                target = getNearestThief();
+                updatePath(target);
             }
+            if (target > 0 && !isVisibleTurn() && isPoliceWithDis1())
+                updatePath(bestPossibilityForThief());
+
+            return getNextInPath();
+        } catch (Exception ignored) {
         }
-
-        logger.log("-------------\n\n");
-
-        return getNextInPath();
+        return view.getViewer().getNodeId();
     }
 
     boolean isSurrounded() {
@@ -99,6 +82,7 @@ public class PoliceAI extends AI {
 
         return false;
     }
+
 
     private int getStrategy() {
         return getTeammatePolice(true).stream()
@@ -207,18 +191,14 @@ public class PoliceAI extends AI {
         logger.log(
                 "turn:%d\t" +
                         "curr:%d\t" +
-                        "target:%d\t" +
                         "path:%s\t" +
-                        "thief-safest:%d\t" +
                         "polices:%s\t" +
                         "index:%d\t" +
                         "neigh:%s\n",
                 view.getTurn().getTurnNumber(),
                 currNodeId,
-                target,
                 path.toString(),
-                getSafestDestForThief(target),
-                mapToNodeId(polices, false),
+                polices.toString(),
                 index,
                 neighborNodes.toString()
         );
@@ -277,82 +257,5 @@ public class PoliceAI extends AI {
                 .filter(agent -> !agent.getIsDead())
                 .map(Agent::getNodeId)
                 .toList();
-    }
-
-    private int getNextInPathForThief(ArrayList<Integer> path) {
-        if (path.size() >= 2) {
-            return path.get(1);
-        }
-        return path.get(0);
-    }
-
-    private int getSafestDestForThief(int nodeId) {
-        ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
-        List<Integer> teammatePolices = mapToNodeId(getTeammatePolice(true), false);
-        ArrayList<Integer> filter = Grid.filter;
-        Grid.filter = new ArrayList<>(teammatePolices);
-        for (int i = 1; i <= config.getNodesCount(); i++) {
-            for (ArrayList<Integer> path : config.getAllShortestPaths(nodeId, i)) {
-                int next = getNextInPathForThief(path);
-                if (mapToNodeId(getTeammatePolice(true), false).contains(next)) {
-                    continue;
-                }
-                paths.add(path);
-            }
-        }
-//        Grid.filter.clear();
-        Grid.filter = filter;
-
-        paths.sort((p1, p2) -> {
-            int compPathSafety = comparePathSafetyForThief(p1, p2);
-            int compPathCost = comparePathCost(p1, p2);
-            if (compPathSafety != 0) return compPathSafety;
-            return compPathCost;
-        });
-
-        if (paths.size() == 0) {
-            return -1;
-        }
-        if (paths.get(0).size() == 0) {
-            return -1;
-        }
-
-
-//        if(getTurnsPassedAfterLastVisibility() == 2) {
-//            logger.log("paths:%d\ttPath:%s\tsafety:%d\n",
-//                    paths.size(), paths.get(0), getPathSafetyLengthForThief(paths.get(0)));
-//        }
-
-        ArrayList<Integer> safestPath = paths.get(0);
-        return safestPath.get(safestPath.size() - 1);
-    }
-
-    private int getNearestDistanceToOurPolices(int nodeId) {
-        int minDist = Integer.MAX_VALUE;
-        for (Agent agent : getTeammatePolice(true)) {
-            minDist = Math.min(
-                    minDist,
-                    config.getMinDistance(nodeId, agent.getNodeId())
-            );
-        }
-        return minDist;
-    }
-
-    private int getPathSafetyLengthForThief(ArrayList<Integer> path) {
-        int safetyLength = 0;
-        for (int i = 0; i < path.size(); i++) {
-            if (getNearestDistanceToOurPolices(path.get(i)) <= i) {
-                break;
-            }
-            safetyLength += 1;
-        }
-        return safetyLength;
-    }
-
-    private int comparePathSafetyForThief(ArrayList<Integer> p1, ArrayList<Integer> p2) {
-        return Integer.compare(
-                getPathSafetyLengthForThief(p2),
-                getPathSafetyLengthForThief(p1)
-        );
     }
 }

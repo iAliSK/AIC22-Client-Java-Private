@@ -5,7 +5,10 @@ import ir.sharif.aic.hideandseek.client.Phone;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ThiefAI extends AI {
 
@@ -26,7 +29,7 @@ public class ThiefAI extends AI {
         logger = new Logger(String.format("logs/thief-%d.log", currAgentId));
         logger.enableLogging(false);
         updateLastPoliceLoc();
-        return getFarthest(1, 0.55);
+        return getFarthestRandomNodeFromPoliceStation(0.55);
 //        return getFarthestRandomNodeFromPoliceStation(0.55);
     }
 
@@ -36,13 +39,13 @@ public class ThiefAI extends AI {
     @Override
     public int move(GameView view) {
         updateGame(view);
-//        try {
-        int nextMove = getNextMove();
-        updateLastPoliceLoc();
-        return nextMove;
-//        } catch (Exception ignored) {
-//        }
-//        return view.getViewer().getNodeId();
+        try {
+            int nextMove = getNextMove();
+            updateLastPoliceLoc();
+            return nextMove;
+        } catch (Exception ignored) {
+        }
+        return view.getViewer().getNodeId();
     }
 
 
@@ -165,6 +168,13 @@ public class ThiefAI extends AI {
         return path;
     }
 
+    private int getLastInPath(ArrayList<Integer> path) {
+        if (path.size() > 0) {
+            return path.get(path.size() - 1);
+        }
+        return currNodeId;
+    }
+
     private int getNextMove() {
 
         Grid.filter = new ArrayList<>(mapToNodeId(getOpponentPolice(), false));
@@ -185,6 +195,20 @@ public class ThiefAI extends AI {
         if (getNearestPoliceDistance(nextMove) <= 1) {
             sec = true;
             path = arrangeBySecondStrategy(paths);
+        }
+
+        int safety = getPathSafetyLength(path);
+        int last = path.get(safety - 1);
+        if (config.getNeighborNodesCount(last) <= 2) {
+            for (ArrayList<Integer> path : paths) {
+                safety = getPathSafetyLength(path);
+                last = path.get(safety - 1);
+                if (config.getNeighborNodesCount(last) >= 3
+                        && getPathSafetyLength(path) >= 3) {
+                    this.path = path;
+                    break;
+                }
+            }
         }
 
         nextMove = getNextInPath(path);
