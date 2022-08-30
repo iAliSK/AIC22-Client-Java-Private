@@ -27,7 +27,7 @@ public class ThiefAI extends AI {
         updateGame(view);
         path = new ArrayList<>();
         logger = new Logger(String.format("logs/thief-%d.log", currAgentId));
-        logger.enableLogging(false);
+        logger.enableLogging(true);
         updateLastPoliceLoc();
         return getFarthestRandomNodeFromPoliceStation(0.55);
     }
