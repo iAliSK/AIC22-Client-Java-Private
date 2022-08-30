@@ -74,8 +74,8 @@ public class Config {
     }
 
 
-    public ArrayList<Integer> getNeighborNodes(ArrayList<Integer> nodeId, int degree,
-                                               HashSet<Integer> nodes, boolean onlyDegree) {
+    private ArrayList<Integer> getNeighborNodes(ArrayList<Integer> nodeId, int degree,
+                                                HashSet<Integer> nodes, boolean onlyDegree) {
         if (degree == 0) {
             if (!onlyDegree) return new ArrayList<>(nodes);
             return nodeId;
@@ -91,6 +91,12 @@ public class Config {
 
         nodes.addAll(temp);
         return getNeighborNodes(temp, degree - 1, nodes, onlyDegree);
+    }
+
+    public ArrayList<Integer> getNeighborNodes(int target, int degree, boolean onlyDegree) {
+        ArrayList<Integer> targets = new ArrayList<>();
+        targets.add(target);
+        return getNeighborNodes(targets, degree, new HashSet<>(targets), onlyDegree);
     }
 
     public ArrayList<Integer> getNearestNodes(int nodeId) {

@@ -302,4 +302,18 @@ public abstract class AI {
         );
     }
 
+    protected int compareDistance(int node1, int node2, int target) {
+        return Integer.compare(
+                config.getMinDistance(node1, target),
+                config.getMinDistance(node2, target)
+        );
+    }
+
+    protected int compareNeighbors(int node1, int node2) {
+        return Integer.compare(
+                config.getNeighborNodesCount(node1),
+                config.getNeighborNodesCount(node2)
+        );
+    }
+
 }
