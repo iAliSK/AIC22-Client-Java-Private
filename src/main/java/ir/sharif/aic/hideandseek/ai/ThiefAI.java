@@ -26,7 +26,7 @@ public class ThiefAI extends AI {
         path = new ArrayList<>();
         opponentPolice = getOpponentPolice();
         logger = new Logger(String.format("logs/thief-%d.log", currAgentId));
-        logger.enableLogging(true);
+        logger.enableLogging(false);
         return getFarthestRandomNodeFromPoliceStation(0.7);
     }
 
@@ -35,25 +35,25 @@ public class ThiefAI extends AI {
      */
     @Override
     public int move(GameView view) {
-        long start = System.currentTimeMillis();
         updateGame(view);
+//        long start = System.currentTimeMillis();
         opponentPolice = getOpponentPolice();
 
         try {
             int nextMove = getNextMove();
-            long end = System.currentTimeMillis();
-
-            logger.log("time: %d\n", (end - start));
-
-            if((end - start) > 900) {
-                logger.log("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-            }
+//            long end = System.currentTimeMillis();
+//
+//            logger.log("time: %d\n", (end - start));
+//
+//            if((end - start) > 900) {
+//                logger.log("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+//            }
 
             return nextMove;
         } catch (Exception e) {
-            throw e;
+
         }
-//        return view.getViewer().getNodeId();
+        return currNodeId;
     }
 
     private int getUniqueIndex() {
@@ -158,11 +158,11 @@ public class ThiefAI extends AI {
                     return compPoliceCount;
                 }).toList();
 
-        logger.log("turn:%d\t" +
-                        "filtered:%s\n",
-                view.getTurn().getTurnNumber(),
-                filteredPaths.toString()
-        );
+//        logger.log("turn:%d\t" +
+//                        "filtered:%s\n",
+//                view.getTurn().getTurnNumber(),
+//                filteredPaths.toString()
+//        );
         return filteredPaths.get(0);
     }
 
@@ -178,7 +178,7 @@ public class ThiefAI extends AI {
 
     private int getNextMove() {
 
-        if(view.getTurn().getTurnNumber() <= 5 && getNearestPoliceDistance(currNodeId) >= 5) {
+        if(view.getTurn().getTurnNumber() <= 5 && getNearestPoliceDistance(currNodeId) >= 6) {
             return currNodeId;
         }
 
@@ -225,26 +225,26 @@ public class ThiefAI extends AI {
 
         nextMove = getNextInPath(path);
 
-        logger.log(
-                "turn:%d\t" +
-                        "paths:%d\t" +
-                        "police:%d\t" +
-                        "sec:%b\t" +
-                        "curr:%3d\t" +
-                        "next:%3d\t" +
-                        "safe:%3d\t" +
-                        "pass:%2d\t" +
-                        "path:%s\n",
-                view.getTurn().getTurnNumber(),
-                paths.size(),
-                countNeighborPolices(currNodeId),
-                sec,
-                currNodeId,
-                nextMove,
-                getPathSafetyLength(path),
-                getTurnsPassedAfterLastVisibility(),
-                path
-        );
+//        logger.log(
+//                "turn:%d\t" +
+//                        "paths:%d\t" +
+//                        "police:%d\t" +
+//                        "sec:%b\t" +
+//                        "curr:%3d\t" +
+//                        "next:%3d\t" +
+//                        "safe:%3d\t" +
+//                        "pass:%2d\t" +
+//                        "path:%s\n",
+//                view.getTurn().getTurnNumber(),
+//                paths.size(),
+//                countNeighborPolices(currNodeId),
+//                sec,
+//                currNodeId,
+//                nextMove,
+//                getPathSafetyLength(path),
+//                getTurnsPassedAfterLastVisibility(),
+//                path
+//        );
 
         return nextMove;
     }
