@@ -265,9 +265,10 @@ public abstract class AI {
         int currTurn = view.getTurn().getTurnNumber();
         List<Integer> visibleTurns = view.getConfig().getTurnSettings().getVisibleTurnsList();
         int i = 0;
-        while (visibleTurns.get(i) <= currTurn) {
+        while (i < visibleTurns.size() && visibleTurns.get(i) <= currTurn) {
             i++;
         }
+        if(i == visibleTurns.size()) i--;
         if (i == 0) return visibleTurns.get(i);
         return visibleTurns.get(i) - visibleTurns.get(i - 1);
     }
