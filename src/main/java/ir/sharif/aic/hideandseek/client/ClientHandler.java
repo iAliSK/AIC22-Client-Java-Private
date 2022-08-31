@@ -66,11 +66,11 @@ public class ClientHandler {
 
     private boolean canMove(GameView gameView) {
         if (gameView.getTurn().getTurnType().equals(TurnType.POLICE_TURN)
-                && gameView.getViewer().getType().equals(AgentType.THIEF))
+                && (gameView.getViewer().getType().equals(AgentType.THIEF) || gameView.getViewer().getType().equals(AgentType.JOKER)))
             return false;
 
         if (gameView.getTurn().getTurnType().equals(TurnType.THIEF_TURN)
-                && gameView.getViewer().getType().equals(AgentType.POLICE))
+                && (gameView.getViewer().getType().equals(AgentType.POLICE) || gameView.getViewer().getType().equals(AgentType.BATMAN)))
             return false;
 
         if (gameView.getTurn().getTurnNumber() == turn) {
@@ -90,7 +90,7 @@ public class ClientHandler {
     }
 
     private void initialize(GameView gameView) {
-        setAIMethod(gameView.getViewer().getType().equals(AgentType.POLICE));
+        setAIMethod(gameView.getViewer().getType().equals(AgentType.POLICE) || gameView.getViewer().getType().equals(AgentType.BATMAN));
         var startingNodeId = ai.getStartingNode(gameView);
         var declareReadinessCommand = commandImpl.declareReadinessCommand(startingNodeId);
         try {
