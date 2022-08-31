@@ -1,14 +1,19 @@
 package ir.sharif.aic.hideandseek.protobuf;
 
-import static io.grpc.MethodDescriptor.generateFullMethodName;
-import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
-import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
+import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
 import static io.grpc.stub.ClientCalls.futureUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
+import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
+import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
+import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 
 /**
  */
@@ -19,54 +24,54 @@ public final class GameHandlerGrpc {
 
   private GameHandlerGrpc() {}
 
-  public static final String SERVICE_NAME = "ir.sharif.aic.hideandseek.api.grpc.GameHandler";
+  public static final String SERVICE_NAME = "ir.sharif.aic.hideandseek.protobuf.GameHandler";
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<AIProto.DeclareReadinessCommand,
+  public static final io.grpc.MethodDescriptor<ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand,
       com.google.protobuf.Empty> METHOD_DECLARE_READINESS =
-      io.grpc.MethodDescriptor.<AIProto.DeclareReadinessCommand, com.google.protobuf.Empty>newBuilder()
+      io.grpc.MethodDescriptor.<ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand, com.google.protobuf.Empty>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ir.sharif.aic.hideandseek.api.grpc.GameHandler", "DeclareReadiness"))
+              "ir.sharif.aic.hideandseek.protobuf.GameHandler", "DeclareReadiness"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              AIProto.DeclareReadinessCommand.getDefaultInstance()))
+              ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               com.google.protobuf.Empty.getDefaultInstance()))
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<AIProto.WatchCommand,
-      AIProto.GameView> METHOD_WATCH =
-      io.grpc.MethodDescriptor.<AIProto.WatchCommand, AIProto.GameView>newBuilder()
+  public static final io.grpc.MethodDescriptor<ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand,
+      ir.sharif.aic.hideandseek.protobuf.AIProto.GameView> METHOD_WATCH =
+      io.grpc.MethodDescriptor.<ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand, ir.sharif.aic.hideandseek.protobuf.AIProto.GameView>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
           .setFullMethodName(generateFullMethodName(
-              "ir.sharif.aic.hideandseek.api.grpc.GameHandler", "Watch"))
+              "ir.sharif.aic.hideandseek.protobuf.GameHandler", "Watch"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              AIProto.WatchCommand.getDefaultInstance()))
+              ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              AIProto.GameView.getDefaultInstance()))
+              ir.sharif.aic.hideandseek.protobuf.AIProto.GameView.getDefaultInstance()))
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<AIProto.MoveCommand,
+  public static final io.grpc.MethodDescriptor<ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand,
       com.google.protobuf.Empty> METHOD_MOVE =
-      io.grpc.MethodDescriptor.<AIProto.MoveCommand, com.google.protobuf.Empty>newBuilder()
+      io.grpc.MethodDescriptor.<ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand, com.google.protobuf.Empty>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ir.sharif.aic.hideandseek.api.grpc.GameHandler", "Move"))
+              "ir.sharif.aic.hideandseek.protobuf.GameHandler", "Move"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              AIProto.MoveCommand.getDefaultInstance()))
+              ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               com.google.protobuf.Empty.getDefaultInstance()))
           .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<AIProto.ChatCommand,
+  public static final io.grpc.MethodDescriptor<ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand,
       com.google.protobuf.Empty> METHOD_SEND_MESSAGE =
-      io.grpc.MethodDescriptor.<AIProto.ChatCommand, com.google.protobuf.Empty>newBuilder()
+      io.grpc.MethodDescriptor.<ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand, com.google.protobuf.Empty>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ir.sharif.aic.hideandseek.api.grpc.GameHandler", "SendMessage"))
+              "ir.sharif.aic.hideandseek.protobuf.GameHandler", "SendMessage"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              AIProto.ChatCommand.getDefaultInstance()))
+              ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               com.google.protobuf.Empty.getDefaultInstance()))
           .build();
@@ -100,60 +105,60 @@ public final class GameHandlerGrpc {
 
     /**
      */
-    public void declareReadiness(AIProto.DeclareReadinessCommand request,
+    public void declareReadiness(ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_DECLARE_READINESS, responseObserver);
     }
 
     /**
      */
-    public void watch(AIProto.WatchCommand request,
-        io.grpc.stub.StreamObserver<AIProto.GameView> responseObserver) {
+    public void watch(ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand request,
+        io.grpc.stub.StreamObserver<ir.sharif.aic.hideandseek.protobuf.AIProto.GameView> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_WATCH, responseObserver);
     }
 
     /**
      */
-    public void move(AIProto.MoveCommand request,
+    public void move(ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_MOVE, responseObserver);
     }
 
     /**
      */
-    public void sendMessage(AIProto.ChatCommand request,
+    public void sendMessage(ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_SEND_MESSAGE, responseObserver);
     }
 
-    @Override public final io.grpc.ServerServiceDefinition bindService() {
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             METHOD_DECLARE_READINESS,
             asyncUnaryCall(
               new MethodHandlers<
-                AIProto.DeclareReadinessCommand,
+                ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand,
                 com.google.protobuf.Empty>(
                   this, METHODID_DECLARE_READINESS)))
           .addMethod(
             METHOD_WATCH,
             asyncServerStreamingCall(
               new MethodHandlers<
-                AIProto.WatchCommand,
-                AIProto.GameView>(
+                ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand,
+                ir.sharif.aic.hideandseek.protobuf.AIProto.GameView>(
                   this, METHODID_WATCH)))
           .addMethod(
             METHOD_MOVE,
             asyncUnaryCall(
               new MethodHandlers<
-                AIProto.MoveCommand,
+                ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand,
                 com.google.protobuf.Empty>(
                   this, METHODID_MOVE)))
           .addMethod(
             METHOD_SEND_MESSAGE,
             asyncUnaryCall(
               new MethodHandlers<
-                AIProto.ChatCommand,
+                ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand,
                 com.google.protobuf.Empty>(
                   this, METHODID_SEND_MESSAGE)))
           .build();
@@ -172,7 +177,7 @@ public final class GameHandlerGrpc {
       super(channel, callOptions);
     }
 
-    @Override
+    @java.lang.Override
     protected GameHandlerStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new GameHandlerStub(channel, callOptions);
@@ -180,7 +185,7 @@ public final class GameHandlerGrpc {
 
     /**
      */
-    public void declareReadiness(AIProto.DeclareReadinessCommand request,
+    public void declareReadiness(ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_DECLARE_READINESS, getCallOptions()), request, responseObserver);
@@ -188,15 +193,15 @@ public final class GameHandlerGrpc {
 
     /**
      */
-    public void watch(AIProto.WatchCommand request,
-        io.grpc.stub.StreamObserver<AIProto.GameView> responseObserver) {
+    public void watch(ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand request,
+        io.grpc.stub.StreamObserver<ir.sharif.aic.hideandseek.protobuf.AIProto.GameView> responseObserver) {
       asyncServerStreamingCall(
           getChannel().newCall(METHOD_WATCH, getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void move(AIProto.MoveCommand request,
+    public void move(ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_MOVE, getCallOptions()), request, responseObserver);
@@ -204,7 +209,7 @@ public final class GameHandlerGrpc {
 
     /**
      */
-    public void sendMessage(AIProto.ChatCommand request,
+    public void sendMessage(ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_SEND_MESSAGE, getCallOptions()), request, responseObserver);
@@ -223,7 +228,7 @@ public final class GameHandlerGrpc {
       super(channel, callOptions);
     }
 
-    @Override
+    @java.lang.Override
     protected GameHandlerBlockingStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new GameHandlerBlockingStub(channel, callOptions);
@@ -231,29 +236,29 @@ public final class GameHandlerGrpc {
 
     /**
      */
-    public com.google.protobuf.Empty declareReadiness(AIProto.DeclareReadinessCommand request) {
+    public com.google.protobuf.Empty declareReadiness(ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand request) {
       return blockingUnaryCall(
           getChannel(), METHOD_DECLARE_READINESS, getCallOptions(), request);
     }
 
     /**
      */
-    public java.util.Iterator<AIProto.GameView> watch(
-        AIProto.WatchCommand request) {
+    public java.util.Iterator<ir.sharif.aic.hideandseek.protobuf.AIProto.GameView> watch(
+        ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand request) {
       return blockingServerStreamingCall(
           getChannel(), METHOD_WATCH, getCallOptions(), request);
     }
 
     /**
      */
-    public com.google.protobuf.Empty move(AIProto.MoveCommand request) {
+    public com.google.protobuf.Empty move(ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand request) {
       return blockingUnaryCall(
           getChannel(), METHOD_MOVE, getCallOptions(), request);
     }
 
     /**
      */
-    public com.google.protobuf.Empty sendMessage(AIProto.ChatCommand request) {
+    public com.google.protobuf.Empty sendMessage(ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand request) {
       return blockingUnaryCall(
           getChannel(), METHOD_SEND_MESSAGE, getCallOptions(), request);
     }
@@ -271,7 +276,7 @@ public final class GameHandlerGrpc {
       super(channel, callOptions);
     }
 
-    @Override
+    @java.lang.Override
     protected GameHandlerFutureStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new GameHandlerFutureStub(channel, callOptions);
@@ -280,7 +285,7 @@ public final class GameHandlerGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> declareReadiness(
-        AIProto.DeclareReadinessCommand request) {
+        ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_DECLARE_READINESS, getCallOptions()), request);
     }
@@ -288,7 +293,7 @@ public final class GameHandlerGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> move(
-        AIProto.MoveCommand request) {
+        ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_MOVE, getCallOptions()), request);
     }
@@ -296,7 +301,7 @@ public final class GameHandlerGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> sendMessage(
-        AIProto.ChatCommand request) {
+        ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_SEND_MESSAGE, getCallOptions()), request);
     }
@@ -320,24 +325,24 @@ public final class GameHandlerGrpc {
       this.methodId = methodId;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
+    @java.lang.Override
+    @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_DECLARE_READINESS:
-          serviceImpl.declareReadiness((AIProto.DeclareReadinessCommand) request,
+          serviceImpl.declareReadiness((ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         case METHODID_WATCH:
-          serviceImpl.watch((AIProto.WatchCommand) request,
-              (io.grpc.stub.StreamObserver<AIProto.GameView>) responseObserver);
+          serviceImpl.watch((ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand) request,
+              (io.grpc.stub.StreamObserver<ir.sharif.aic.hideandseek.protobuf.AIProto.GameView>) responseObserver);
           break;
         case METHODID_MOVE:
-          serviceImpl.move((AIProto.MoveCommand) request,
+          serviceImpl.move((ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         case METHODID_SEND_MESSAGE:
-          serviceImpl.sendMessage((AIProto.ChatCommand) request,
+          serviceImpl.sendMessage((ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         default:
@@ -345,8 +350,8 @@ public final class GameHandlerGrpc {
       }
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
+    @java.lang.Override
+    @java.lang.SuppressWarnings("unchecked")
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
@@ -357,9 +362,9 @@ public final class GameHandlerGrpc {
   }
 
   private static final class GameHandlerDescriptorSupplier implements io.grpc.protobuf.ProtoFileDescriptorSupplier {
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return AIProto.getDescriptor();
+      return ir.sharif.aic.hideandseek.protobuf.AIProto.getDescriptor();
     }
   }
 
