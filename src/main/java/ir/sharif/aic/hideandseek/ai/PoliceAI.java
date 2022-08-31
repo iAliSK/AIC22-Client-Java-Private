@@ -8,6 +8,7 @@ import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PoliceAI extends AI {
 
@@ -25,7 +26,7 @@ public class PoliceAI extends AI {
     public int getStartingNode(GameView view) {
         updateGame(view);
         logger = new Logger(String.format("logs/police-%d.log", currAgentId));
-        logger.enableLogging(true);
+        logger.enableLogging(false);
         initPath();
         return 1;
     }
@@ -35,9 +36,9 @@ public class PoliceAI extends AI {
      */
     @Override
     public int move(GameView view) {
-        long start = System.currentTimeMillis();
-
         updateGame(view);
+//        long start = System.currentTimeMillis();
+
         try {
             if (isVisibleTurn()) {
                 setThievesLocation();
@@ -54,35 +55,35 @@ public class PoliceAI extends AI {
 
             // todo change
             if (target > 0 && !isVisibleTurn() && currNodeId == getLastInPath(path)) {
-                logger.log("%d\tcatch\n", view.getTurn().getTurnNumber());
+//                logger.log("%d\tcatch\n", view.getTurn().getTurnNumber());
                 return currNodeId;
             }
 
-            logger.log("turn:%d\t" +
-                            "curr:%d\t" +
-                            "target:%d\t" +
-                            "path:%s\n",
-                    view.getTurn().getTurnNumber(),
-                    currNodeId,
-                    target,
-                    path
-            );
-
-            long end = System.currentTimeMillis();
-
-            logger.log("time: %d\n", (end - start));
-
-            if ((end - start) > 900) {
-                logger.log("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-            }
-
-            logger.log("\n------------------------------\n");
+//            logger.log("turn:%d\t" +
+//                            "curr:%d\t" +
+//                            "target:%d\t" +
+//                            "path:%s\n",
+//                    view.getTurn().getTurnNumber(),
+//                    currNodeId,
+//                    target,
+//                    path
+//            );
+//
+//            long end = System.currentTimeMillis();
+//
+//            logger.log("time: %d\n", (end - start));
+//
+//            if ((end - start) > 900) {
+//                logger.log("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+//            }
+//
+//            logger.log("\n------------------------------\n");
 
             return nextMove;
         } catch (Exception e) {
-            throw e;
+
         }
-//        return currNodeId;
+        return currNodeId;
     }
 
     void initPath() {
@@ -100,7 +101,7 @@ public class PoliceAI extends AI {
 
         int degree = getVisibleTurnsDiff() / 2;
 
-        logger.log("degree:%d\n", degree);
+//        logger.log("degree:%d\n", degree);
 
         List<Integer> neighborNodes = config.getNeighborNodes(target, degree, false);
 
@@ -110,7 +111,7 @@ public class PoliceAI extends AI {
                 .thenComparingInt(nodeId -> nodeId)
         );
 
-        logger.log("targetNeighbors:%s\n", neighborNodes);
+//        logger.log("targetNeighbors:%s\n", neighborNodes);
 
         ArrayList<Agent> polices = getTeammatePolice(true);
 
@@ -119,7 +120,7 @@ public class PoliceAI extends AI {
                 .thenComparingInt(Agent::getId)
         );
 
-        logger.log("polices:%s\n", mapToAgentId(polices, false));
+//        logger.log("polices:%s\n", mapToAgentId(polices, false));
 
 
         int myDest = -1;
@@ -145,7 +146,6 @@ public class PoliceAI extends AI {
 
                     boolean badNode = false;
 
-
                     for (ArrayList<Integer> path : config.getAllShortestPaths(node, target)) {
                         for (int node2 : allDest) {
                             if (path.contains(node2)) {
@@ -162,11 +162,10 @@ public class PoliceAI extends AI {
                         break;
                     }
 
-                    logger.log("badNodes:%s\n", badNodes);
+//                    logger.log("badNodes:%s\n", badNodes);
                     badNodes.clear();
 
-
-                    logger.log("agent:%d\tall:%s\n", police.getId(), config.getAllShortestPaths(node, target));
+//                    logger.log("agent:%d\tdest:%d\n", police.getId(), node);
 
                     selected.add(police.getId());
                     allDest.add(node);
@@ -175,9 +174,10 @@ public class PoliceAI extends AI {
                         myDest = node;
                     }
                     break;
+
                 }
 
-//                if(myDest != -1) {
+//                if (myDest != -1) {
 //                    break;
 //                }
             }
@@ -187,7 +187,7 @@ public class PoliceAI extends AI {
             int killerId = selected.get(0);
             if (killerId == currAgentId) {
                 myDest = target;
-                logger.log("killer:%d\n", killerId);
+//                logger.log("killer:%d\n", killerId);
             } else {
                 // todo next target
             }
@@ -197,13 +197,40 @@ public class PoliceAI extends AI {
 
 
         if (myDest == -1) {
+            // strategy2
+
+            List<Integer> notSelected = polices.stream()
+                    .map(Agent::getId)
+                    .filter(agentId -> !selected.contains(agentId))
+                    .collect(Collectors.toList());
+
+
+            for (int node : neighborNodes) {
+                for (int agentId : notSelected) {
+                    if (!allDest.contains(node)) {
+                        notSelected.remove((Integer) agentId);
+                        if (agentId == currAgentId) {
+                            myDest = node;
+                        }
+//                        logger.log("agent:%d\tstrategy2\n", agentId);
+                        break;
+                    }
+                }
+                if (myDest != -1) {
+                    break;
+                }
+            }
+
+        }
+
+
+        if (myDest == -1) {
             // old strategy
-            logger.log("agent:%d\told strategy!!\n", currAgentId);
+//            logger.log("agent:%d\told strategy!!\n", currAgentId);
             int index = polices.indexOf(view.getViewer());
             myDest = neighborNodes.get(index % neighborNodes.size());
         }
-
-        logger.log("myDest:%d\tallDest: %s\n", myDest, allDest);
+//        logger.log("myDest:%d\tallDest: %s\n", myDest, allDest);
 
         path = getCheaperPath(currNodeId, myDest);
     }
