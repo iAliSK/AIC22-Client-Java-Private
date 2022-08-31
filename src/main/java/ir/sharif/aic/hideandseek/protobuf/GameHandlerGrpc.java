@@ -24,7 +24,7 @@ public final class GameHandlerGrpc {
 
   private GameHandlerGrpc() {}
 
-  public static final String SERVICE_NAME = "ir.sharif.aic.hideandseek.protobuf.GameHandler";
+  public static final String SERVICE_NAME = "ir.sharif.aic.hideandseek.api.grpc.GameHandler";
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
@@ -33,7 +33,7 @@ public final class GameHandlerGrpc {
       io.grpc.MethodDescriptor.<ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand, com.google.protobuf.Empty>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ir.sharif.aic.hideandseek.protobuf.GameHandler", "DeclareReadiness"))
+              "ir.sharif.aic.hideandseek.api.grpc.GameHandler", "DeclareReadiness"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               ir.sharif.aic.hideandseek.protobuf.AIProto.DeclareReadinessCommand.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -45,7 +45,7 @@ public final class GameHandlerGrpc {
       io.grpc.MethodDescriptor.<ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand, ir.sharif.aic.hideandseek.protobuf.AIProto.GameView>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
           .setFullMethodName(generateFullMethodName(
-              "ir.sharif.aic.hideandseek.protobuf.GameHandler", "Watch"))
+              "ir.sharif.aic.hideandseek.api.grpc.GameHandler", "Watch"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               ir.sharif.aic.hideandseek.protobuf.AIProto.WatchCommand.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -57,7 +57,7 @@ public final class GameHandlerGrpc {
       io.grpc.MethodDescriptor.<ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand, com.google.protobuf.Empty>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ir.sharif.aic.hideandseek.protobuf.GameHandler", "Move"))
+              "ir.sharif.aic.hideandseek.api.grpc.GameHandler", "Move"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               ir.sharif.aic.hideandseek.protobuf.AIProto.MoveCommand.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -69,7 +69,7 @@ public final class GameHandlerGrpc {
       io.grpc.MethodDescriptor.<ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand, com.google.protobuf.Empty>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ir.sharif.aic.hideandseek.protobuf.GameHandler", "SendMessage"))
+              "ir.sharif.aic.hideandseek.api.grpc.GameHandler", "SendMessage"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               ir.sharif.aic.hideandseek.protobuf.AIProto.ChatCommand.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
