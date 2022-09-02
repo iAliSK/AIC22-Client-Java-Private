@@ -8,7 +8,8 @@ import java.util.*;
 public class Grid {
 
     public static ArrayList<Integer> filter;
-    private int[][] D;
+    public int[][] D0;
+    public int[][] D1;
     private int size;
 
     public Grid(GameView gameView) {
@@ -16,21 +17,22 @@ public class Grid {
         filter = new ArrayList<>();
     }
 
-    public Grid(int[][] grid) {
-        D = grid;
-        size = grid.length;
-        filter = new ArrayList<>();
-    }
+//    public Grid(int[][] grid) {
+//        D1 = grid;
+//        size = grid.length;
+//        filter = new ArrayList<>();
+//    }
 
 
     private void initGrid(GameView gameView) {
         size = gameView.getConfig().getGraph().getNodesCount();
 
-        D = new int[size][size];
+        D0 = new int[size][size];
+        D1 = new int[size][size];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                D[i][j] = (i == j) ? 0 : 9999999;
+                D0[i][j] = D1[i][j] = (i == j) ? 0 : 9999999;
             }
         }
 
@@ -38,11 +40,13 @@ public class Grid {
         for (Path path : paths) {
             int i = path.getFirstNodeId() - 1;
             int j = path.getSecondNodeId() - 1;
-            D[i][j] = D[j][i] = 1;
+            D1[i][j] = D1[j][i] = 1;
+            if (path.getPrice() == 0) D0[i][j] = D0[j][i] = 1;
         }
     }
 
-    public ArrayList<Integer> getNeighborNodes(int nodeId) {
+    public ArrayList<Integer> getNeighborNodes(int nodeId, int type) {
+        int[][] D = type == 0 ? D0 : D1;
         ArrayList<Integer> aroundNodes = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             if (D[nodeId][i] == 1) {
@@ -52,7 +56,8 @@ public class Grid {
         return aroundNodes;
     }
 
-    public int[][] floyd() {
+    public int[][] floyd(int type) {
+        int[][] D = type == 0 ? D0 : D1;
         int[][] dist = D.clone();
         for (int k = 0; k < size; k++) {
             for (int i = 0; i < size; i++) {
@@ -64,7 +69,8 @@ public class Grid {
         return dist;
     }
 
-    private void bfs(ArrayList<ArrayList<Integer>> parent, int src) {
+    private void bfs(ArrayList<ArrayList<Integer>> parent, int src, int type) {
+        int[][] D = type == 0 ? D0 : D1;
         int n = size;
         int[] dist = new int[n];
         Arrays.fill(dist, Integer.MAX_VALUE);
@@ -102,7 +108,7 @@ public class Grid {
         }
     }
 
-    public ArrayList<ArrayList<Integer>> getAllShortestPaths(int src, int dst) {
+    public ArrayList<ArrayList<Integer>> getAllShortestPaths(int src, int dst, int type) {
         int n = size;
         ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
         ArrayList<Integer> path = new ArrayList<>();
@@ -110,7 +116,7 @@ public class Grid {
         for (int i = 0; i < n; i++) {
             parent.add(new ArrayList<>());
         }
-        bfs(parent, dst);
+        bfs(parent, dst, type);
         findPaths(paths, path, parent, src);
         return paths;
     }

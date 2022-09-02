@@ -64,7 +64,7 @@ public class ThiefAI extends AI {
         ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
 
         for (int i = 1; i <= config.getNodesCount(); i++) {
-            for (ArrayList<Integer> path : config.getAllShortestPaths(fromNodeId, i)) {
+            for (ArrayList<Integer> path : config.getAllShortestPaths(fromNodeId, i, 1)) {
                 int next = getNextInPath(path);
                 if (getNearestPoliceDistance(next) == 0) {
                     continue;
@@ -132,7 +132,7 @@ public class ThiefAI extends AI {
     private int countNeighborPolices(int nodeId) {
         int count = 0;
         List<Integer> polices = mapToNodeId(opponentPolice, false);
-        List<Integer> neighbors = config.getNeighborNodes(nodeId);
+        List<Integer> neighbors = config.getNeighborNodes(nodeId, 1);
         for (int next : neighbors) {
             if (polices.contains(next)) {
                 count++;
@@ -211,11 +211,11 @@ public class ThiefAI extends AI {
 
         int safety = getPathSafetyLength(path);
         int last = path.get(safety - 1);
-        if (config.getNeighborNodesCount(last) <= 2) {
+        if (config.getNeighborNodesCount(last, 1) <= 2) {
             for (ArrayList<Integer> path : paths) {
                 safety = getPathSafetyLength(path);
                 last = path.get(safety - 1);
-                if (config.getNeighborNodesCount(last) >= 3
+                if (config.getNeighborNodesCount(last, 1) >= 3
                         && getPathSafetyLength(path) >= 3) {
                     this.path = path;
                     break;
@@ -258,7 +258,7 @@ public class ThiefAI extends AI {
         for (Agent agent : getTeammateThieves(false)) {
             minDist = Math.min(
                     minDist,
-                    config.getMinDistance(nodeId, agent.getNodeId())
+                    config.getMinDistance(nodeId, agent.getNodeId(), 1)
             );
         }
         return minDist;
@@ -276,7 +276,7 @@ public class ThiefAI extends AI {
         for (Agent agent : opponentPolice) {
             minDist = Math.min(
                     minDist,
-                    config.getMinDistance(nodeId, agent.getNodeId())
+                    config.getMinDistance(nodeId, agent.getNodeId(), 1)
             );
         }
         return minDist;
@@ -289,7 +289,7 @@ public class ThiefAI extends AI {
                 * getNearestPoliceDistance(nodeId);
 
         int allowedNeighbors = 0;
-        for (int node : config.getNeighborNodes(nodeId)) {
+        for (int node : config.getNeighborNodes(nodeId, 1)) {
             if (config.getPathCost(nodeId, node) <= nextBalance) {
                 allowedNeighbors++;
             }
@@ -324,15 +324,15 @@ public class ThiefAI extends AI {
 
     private int compareLastVisibleNodeId(int node1, int node2) {
         return Integer.compare(
-                config.getMinDistance(node2, visibleNodeId),
-                config.getMinDistance(node1, visibleNodeId)
+                config.getMinDistance(node2, visibleNodeId, 1),
+                config.getMinDistance(node1, visibleNodeId, 1)
         );
     }
 
     int compDistFromMe(int node1, int node2) {
         return Integer.compare(
-                config.getMinDistance(currNodeId, node2),
-                config.getMinDistance(currNodeId, node1)
+                config.getMinDistance(currNodeId, node2, 1),
+                config.getMinDistance(currNodeId, node1, 1)
         );
     }
 

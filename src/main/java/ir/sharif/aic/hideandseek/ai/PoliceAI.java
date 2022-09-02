@@ -2,6 +2,7 @@ package ir.sharif.aic.hideandseek.ai;
 
 import ir.sharif.aic.hideandseek.Logger;
 import ir.sharif.aic.hideandseek.client.Phone;
+import ir.sharif.aic.hideandseek.protobuf.AIProto;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.Agent;
 import ir.sharif.aic.hideandseek.protobuf.AIProto.GameView;
 
@@ -12,8 +13,9 @@ import java.util.stream.Collectors;
 
 public class PoliceAI extends AI {
 
-    public List<Integer> thievesLocation = new ArrayList<>();
+    public List<Agent> thievesLocation = new ArrayList<>();
     public int target = -1;
+    boolean isTargetJoker = false;
 
     public PoliceAI(Phone phone) {
         this.phone = phone;
@@ -42,6 +44,16 @@ public class PoliceAI extends AI {
         try {
             if (isVisibleTurn()) {
                 setThievesLocation();
+                for (Agent agent : thievesLocation) {
+                    if (config.getNeighborNodes(agent.getNodeId(),1).contains(currNodeId)) {
+                        if (isMoneyEnoughToMove(currNodeId, agent.getNodeId())) {
+//                            thievesLocation.remove(node);
+//                            target = getNearestThief();
+//                            updatePath(target);
+                            return agent.getNodeId();
+                        }
+                    }
+                }
                 target = getNearestThief();
                 updatePath(target);
             }
@@ -55,7 +67,7 @@ public class PoliceAI extends AI {
 
             // todo change
             if (target > 0 && !isVisibleTurn() && currNodeId == getLastInPath(path)) {
-//                logger.log("%d\tcatch\n", view.getTurn().getTurnNumber());
+                logger.log("%d\tcatch\n", view.getTurn().getTurnNumber());
                 return currNodeId;
             }
 
@@ -81,14 +93,13 @@ public class PoliceAI extends AI {
 
             return nextMove;
         } catch (Exception e) {
-
         }
         return currNodeId;
     }
 
     void initPath() {
         path = getCheaperPath(currNodeId,
-                getFarthestRandomNodeFromPoliceStation(0.7)
+                getFarthestRandomNodeFromPoliceStation(0.7), 1
         );
     }
 
@@ -103,20 +114,27 @@ public class PoliceAI extends AI {
 
 //        logger.log("degree:%d\n", degree);
 
-        List<Integer> neighborNodes = config.getNeighborNodes(target, degree, false);
+        List<Integer> neighborNodes = config.getNeighborNodes(target, degree, false, 1);
 
         neighborNodes.sort(Comparator
-                .comparingInt((Integer node) -> config.getMinDistance(node, target))
-                .thenComparingInt(node -> -config.getNeighborNodesCount(node))
+                .comparingInt((Integer node) -> config.getMinDistance(node, target, 1))
+                .thenComparingInt(node -> -config.getNeighborNodesCount(node, 1))
                 .thenComparingInt(nodeId -> nodeId)
         );
 
 //        logger.log("targetNeighbors:%s\n", neighborNodes);
 
-        ArrayList<Agent> polices = getTeammatePolice(true);
+        ArrayList<Agent> polices = new ArrayList<>();
+
+        for (Agent agent: getTeammatePolice(true)) {
+            if (isVisibleToPolice(agent.getNodeId(),target,isTargetJoker))
+                polices.add(agent);
+        }
+
+        if (!polices.contains(view.getViewer())) polices.add(view.getViewer());
 
         polices.sort(Comparator.comparingInt((Agent agent) ->
-                config.getMinDistance(agent.getNodeId(), target))
+                config.getMinDistance(agent.getNodeId(), target, 1))
                 .thenComparingInt(Agent::getId)
         );
 
@@ -139,14 +157,14 @@ public class PoliceAI extends AI {
                     continue;
                 }
 
-                int policeDist = config.getMinDistance(police.getNodeId(), node);
-                int thiefDist = config.getMinDistance(target, node);
+                int policeDist = config.getMinDistance(police.getNodeId(), node, 1);
+                int thiefDist = config.getMinDistance(target, node, 1);
 
                 if (policeDist <= thiefDist + 1) {
 
                     boolean badNode = false;
 
-                    for (ArrayList<Integer> path : config.getAllShortestPaths(node, target)) {
+                    for (ArrayList<Integer> path : config.getAllShortestPaths(node, target,1)) {
                         for (int node2 : allDest) {
                             if (path.contains(node2)) {
                                 badNode = true;
@@ -232,11 +250,11 @@ public class PoliceAI extends AI {
         }
 //        logger.log("myDest:%d\tallDest: %s\n", myDest, allDest);
 
-        path = getCheaperPath(currNodeId, myDest);
+        path = getCheaperPath(currNodeId, myDest, 1);
     }
 
     private boolean willBeSurrounded(int target, ArrayList<Integer> polices) {
-        for (int node : config.getNeighborNodes(target)) {
+        for (int node : config.getNeighborNodes(target, 1)) {
             if (!polices.contains(node)) {
                 return false;
             }
@@ -251,7 +269,7 @@ public class PoliceAI extends AI {
     ArrayList<Integer> emptyNodes() {
         ArrayList<Agent> polices = getTeammatePolice(true);
 
-        ArrayList<Integer> neighborNodes = config.getNeighborNodes(target);
+        ArrayList<Integer> neighborNodes = config.getNeighborNodes(target, 1);
 
         for (Agent node : polices) {
             if (neighborNodes.contains(node.getNodeId())) {
@@ -263,11 +281,19 @@ public class PoliceAI extends AI {
 
     }
 
+    private boolean isVisibleToPolice(int policeNode, int thiefNode, boolean isJoker) {
+        int vision;
+
+        if (isJoker) vision = view.getConfig().getGraph().getVisibleRadiusYPoliceJoker();
+        else vision = view.getConfig().getGraph().getVisibleRadiusXPoliceThief();
+
+        return config.getMinDistance(policeNode, thiefNode, 0) <= vision;
+    }
 
     boolean isPoliceWithDist1() {
         ArrayList<Agent> polices = getTeammatePolice(true);
 
-        ArrayList<Integer> neighborNodes = config.getNeighborNodes(target);
+        ArrayList<Integer> neighborNodes = config.getNeighborNodes(target, 1);
 
         for (Agent node : polices) {
             if (neighborNodes.contains(node.getNodeId())) {
@@ -285,15 +311,15 @@ public class PoliceAI extends AI {
     int bestPossibilityForThief() {
         ArrayList<Agent> polices = getTeammatePolice(true);
 
-        ArrayList<Integer> neighborNodes = config.getNeighborNodes(target);
+        ArrayList<Integer> neighborNodes = config.getNeighborNodes(target, 1);
 
         for (Agent node : polices) {
-            neighborNodes.removeAll(config.getNeighborNodes(node.getNodeId()));
+            neighborNodes.removeAll(config.getNeighborNodes(node.getNodeId(), 1));
         }
 
         neighborNodes.sort(Comparator
                 .comparingInt((Integer node) -> -getDisToAllPolices(node))
-                .thenComparingInt(node -> -config.getNeighborNodesCount(node))
+                .thenComparingInt(node -> -config.getNeighborNodesCount(node, 1))
                 .thenComparingInt(nodeId -> nodeId)
         );
 
@@ -314,18 +340,29 @@ public class PoliceAI extends AI {
     }
 
     private int getNearestThief() {
-        return thievesLocation.stream().min(Comparator
-                .comparingInt(this::getDisToAllPolices)
-                .thenComparingInt(config::getNeighborNodesCount)
-                .thenComparingInt(nodeId -> nodeId)
-        ).orElse(getFarthestRandomNode(currNodeId, 0.7));
+        Agent thief = thievesLocation.stream().min(
+
+
+                Comparator
+                        .comparingInt(agent -> getDisToAllPolices(((Agent) agent).getNodeId()))
+                        .thenComparingInt(agent -> config.getNeighborNodesCount(((Agent) agent).getNodeId(), 1))
+                        .thenComparingInt(agent -> ((Agent) agent).getNodeId())
+
+        ).orElse(null);
+
+        isTargetJoker = thief != null && thief.getType().equals(AIProto.AgentType.JOKER);
+
+        if(thief != null) {
+            return thief.getNodeId();
+        }
+        return getFarthestRandomNode(currNodeId, 0.7);
     }
 
     private int getDisToAllPolices(int thiefLoc) {
         ArrayList<Agent> polices = getTeammatePolice(true);
         int sum = 0;
         for (Agent police : polices) {
-            sum += config.getMinDistance(police.getNodeId(), thiefLoc);
+            sum += config.getMinDistance(police.getNodeId(), thiefLoc, 1);
         }
         return sum;
     }
@@ -333,7 +370,6 @@ public class PoliceAI extends AI {
     private void setThievesLocation() {
         thievesLocation = getOpponentThieves().stream()
                 .filter(agent -> !agent.getIsDead())
-                .map(Agent::getNodeId)
                 .toList();
     }
 
@@ -357,7 +393,7 @@ public class PoliceAI extends AI {
     private int getNearestTeammatePoliceDistance(int nodeId) {
         int minDist = Integer.MAX_VALUE;
         for (Integer node : mapToNodeId(getTeammatePolice(true), false)) {
-            minDist = Math.min(minDist, config.getMinDistance(node, nodeId));
+            minDist = Math.min(minDist, config.getMinDistance(node, nodeId, 1));
         }
         return minDist;
     }
