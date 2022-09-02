@@ -10,15 +10,18 @@ public class Config {
 
     private static Config instance;
     private final Grid grid;
-    private final int[][] dist;
-    private ArrayList<Integer>[] next;
+    private final int[][] dist1;
+    private final int[][] dist0;
+    private ArrayList<Integer>[] next0;
+    private ArrayList<Integer>[] next1;
     private double[][] cost;
     private final int nodesCount;
 
     private Config(GameView view) {
         grid = new Grid(view);
         nodesCount = view.getConfig().getGraph().getNodesCount();
-        dist = grid.floyd();
+        dist1 = grid.floyd(1);
+        dist0 = grid.floyd(0);
         initCost(view);
         initNext();
     }
@@ -43,9 +46,11 @@ public class Config {
     @SuppressWarnings("unchecked")
     private void initNext() {
         int n = nodesCount;
-        next = new ArrayList[n];
+        next0 = new ArrayList[n];
+        next1 = new ArrayList[n];
         for (int i = 0; i < n; i++) {
-            next[i] = grid.getNeighborNodes(i);
+            next0[i] = grid.getNeighborNodes(i,0);
+            next1[i] = grid.getNeighborNodes(i,1);
         }
     }
 
@@ -57,25 +62,28 @@ public class Config {
         return cost[fromNodeId - 1][toNodeId - 1];
     }
 
-    public int getMinDistance(int fromNodeId, int toNodeId) {
+    public int getMinDistance(int fromNodeId, int toNodeId, int type) {
+        int[][] dist = type == 0 ? dist0 : dist1;
         return dist[fromNodeId - 1][toNodeId - 1];
     }
 
-    public int[] getMinDistances(int fromNodeId) {
+    public int[] getMinDistances(int fromNodeId, int type) {
+        int[][] dist = type == 0 ? dist0 : dist1;
         return dist[fromNodeId - 1];
     }
 
-    public ArrayList<ArrayList<Integer>> getAllShortestPaths(int fromNodeId, int toNodeId) {
-        return grid.getAllShortestPaths(fromNodeId - 1, toNodeId - 1);
+    public ArrayList<ArrayList<Integer>> getAllShortestPaths(int fromNodeId, int toNodeId, int type) {
+        return grid.getAllShortestPaths(fromNodeId - 1, toNodeId - 1, type);
     }
 
-    public ArrayList<Integer> getNeighborNodes(int nodeId) {
+    public ArrayList<Integer> getNeighborNodes(int nodeId, int type) {
+        ArrayList<Integer>[] next = type == 0 ? next0 : next1;
         return new ArrayList<>(next[nodeId - 1]);
     }
 
 
     private ArrayList<Integer> getNeighborNodes(ArrayList<Integer> nodeId, int degree,
-                                                HashSet<Integer> nodes, boolean onlyDegree) {
+                                                HashSet<Integer> nodes, boolean onlyDegree, int type) {
         if (degree == 0) {
             if (!onlyDegree) return new ArrayList<>(nodes);
             return nodeId;
@@ -83,55 +91,30 @@ public class Config {
 
         ArrayList<Integer> temp = new ArrayList<>();
         for (Integer node : nodeId) {
-            for (Integer neighbor : getNeighborNodes(node)) {
+            for (Integer neighbor : getNeighborNodes(node, type)) {
                 if (!nodes.contains(neighbor))
                     temp.add(neighbor);
             }
         }
 
         nodes.addAll(temp);
-        return getNeighborNodes(temp, degree - 1, nodes, onlyDegree);
+        return getNeighborNodes(temp, degree - 1, nodes, onlyDegree, type);
     }
 
-    public ArrayList<Integer> getNeighborNodes(int target, int degree, boolean onlyDegree) {
+    public ArrayList<Integer> getNeighborNodes(int target, int degree, boolean onlyDegree, int type) {
         ArrayList<Integer> targets = new ArrayList<>();
         targets.add(target);
-        return getNeighborNodes(targets, degree, new HashSet<>(targets), onlyDegree);
-    }
-
-    public ArrayList<Integer> getNearestNodes(int nodeId) {
-        ArrayList<Integer> neighborNodes = getNeighborNodes(nodeId);
-        ArrayList<Integer> temp = new ArrayList<>();
-        HashSet<Integer> nodes = new HashSet<>(neighborNodes);
-        nodes.add(nodeId);
-
-        for (Integer node : neighborNodes) {
-            nodes.addAll(getNeighborNodes(node));
-            temp.addAll(getNeighborNodes(node));
-        }
-        for (Integer node : temp) {
-            nodes.addAll(getNeighborNodes(node));
-        }
-
-        ArrayList<Integer> selectedNodes = new ArrayList<>(nodes);
-        selectedNodes.sort((o1, o2) -> {
-            int temp1 = Integer.compare(getMinDistance(o1, nodeId), getMinDistance(o2, nodeId));
-            if (temp1 != 0) return temp1;
-            int temp2 = Integer.compare(getNeighborNodesCount(o2), getNeighborNodesCount(o1));
-            if (temp2 != 0) return temp2;
-            return Integer.compare(o1, o2);
-        });
-
-        return selectedNodes;
-    }
-
-    public boolean isNeighbor(int nodeId1, int nodeId2) {
-        return getNeighborNodes(nodeId1).contains(nodeId2);
+        return getNeighborNodes(targets, degree, new HashSet<>(targets), onlyDegree, type);
     }
 
 
-    public int getNeighborNodesCount(int nodeId) {
-        return getNeighborNodes(nodeId).size();
+//    public boolean isNeighbor(int nodeId1, int nodeId2) {
+//        return getNeighborNodes(nodeId1).contains(nodeId2);
+//    }
+
+
+    public int getNeighborNodesCount(int nodeId, int type) {
+        return getNeighborNodes(nodeId, type).size();
     }
 
     public double getPathCost(ArrayList<Integer> path) {

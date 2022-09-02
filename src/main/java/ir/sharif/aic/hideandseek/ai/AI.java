@@ -40,7 +40,7 @@ public abstract class AI {
     }
 
     protected int getFarthestUniqueNode(int fromNodeId, double percent) {
-        int[] distances = config.getMinDistances(fromNodeId);
+        int[] distances = config.getMinDistances(fromNodeId, 1);
 
         int maxDist = Arrays.stream(distances).max().orElse(2);
 
@@ -59,7 +59,7 @@ public abstract class AI {
     }
 
     protected int getFarthestRandomNode(int fromNodeId, double percent) {
-        int[] distances = config.getMinDistances(fromNodeId);
+        int[] distances = config.getMinDistances(fromNodeId, 1);
 
         int maxDist = Arrays.stream(distances).max().orElse(2);
 
@@ -77,7 +77,7 @@ public abstract class AI {
 
 //        // sort by max neighbor nodes count
         Arrays.sort(farthestNodes, Comparator.
-                comparingInt(d -> config.getNeighborNodesCount((Integer) d)).reversed());
+                comparingInt(d -> config.getNeighborNodesCount((Integer) d, 1)).reversed());
 
         int randIndex = getRandInt(farthestNodes.length / 2);
         return farthestNodes[randIndex];
@@ -92,9 +92,21 @@ public abstract class AI {
 
     private ArrayList<Agent> getAgents(int team, int type, boolean includeMe) {
         ArrayList<Agent> agents = new ArrayList<>();
+        ArrayList<Integer> policeType = new ArrayList<>();
+        policeType.add(AgentType.POLICE_VALUE);
+        policeType.add(AgentType.BATMAN_VALUE);
+
+        ArrayList<Integer> thiefType = new ArrayList<>();
+        thiefType.add(AgentType.THIEF_VALUE);
+        thiefType.add(AgentType.JOKER_VALUE);
+
+
         for (Agent agent : view.getVisibleAgentsList()) {
-            if (agent.getTeamValue() == team && agent.getTypeValue() == type) {
-                if (!agents.contains(agent)) {
+            if (agent.getTeamValue() == team) {
+
+                boolean sameType = policeType.contains(agent.getTypeValue()) && policeType.contains(type) || thiefType.contains(agent.getTypeValue()) && thiefType.contains(type);
+
+                if (sameType && !agents.contains(agent)) {
                     agents.add(agent);
                 }
             }
@@ -154,7 +166,7 @@ public abstract class AI {
         int m = 0, k = 0;
         for (int i = 0; i < n - 1; i++) {
             for (int j = i + 1; j < n; j++) {
-                diff[i][j] = config.getMinDistance(allNodes[i], allNodes[j]);
+                diff[i][j] = config.getMinDistance(allNodes[i], allNodes[j], 1);
                 diff[j][i] = diff[i][j];
                 if (diff[i][j] > max) {
                     max = diff[i][j];
@@ -172,8 +184,8 @@ public abstract class AI {
 
         //=======================
         nodes.sort((o1, o2) -> Integer.compare(
-                config.getMinDistance(o2, ans.get(0)) * config.getMinDistance(o2, ans.get(1)),
-                config.getMinDistance(o1, ans.get(0)) * config.getMinDistance(o1, ans.get(1))));
+                config.getMinDistance(o2, ans.get(0), 1) * config.getMinDistance(o2, ans.get(1), 1),
+                config.getMinDistance(o1, ans.get(0), 1) * config.getMinDistance(o1, ans.get(1), 1)));
 
         int counter = 0;
         for (Integer node : nodes) {
@@ -205,10 +217,10 @@ public abstract class AI {
         return getTurnsPassedAfterLastVisibility() <= 1;
     }
 
-    public ArrayList<Integer> getCheaperPath(int fromNodeId, int toNodeId) {
+    public ArrayList<Integer> getCheaperPath(int fromNodeId, int toNodeId, int type) {
         int min = Integer.MAX_VALUE;
         ArrayList<Integer> temp = null;
-        for (ArrayList<Integer> path : config.getAllShortestPaths(fromNodeId, toNodeId)) {
+        for (ArrayList<Integer> path : config.getAllShortestPaths(fromNodeId, toNodeId, type)) {
             int cost = 0;
             for (int i = 1; i < path.size(); i++) {
                 cost += config.getPathCost(path.get(i - 1), path.get(i));
@@ -305,15 +317,15 @@ public abstract class AI {
 
     protected int compareDistance(int node1, int node2, int target) {
         return Integer.compare(
-                config.getMinDistance(node1, target),
-                config.getMinDistance(node2, target)
+                config.getMinDistance(node1, target, 1),
+                config.getMinDistance(node2, target, 1)
         );
     }
 
     protected int compareNeighbors(int node1, int node2) {
         return Integer.compare(
-                config.getNeighborNodesCount(node1),
-                config.getNeighborNodesCount(node2)
+                config.getNeighborNodesCount(node1, 1),
+                config.getNeighborNodesCount(node2, 1)
         );
     }
 
